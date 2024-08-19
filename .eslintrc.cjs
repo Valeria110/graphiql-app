@@ -3,6 +3,7 @@ module.exports = {
   env: { browser: true, es2022: true },
   extends: [
     'eslint:recommended',
+    'plugin:react/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:react-hooks/recommended',
     'plugin:import/recommended',
@@ -16,6 +17,9 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 2020,
     sourceType: 'module',
+    ecmaFeatures: {
+      jsx: true,
+    },
   },
   settings: {
     'import/extensions': ['.ts', 'tsx'],
@@ -23,9 +27,10 @@ module.exports = {
       '@typescript-eslint/parser': ['.ts', 'tsx'],
     },
   },
-  plugins: ['react-refresh', 'react-compiler', 'import'],
+  plugins: ['react', 'react-refresh', 'react-compiler', 'import'],
   rules: {
-    'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+    'react-refresh/only-export-components': 'off',
+    'react/self-closing-comp': 'warn',
     'react-compiler/react-compiler': 'error',
     '@typescript-eslint/no-explicit-any': 'error',
     'react-refresh/only-export-components': 'off',
