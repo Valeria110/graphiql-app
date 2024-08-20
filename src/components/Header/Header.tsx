@@ -13,7 +13,6 @@ export default function Header() {
   const [screenWidth, setScreenWidth] = useState(0);
   const headerClassName = isSticky ? classNames(styles.header, styles.isSticky) : styles.header;
   const router = useRouter();
-  console.log(screenWidth);
 
   const handleChange = () => {
     //To be done:
@@ -36,7 +35,6 @@ export default function Header() {
   const handleScroll = () => {
     const curScrollPosition = window.scrollY;
     const headerHeight = 100;
-    console.log(curScrollPosition);
 
     if (curScrollPosition > headerHeight) {
       setIsSticky(true);
