@@ -2,36 +2,32 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, FormControl, TextField } from '@mui/material';
 import { useEffect, useId, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, useWatch } from 'react-hook-form';
 import { logInWithEmailAndPassword, registerWithEmailAndPasswordShort } from '@/authService';
 import { auth } from '@/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { schemaSignUp, valuesSignUp } from '@/validation/schemas';
 import { useRouter } from 'next/navigation';
 
-// TODO: mix ", '
-// TODO: Show all problem with password together
-// TODO: Find better way with header
-// TODO: eyes for password
-// TODO: reset auth error when typing
-// TODO: Message email already use
-
 interface SignUniversalProps {
   mode: 'signIn' | 'signUp';
 }
 
 export default function SignUniversal({ mode }: SignUniversalProps) {
-  const [user, loading] = useAuthState(auth);
+  const { register, handleSubmit, formState, control } = useForm({
+    resolver: yupResolver(schemaSignUp),
+    mode: 'onChange',
+  });
+
+  const [user] = useAuthState(auth);
   const [messageAuthError, setMessageAuthError] = useState('');
   const isMessageAuthError = messageAuthError !== '';
   const idEmail = useId();
   const idPassword = useId();
   const router = useRouter();
+  const watchPassword = useWatch({ control, name: 'password' });
+  const watchEmail = useWatch({ control, name: 'email' });
 
-  const { register, handleSubmit, formState } = useForm({
-    resolver: yupResolver(schemaSignUp),
-    mode: 'onChange',
-  });
   const { errors, isValid, isDirty } = formState;
 
   const onSubmit = async (data: valuesSignUp) => {
@@ -45,14 +41,15 @@ export default function SignUniversal({ mode }: SignUniversalProps) {
     setMessageAuthError(success ? '' : 'Invalid credentials');
   };
 
-  console.log(`user = ${user}, loading = ${loading}`);
-  console.log(user);
-
   useEffect(() => {
     if (user) {
       router.push('/');
     }
   }, [user, router]);
+
+  useEffect(() => {
+    setMessageAuthError('');
+  }, [watchPassword, watchEmail]);
 
   return (
     <Box
@@ -92,7 +89,7 @@ export default function SignUniversal({ mode }: SignUniversalProps) {
           />
         </FormControl>
 
-        <Button type="submit" variant="contained" color="primary" disabled={!isValid || !isDirty}>
+        <Button type="submit" variant="contained" color="primary" disabled={!isValid || !isDirty || isMessageAuthError}>
           {mode === 'signIn' ? 'Sign in' : 'Sign up'}
         </Button>
       </form>
