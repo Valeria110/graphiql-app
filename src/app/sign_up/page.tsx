@@ -1,11 +1,28 @@
+'use client';
+import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, FormControl, TextField } from '@mui/material';
 import { useId } from 'react';
+import { useForm } from 'react-hook-form';
+import { schemaSignUp, valuesSignUp } from '../validation/schemas';
 
+// TODO: mix ", '
+// TODO: Show all problem with password together
 // TODO: Find better way with header
+// TODO: eyes for password
 
 export default function SignUp() {
   const idEmail = useId();
   const idPassword = useId();
+
+  const { register, handleSubmit, formState } = useForm({
+    resolver: yupResolver(schemaSignUp),
+    mode: 'onChange',
+  });
+  const { errors, isValid, isDirty } = formState;
+
+  const onSubmit = (data: valuesSignUp) => {
+    console.log(data);
+  };
 
   return (
     <Box
@@ -17,21 +34,38 @@ export default function SignUp() {
         marginTop: 20,
       }}
     >
-      <FormControl fullWidth error>
-        <TextField id={idEmail} label="Email" variant="outlined" required sx={{ marginBottom: 2 }} />
-        <TextField
-          id={idPassword}
-          label="Password"
-          variant="outlined"
-          type="password"
-          required
-          sx={{ marginBottom: 2 }}
-        />
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <FormControl fullWidth margin="normal" error={!!errors.email}>
+          <TextField
+            id={idEmail}
+            label="Email"
+            variant="outlined"
+            {...register('email')}
+            required
+            sx={{ marginBottom: 2 }}
+            error={!!errors.email}
+            helperText={errors.email?.message ?? ''}
+          />
+        </FormControl>
 
-        <Button variant="contained" color="primary">
-          Submit
+        <FormControl fullWidth margin="normal" error={!!errors.password}>
+          <TextField
+            id={idPassword}
+            label="Password"
+            variant="outlined"
+            type="password"
+            {...register('password')}
+            required
+            sx={{ marginBottom: 2 }}
+            error={!!errors.password}
+            helperText={errors.password?.message ?? ''}
+          />
+        </FormControl>
+
+        <Button type="submit" variant="contained" color="primary" disabled={!isValid || !isDirty}>
+          Sign up
         </Button>
-      </FormControl>
+      </form>
     </Box>
   );
 }
