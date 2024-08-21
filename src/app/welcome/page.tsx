@@ -1,24 +1,33 @@
 'use client';
-import { auth } from "@/firebase";
+import { registerWithEmailAndPassword, logInWithEmailAndPassword, logOutUser } from '@/authService';
+import { auth } from '@/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 
 function WelcomePage() {
-    const [user, loading] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
 
-    if (loading) {
-        return <div>Loading</div>;
-    }
+  const onClick = () => {
+    registerWithEmailAndPassword('Rweqwe', 'test@gmail.com', '3cFj49D63@');
+  };
 
-    console.log(user)
+  const onClickLogin = async () => {
+    logInWithEmailAndPassword('test@gmail.com', '3cFj49D63@');
+  };
 
-    return (
-        <>
-            <div>Hello {user?.email || ''}</div>
-            <button>Register</button>
-            <button>Login</button>
-            <button>Logout</button>
-        </>
-    );
+  if (loading) {
+    return <div>Loading</div>;
+  }
+
+  console.log(user);
+
+  return (
+    <>
+      <div>Hello {user?.email || ''}</div>
+      <button onClick={onClick}>Register</button>
+      <button onClick={onClickLogin}>Login</button>
+      <button onClick={logOutUser}>Logout</button>
+    </>
+  );
 }
 
 export default WelcomePage;
