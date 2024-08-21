@@ -1,20 +1,28 @@
 'use client';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, FormControl, TextField } from '@mui/material';
-import { useId } from 'react';
+import { useId, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { schemaSignUp, valuesSignUp } from '../validation/schemas';
-import { registerWithEmailAndPassword } from '@/authService';
+import { logInWithEmailAndPassword, registerWithEmailAndPasswordShort } from '@/authService';
 import { auth } from '@/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
+import { schemaSignUp, valuesSignUp } from '@/validation/schemas';
+import { SignOutBtn } from '@/components/SignOutBtn/SignOutBtn';
 
 // TODO: mix ", '
 // TODO: Show all problem with password together
 // TODO: Find better way with header
 // TODO: eyes for password
+// TODO: reset auth error when typing
 
-export default function SignUp() {
+interface SignUniversalProps {
+  mode: 'signIn' | 'signUp';
+}
+
+export default function SignUniversal({ mode }: SignUniversalProps) {
   const [user, loading] = useAuthState(auth);
+  const [messageAuthError, setMessageAuthError] = useState('');
+  const isMessageAuthError = messageAuthError !== '';
   const idEmail = useId();
   const idPassword = useId();
 
@@ -25,8 +33,17 @@ export default function SignUp() {
   const { errors, isValid, isDirty } = formState;
 
   const onSubmit = async (data: valuesSignUp) => {
-    registerWithEmailAndPassword('Mikhail', data.email, data.password);
+    let success = false;
+
+    if (mode === 'signIn') {
+      success = await logInWithEmailAndPassword(data.email, data.password);
+    } else if (mode === 'signUp') {
+      success = await registerWithEmailAndPasswordShort(data.email, data.password);
+    }
+
+    setMessageAuthError(success ? '' : 'Invalid credentials');
   };
+
   console.log(`user = ${user}, loading = ${loading}`);
   console.log(user);
 
@@ -53,8 +70,8 @@ export default function SignUp() {
             {...register('email')}
             required
             sx={{ marginBottom: 2 }}
-            error={!!errors.email}
-            helperText={errors.email?.message ?? ''}
+            error={!!errors.email || isMessageAuthError}
+            helperText={errors.email?.message ?? messageAuthError ?? ''}
           />
         </FormControl>
 
@@ -67,14 +84,16 @@ export default function SignUp() {
             {...register('password')}
             required
             sx={{ marginBottom: 2 }}
-            error={!!errors.password}
-            helperText={errors.password?.message ?? ''}
+            error={!!errors.password || isMessageAuthError}
+            helperText={errors.password?.message ?? messageAuthError ?? ''}
           />
         </FormControl>
 
         <Button type="submit" variant="contained" color="primary" disabled={!isValid || !isDirty}>
-          Sign up
+          {mode === 'signIn' ? 'Sign in' : 'Sign up'}
         </Button>
+
+        <SignOutBtn />
       </form>
     </Box>
   );

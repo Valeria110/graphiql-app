@@ -5,8 +5,10 @@ import { addDoc, collection } from 'firebase/firestore';
 export const logInWithEmailAndPassword = async (email: string, password: string) => {
   try {
     await signInWithEmailAndPassword(auth, email, password);
+    return true;
   } catch (err) {
-    console.error(err); // нужно доделать обработку ошибок на странице регистрации и логина
+    console.error(err); // TODO: нужно доделать обработку ошибок на странице регистрации и логина
+    return false;
   }
 };
 
@@ -21,9 +23,16 @@ export const registerWithEmailAndPassword = async (name: string, email: string, 
       authProvider: 'local',
       email,
     });
+    return true;
   } catch (err) {
     console.error(err);
+    return false;
   }
+};
+
+export const registerWithEmailAndPasswordShort = async (email: string, password: string) => {
+  const name = email.split('@')[0];
+  return registerWithEmailAndPassword(name, email, password);
 };
 
 export const logOutUser = async () => {
