@@ -1,19 +1,21 @@
 'use client';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Box, Button, FormControl, TextField } from '@mui/material';
-import { useId, useState } from 'react';
+import { useEffect, useId, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { logInWithEmailAndPassword, registerWithEmailAndPasswordShort } from '@/authService';
 import { auth } from '@/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { schemaSignUp, valuesSignUp } from '@/validation/schemas';
 import { SignOutBtn } from '@/components/SignOutBtn/SignOutBtn';
+import { useRouter } from 'next/navigation';
 
 // TODO: mix ", '
 // TODO: Show all problem with password together
 // TODO: Find better way with header
 // TODO: eyes for password
 // TODO: reset auth error when typing
+// TODO: Message email already use
 
 interface SignUniversalProps {
   mode: 'signIn' | 'signUp';
@@ -25,6 +27,7 @@ export default function SignUniversal({ mode }: SignUniversalProps) {
   const isMessageAuthError = messageAuthError !== '';
   const idEmail = useId();
   const idPassword = useId();
+  const router = useRouter();
 
   const { register, handleSubmit, formState } = useForm({
     resolver: yupResolver(schemaSignUp),
@@ -40,16 +43,17 @@ export default function SignUniversal({ mode }: SignUniversalProps) {
     } else if (mode === 'signUp') {
       success = await registerWithEmailAndPasswordShort(data.email, data.password);
     }
-
     setMessageAuthError(success ? '' : 'Invalid credentials');
   };
 
   console.log(`user = ${user}, loading = ${loading}`);
   console.log(user);
 
-  if (user !== undefined) {
-    console.log('should redirect');
-  }
+  useEffect(() => {
+    if (user) {
+      router.push('/');
+    }
+  }, [user, router]);
 
   return (
     <Box
