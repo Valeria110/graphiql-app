@@ -7,7 +7,6 @@ import { logInWithEmailAndPassword, registerWithEmailAndPasswordShort } from '@/
 import { auth } from '@/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { schemaSignUp, valuesSignUp } from '@/validation/schemas';
-import { SignOutBtn } from '@/components/SignOutBtn/SignOutBtn';
 import { useRouter } from 'next/navigation';
 
 // TODO: mix ", '
@@ -96,8 +95,6 @@ export default function SignUniversal({ mode }: SignUniversalProps) {
         <Button type="submit" variant="contained" color="primary" disabled={!isValid || !isDirty}>
           {mode === 'signIn' ? 'Sign in' : 'Sign up'}
         </Button>
-
-        <SignOutBtn />
       </form>
     </Box>
   );
