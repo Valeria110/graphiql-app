@@ -12,6 +12,12 @@
   border: 1px solid #fff;
   background: transparent;
 
+  @media (hover: hover) {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
   .burgerLine {
     position: relative;
     display: inline-block;
@@ -86,6 +92,16 @@
       letter-spacing: 0.8px;
       border: 0;
       border-radius: 5px;
+      transition: background-color 0.4s;
+
+      &:hover {
+        cursor: pointer;
+        background-color: #ddd6d6;
+      }
+
+      &:focus {
+        outline: 0;
+      }
     }
   }
 }

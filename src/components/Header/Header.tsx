@@ -29,7 +29,10 @@ export default function Header() {
 
     setScreenWidth(window.innerWidth);
 
-    return () => window.removeEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   const handleScroll = () => {
@@ -56,13 +59,16 @@ export default function Header() {
             <button className={classNames(styles.signOutBtn, styles.headerBtn)}>Sign Out</button>
           ) : (
             <>
-              <button className={classNames(styles.signUpBtn, styles.headerBtn)}>Sign Up</button>
               <button className={classNames(styles.signInBtn, styles.headerBtn)}>Sign In</button>
             </>
           )}
           <select defaultValue="En" onChange={handleChange} className={styles.langSelect}>
-            <option value="En">En</option>
-            <option value="Рус">Рус</option>
+            <option className={styles.option} value="En">
+              En
+            </option>
+            <option className={styles.option} value="Рус">
+              Рус
+            </option>
           </select>
         </div>
       )}

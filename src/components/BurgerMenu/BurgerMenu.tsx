@@ -32,14 +32,9 @@ export default function BurgerMenu() {
               Sign Out
             </Link>
           ) : (
-            <>
-              <Link className={styles.navLink} href="/sign-up">
-                Sign Up
-              </Link>
-              <Link className={styles.navLink} href="/sign-in">
-                Sign In
-              </Link>
-            </>
+            <Link className={styles.navLink} href="/sign-in">
+              Sign In
+            </Link>
           )}
           <select defaultValue="En" onChange={handleChange} className={styles.langSelect}>
             <option value="En">En</option>
