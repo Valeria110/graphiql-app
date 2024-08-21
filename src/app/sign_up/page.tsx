@@ -4,6 +4,9 @@ import { Box, Button, FormControl, TextField } from '@mui/material';
 import { useId } from 'react';
 import { useForm } from 'react-hook-form';
 import { schemaSignUp, valuesSignUp } from '../validation/schemas';
+import { registerWithEmailAndPassword } from '@/authService';
+import { auth } from '@/firebase';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 // TODO: mix ", '
 // TODO: Show all problem with password together
@@ -11,6 +14,7 @@ import { schemaSignUp, valuesSignUp } from '../validation/schemas';
 // TODO: eyes for password
 
 export default function SignUp() {
+  const [user, loading] = useAuthState(auth);
   const idEmail = useId();
   const idPassword = useId();
 
@@ -20,9 +24,15 @@ export default function SignUp() {
   });
   const { errors, isValid, isDirty } = formState;
 
-  const onSubmit = (data: valuesSignUp) => {
-    console.log(data);
+  const onSubmit = async (data: valuesSignUp) => {
+    registerWithEmailAndPassword('Mikhail', data.email, data.password);
   };
+  console.log(`user = ${user}, loading = ${loading}`);
+  console.log(user);
+
+  if (user !== undefined) {
+    console.log('should redirect');
+  }
 
   return (
     <Box
