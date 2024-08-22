@@ -6,9 +6,14 @@ import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
 import { useRouter } from 'next/navigation';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '@/firebase';
+import { logOutUser } from '@/authService';
 
 export default function Header() {
-  const isUserSignedIn = false; //Here will be the check whether a user is signed in
+  const [user] = useAuthState(auth);
+  const isUserSignedIn = Boolean(user); //Here will be the check whether a user is signed in
+
   const [isSticky, setIsSticky] = useState<boolean>(false);
   const [screenWidth, setScreenWidth] = useState(0);
   const headerClassName = isSticky ? classNames(styles.header, styles.isSticky) : styles.header;
@@ -46,6 +51,14 @@ export default function Header() {
     }
   };
 
+  const handleSignIn = () => {
+    router.push('/sign_in');
+  };
+
+  const handleSignOut = () => {
+    logOutUser();
+  };
+
   return (
     <div className={headerClassName}>
       <button onClick={() => router.push('/')} className={styles.homeBtn}>
@@ -56,10 +69,14 @@ export default function Header() {
       ) : (
         <div className={styles.rightBtnsWrapper}>
           {isUserSignedIn ? (
-            <button className={classNames(styles.signOutBtn, styles.headerBtn)}>Sign Out</button>
+            <button className={classNames(styles.signOutBtn, styles.headerBtn)} onClick={handleSignOut}>
+              Sign Out
+            </button>
           ) : (
             <>
-              <button className={classNames(styles.signInBtn, styles.headerBtn)}>Sign In</button>
+              <button className={classNames(styles.signInBtn, styles.headerBtn)} onClick={handleSignIn}>
+                Sign In
+              </button>
             </>
           )}
           <select defaultValue="En" onChange={handleChange} className={styles.langSelect}>

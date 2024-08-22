@@ -37,3 +37,6 @@ next-env.d.ts
 
 # github
 .github
+
+.env
+.vscode/launch.json
