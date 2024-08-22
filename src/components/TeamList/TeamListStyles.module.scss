@@ -1,0 +1,59 @@
+@use '../../styles/globals.scss' as *;
+
+.team-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  gap: 40px;
+}
+
+.member-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: $blue-primary;
+  padding: 20px;
+  border-radius: 5px;
+  gap: 20px;
+  width: 20vw;
+  box-sizing: border-box;
+  height: fit-content;
+  min-height: 900px;
+  justify-content: space-between;
+  transition: 0.6s;
+
+  &:hover {
+    scale: 1.04;
+  }
+
+  &__img {
+    border-radius: 5px;
+    width: 250px;
+    height: 250px;
+  }
+
+  &__info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+
+.accordions-container {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+  font-family: 'Poppins', sans-serif !important;
+
+  &__link {
+    color: $light-blue-200;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+  }
+}

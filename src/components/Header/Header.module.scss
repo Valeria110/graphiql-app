@@ -1,7 +1,7 @@
 @use '../../styles/globals.scss' as *;
 
 .header {
-  position: absolute;
+  position: sticky;
   top: 0;
   left: 0;
   right: 0;
@@ -12,6 +12,7 @@
   height: 100px;
   background-color: $bgc-dark-blue;
   padding: 10px 20px;
+  z-index: 99;
 
   .homeBtn {
     width: 50px;

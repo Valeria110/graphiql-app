@@ -8,6 +8,7 @@ import Image from 'next/image';
 import { logInWithEmailAndPassword } from '@/authService';
 import { customUserName } from '@/utils/customNameUser';
 import Link from 'next/link';
+import { TeamList } from '@/components/TeamList/TeamList';
 
 function WelcomePage() {
   const [user, loading] = useAuthState(auth);
@@ -50,16 +51,39 @@ function WelcomePage() {
             </div>
           ) : (
             <div className={welcomePageStyles['section-welcome__navigate-buttons']}>
-              <Link className={welcomePageStyles['section-welcome__navigate-button']} href={'/sign_in'}>Sign In</Link>
-              <Link className={welcomePageStyles['section-welcome__navigate-button']} href={'/sign_up'}>Sign Up</Link>
+              <Link className={welcomePageStyles['section-welcome__navigate-button']} href={'/sign_in'}>
+                Sign In
+              </Link>
+              <Link className={welcomePageStyles['section-welcome__navigate-button']} href={'/sign_up'}>
+                Sign Up
+              </Link>
             </div>
           )}
         </div>
         <div className={welcomePageStyles['section-welcome__logos-container']}>
-          <Image src={restLogo} alt="rss logo" width={230} height={170} priority />
+          <Image
+            className={welcomePageStyles['section-welcome__img']}
+            src={restLogo}
+            alt="logo"
+            width={230}
+            height={170}
+            priority
+          />
           +
-          <Image src={graphQLLogo} alt="rss logo" width={200} height={200} priority />
+          <Image
+            className={welcomePageStyles['section-welcome__img']}
+            src={graphQLLogo}
+            alt="logo"
+            width={200}
+            height={220}
+            priority
+          />
         </div>
+      </section>
+      <section className={welcomePageStyles['section-team']}>
+        <h2 className={welcomePageStyles['section-team__title']}>Our team</h2>
+        <h3 className={welcomePageStyles['section-team__subtitle']}>Jumping Skunk</h3>
+        <TeamList />
       </section>
     </div>
   );
