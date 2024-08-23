@@ -1,7 +1,7 @@
 'use client';
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
 import { useLocale } from 'next-intl';
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useId, useTransition } from 'react';
 
 export default function LocaleSwitcher() {
@@ -9,12 +9,14 @@ export default function LocaleSwitcher() {
   const id = useId();
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+  const pathname = usePathname();
 
   const handleChange = (event: SelectChangeEvent<string>) => {
     const selectedLanguage = event.target.value;
-    console.log('Selected Language:', selectedLanguage);
+    const newPathname = pathname.replace(`/${localActive}`, `/${selectedLanguage}`);
+
     startTransition(() => {
-      router.replace(`/${selectedLanguage}`);
+      router.replace(newPathname);
     });
   };
 
