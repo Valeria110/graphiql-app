@@ -6,7 +6,6 @@ import restLogo from '../../assets/rest-api-logo.png';
 import graphQLLogo from '../../assets/graphQL-logo.png';
 import rssLogo from '../../assets/svg/rs-school.svg';
 import Image from 'next/image';
-import { logInWithEmailAndPassword } from '@/authService';
 import { customUserName } from '@/utils/customNameUser';
 import Link from 'next/link';
 import { TeamList } from '@/components/TeamList/TeamList';
@@ -26,15 +25,8 @@ function WelcomePage() {
     return <div>Loading</div>;
   }
 
-  const onClickLogin = async () => {
-    logInWithEmailAndPassword('test@gmail.com', '3cFj49D63@');
-  };
-
-  console.log(user);
-
   return (
     <div className={welcomePageStyles['welcome-page']}>
-      <button onClick={onClickLogin}>Login</button>
       <section className={welcomePageStyles['section-welcome']}>
         <div className={welcomePageStyles['section-welcome__info-container']}>
           <h2 className={welcomePageStyles['section-welcome__title']}>
