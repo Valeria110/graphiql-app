@@ -128,14 +128,21 @@ function WelcomePage() {
               className={welcomePageStyles['section-course__description-text']}
             >{`RS School's React course is a great opportunity for developers to deepen their knowledge and skills by creating modern web applications using one of the most in-demand tools on the market.`}</div>
           </div>
-          <Image
-            className={welcomePageStyles['section-course__logo']}
-            src={rssLogo}
-            alt="rss-logo"
-            width={200}
-            height={220}
-            priority
-          />
+          <a
+            className={welcomePageStyles['section-course__link']}
+            href="https://rs.school/courses/reactjs"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Image
+              className={welcomePageStyles['section-course__logo']}
+              src={rssLogo}
+              alt="rss-logo"
+              width={200}
+              height={220}
+              priority
+            />
+          </a>
         </div>
       </section>
     </div>
