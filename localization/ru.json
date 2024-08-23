@@ -5,7 +5,7 @@
   "AuthPages": {
     "labelEmail": "Email",
     "labelPassword": "Пароль",
-    "btnSignUp": "Зарегестироваться",
+    "btnSignUp": "Регистрация",
     "btnSignIn": "Войти",
     "btnSignOut": "Выйти"
   }

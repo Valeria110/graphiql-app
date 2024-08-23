@@ -80,7 +80,12 @@ export default function Header() {
               <Button variant="contained" color="primary" onClick={handleSignIn}>
                 {t('btnSignIn')}
               </Button>
-              <Button variant="contained" color="secondary" onClick={handleSignUp}>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleSignUp}
+                sx={{ whiteSpace: 'nowrap', paddingX: 4 }}
+              >
                 {t('btnSignUp')}
               </Button>
             </>
