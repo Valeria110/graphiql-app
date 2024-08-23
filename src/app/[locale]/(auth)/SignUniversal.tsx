@@ -72,7 +72,11 @@ export default function SignUniversal({ mode }: SignUniversalProps) {
     <Box
       sx={{
         maxWidth: 600,
-        width: '50%',
+        width: {
+          xs: '100%',
+          sm: '100%',
+          md: '50%',
+        },
         margin: '0 auto',
         padding: 2,
         marginTop: 20,
