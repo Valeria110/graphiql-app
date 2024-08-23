@@ -3,31 +3,20 @@ import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } f
 import { addDoc, collection } from 'firebase/firestore';
 
 export const logInWithEmailAndPassword = async (email: string, password: string) => {
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-    return true;
-  } catch (err) {
-    console.error(err); // TODO: нужно доделать обработку ошибок на странице регистрации и логина
-    return false;
-  }
+  await signInWithEmailAndPassword(auth, email, password);
 };
 
 export const registerWithEmailAndPassword = async (name: string, email: string, password: string) => {
-  try {
-    const res = await createUserWithEmailAndPassword(auth, email, password);
-    const user = res.user;
+  const res = await createUserWithEmailAndPassword(auth, email, password);
+  const user = res.user;
 
-    await addDoc(collection(db, 'users'), {
-      uid: user.uid,
-      name,
-      authProvider: 'local',
-      email,
-    });
-    return true;
-  } catch (err) {
-    console.error(err);
-    return false;
-  }
+  await addDoc(collection(db, 'users'), {
+    uid: user.uid,
+    name,
+    authProvider: 'local',
+    email,
+  });
+  return true;
 };
 
 export const registerWithEmailAndPasswordShort = async (email: string, password: string) => {

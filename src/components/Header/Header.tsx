@@ -81,7 +81,7 @@ export default function Header() {
                 {t('btnSignIn')}
               </Button>
               <Button variant="contained" color="secondary" onClick={handleSignUp}>
-                {t('btnSignOut')}
+                {t('btnSignUp')}
               </Button>
             </>
           )}

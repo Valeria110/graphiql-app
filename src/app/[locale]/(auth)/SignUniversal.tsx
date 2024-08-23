@@ -21,8 +21,10 @@ export default function SignUniversal({ mode }: SignUniversalProps) {
   });
 
   const [user] = useAuthState(auth);
-  const [messageAuthError, setMessageAuthError] = useState('');
-  const isMessageAuthError = messageAuthError !== '';
+  const [messageAuthErrorMail, setMessageAuthErrorMail] = useState('');
+  const [messageAuthErrorPassword, setMessageAuthPassword] = useState('');
+  const isMessageAuthErrorMail = messageAuthErrorMail !== '';
+  const isMessageAuthErrorPassword = messageAuthErrorPassword !== '';
   const idEmail = useId();
   const idPassword = useId();
   const router = useRouter();
@@ -35,14 +37,24 @@ export default function SignUniversal({ mode }: SignUniversalProps) {
   const { errors, isValid, isDirty } = formState;
 
   const onSubmit = async (data: valuesSignUp) => {
-    let success = false;
-
-    if (mode === 'signIn') {
-      success = await logInWithEmailAndPassword(data.email, data.password);
-    } else if (mode === 'signUp') {
-      success = await registerWithEmailAndPasswordShort(data.email, data.password);
+    setMessageAuthErrorMail('');
+    setMessageAuthPassword('');
+    try {
+      if (mode === 'signIn') {
+        await logInWithEmailAndPassword(data.email, data.password);
+      } else if (mode === 'signUp') {
+        await registerWithEmailAndPasswordShort(data.email, data.password);
+      }
+    } catch (error: unknown) {
+      if (error && typeof error === 'object' && 'code' in error) {
+        if (error.code === 'auth/email-already-in-use') {
+          setMessageAuthErrorMail('This email already in use');
+        } else {
+          setMessageAuthErrorMail('Invalid credentials');
+          setMessageAuthPassword('Invalid credentials');
+        }
+      }
     }
-    setMessageAuthError(success ? '' : 'Invalid credentials');
   };
 
   useEffect(() => {
@@ -52,7 +64,8 @@ export default function SignUniversal({ mode }: SignUniversalProps) {
   }, [user, router, localActive]);
 
   useEffect(() => {
-    setMessageAuthError('');
+    setMessageAuthErrorMail('');
+    setMessageAuthPassword('');
   }, [watchPassword, watchEmail]);
 
   return (
@@ -74,8 +87,8 @@ export default function SignUniversal({ mode }: SignUniversalProps) {
             {...register('email')}
             required
             sx={{ marginBottom: 2 }}
-            error={!!errors.email || isMessageAuthError}
-            helperText={errors.email?.message ?? messageAuthError ?? ''}
+            error={!!errors.email || isMessageAuthErrorMail}
+            helperText={errors.email?.message ?? messageAuthErrorMail ?? ''}
           />
         </FormControl>
 
@@ -88,12 +101,17 @@ export default function SignUniversal({ mode }: SignUniversalProps) {
             {...register('password')}
             required
             sx={{ marginBottom: 2 }}
-            error={!!errors.password || isMessageAuthError}
-            helperText={errors.password?.message ?? messageAuthError ?? ''}
+            error={!!errors.password || isMessageAuthErrorPassword}
+            helperText={errors.password?.message ?? messageAuthErrorPassword ?? ''}
           />
         </FormControl>
 
-        <Button type="submit" variant="contained" color="primary" disabled={!isValid || !isDirty || isMessageAuthError}>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          disabled={!isValid || !isDirty || isMessageAuthErrorMail || isMessageAuthErrorPassword}
+        >
           {mode === 'signIn' ? t('btnSignIn') : t('btnSignUp')}
         </Button>
       </form>
