@@ -12,14 +12,11 @@ import Link from 'next/link';
 import { TeamList } from '@/components/TeamList/TeamList';
 
 const courseDescription = [
-  'Main features of the course:',
   '1. Deep learning of React',
   '2. Project-oriented approach',
   '3. Mentoring and code review',
   '4. Support for modern tools',
   '5. Community and Career Opportunities',
-  '',
-  "RS School's React course is a great opportunity for developers to deepen their knowledge and skills by creating modern web applications using one of the most in-demand tools on the market.",
 ];
 
 function WelcomePage() {
@@ -92,6 +89,22 @@ function WelcomePage() {
           />
         </div>
       </section>
+      <section className={welcomePageStyles['section-project']}>
+        <h2 className={welcomePageStyles['section-project__title']}>Our Project</h2>
+        <div className={welcomePageStyles['section-project__description']}>
+          <p
+            className={welcomePageStyles['section-project__subtitle']}
+          >{`Our tool offers a streamlined interface that simplifies your workflow:`}</p>
+          <ul className={welcomePageStyles['section-project__list']}>
+            <li>{`Test endpoints effortlessly.`}</li>
+            <li>{`Analyze responses quickly.`}</li>
+            <li>{`Manage API requests with ease.`}</li>
+            <li>{`Switch seamlessly between REST and GraphQL.`}</li>
+            <li>{`Customize your requests and view responses in real-time.`}</li>
+          </ul>
+          <p>{`It's a one-stop solution for API development and testing, designed to make your work faster, easier, and more productive. Dive in and explore how our tool can transform your API interactions, making them smoother and more efficient than ever before.`}</p>
+        </div>
+      </section>
       <section className={welcomePageStyles['section-team']}>
         <h2 className={welcomePageStyles['section-team__title']}>Our Team</h2>
         <h3 className={welcomePageStyles['section-team__subtitle']}>Jumping Skunk</h3>
@@ -103,14 +116,18 @@ function WelcomePage() {
           className={welcomePageStyles['section-course__subtitle']}
         >{`RS School's React course is an advanced educational program aimed at developers who want to master React and become professional front-end developers. `}</h3>
         <div className={welcomePageStyles['section-course__description-container']}>
-          <p className={welcomePageStyles['section-course__description']}>
+          <div className={welcomePageStyles['section-course__description']}>
+            <div className={welcomePageStyles['section-course__description-title']}>Main features of the course:</div>
             {courseDescription.map((line, index) => (
               <div key={index}>
                 {line}
                 <br />
               </div>
             ))}
-          </p>
+            <div
+              className={welcomePageStyles['section-course__description-text']}
+            >{`RS School's React course is a great opportunity for developers to deepen their knowledge and skills by creating modern web applications using one of the most in-demand tools on the market.`}</div>
+          </div>
           <Image
             className={welcomePageStyles['section-course__logo']}
             src={rssLogo}
