@@ -1,4 +1,4 @@
-1. Task: [link](https://github.com/)
+1. Task: [link](https://github.com/rolling-scopes-school/tasks/blob/master/react/modules/tasks/final.md)
 2. Screenshot:
 3. Deploy: [link](https://github.com/)
 4. Done 01.08.2024 / deadline 16.09.2024
