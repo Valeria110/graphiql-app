@@ -9,20 +9,19 @@ import { useRouter } from 'next/navigation';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/firebase';
 import { logOutUser } from '@/authService';
+import LocaleSwitcher from '../LocaleSwitcher/LocaleSwitcher';
+import { Button } from '@mui/material';
+import { useLocale, useTranslations } from 'next-intl';
 
 export default function Header() {
   const [user] = useAuthState(auth);
-  const isUserSignedIn = Boolean(user); //Here will be the check whether a user is signed in
-
+  const isUserSignedIn = Boolean(user);
   const [isSticky, setIsSticky] = useState<boolean>(false);
   const [screenWidth, setScreenWidth] = useState(0);
   const headerClassName = isSticky ? classNames(styles.header, styles.isSticky) : styles.header;
   const router = useRouter();
-
-  const handleChange = () => {
-    //To be done:
-    //change the language in the whole application
-  };
+  const t = useTranslations('AuthPages');
+  const localActive = useLocale();
 
   useEffect(() => {
     const handleResize = () => {
@@ -52,7 +51,11 @@ export default function Header() {
   };
 
   const handleSignIn = () => {
-    router.push('/sign_in');
+    router.replace(`/${localActive}/sign_in`);
+  };
+
+  const handleSignUp = () => {
+    router.replace(`/${localActive}/sign_up`);
   };
 
   const handleSignOut = () => {
@@ -69,24 +72,25 @@ export default function Header() {
       ) : (
         <div className={styles.rightBtnsWrapper}>
           {isUserSignedIn ? (
-            <button className={classNames(styles.signOutBtn, styles.headerBtn)} onClick={handleSignOut}>
-              Sign Out
-            </button>
+            <Button variant="contained" color="secondary" onClick={handleSignOut}>
+              {t('btnSignOut')}
+            </Button>
           ) : (
             <>
-              <button className={classNames(styles.signInBtn, styles.headerBtn)} onClick={handleSignIn}>
-                Sign In
-              </button>
+              <Button variant="contained" color="primary" onClick={handleSignIn}>
+                {t('btnSignIn')}
+              </Button>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleSignUp}
+                sx={{ whiteSpace: 'nowrap', paddingX: 4 }}
+              >
+                {t('btnSignUp')}
+              </Button>
             </>
           )}
-          <select defaultValue="En" onChange={handleChange} className={styles.langSelect}>
-            <option className={styles.option} value="En">
-              En
-            </option>
-            <option className={styles.option} value="Рус">
-              Рус
-            </option>
-          </select>
+          <LocaleSwitcher />
         </div>
       )}
     </div>

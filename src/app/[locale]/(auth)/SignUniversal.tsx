@@ -8,6 +8,7 @@ import { auth } from '@/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { schemaSignUp, valuesSignUp } from '@/validation/schemas';
 import { useRouter } from 'next/navigation';
+import { useLocale, useTranslations } from 'next-intl';
 
 interface SignUniversalProps {
   mode: 'signIn' | 'signUp';
@@ -20,42 +21,62 @@ export default function SignUniversal({ mode }: SignUniversalProps) {
   });
 
   const [user] = useAuthState(auth);
-  const [messageAuthError, setMessageAuthError] = useState('');
-  const isMessageAuthError = messageAuthError !== '';
+  const [messageAuthErrorMail, setMessageAuthErrorMail] = useState('');
+  const [messageAuthErrorPassword, setMessageAuthPassword] = useState('');
+  const isMessageAuthErrorMail = messageAuthErrorMail !== '';
+  const isMessageAuthErrorPassword = messageAuthErrorPassword !== '';
   const idEmail = useId();
   const idPassword = useId();
   const router = useRouter();
   const watchPassword = useWatch({ control, name: 'password' });
   const watchEmail = useWatch({ control, name: 'email' });
+  const localActive = useLocale();
+
+  const t = useTranslations('AuthPages');
 
   const { errors, isValid, isDirty } = formState;
 
   const onSubmit = async (data: valuesSignUp) => {
-    let success = false;
-
-    if (mode === 'signIn') {
-      success = await logInWithEmailAndPassword(data.email, data.password);
-    } else if (mode === 'signUp') {
-      success = await registerWithEmailAndPasswordShort(data.email, data.password);
+    setMessageAuthErrorMail('');
+    setMessageAuthPassword('');
+    try {
+      if (mode === 'signIn') {
+        await logInWithEmailAndPassword(data.email, data.password);
+      } else if (mode === 'signUp') {
+        await registerWithEmailAndPasswordShort(data.email, data.password);
+      }
+    } catch (error: unknown) {
+      if (error && typeof error === 'object' && 'code' in error) {
+        if (error.code === 'auth/email-already-in-use') {
+          setMessageAuthErrorMail('This email already in use');
+        } else {
+          setMessageAuthErrorMail('Invalid credentials');
+          setMessageAuthPassword('Invalid credentials');
+        }
+      }
     }
-    setMessageAuthError(success ? '' : 'Invalid credentials');
   };
 
   useEffect(() => {
-    if (user) {
-      router.push('/');
+    if (user && localActive) {
+      router.push(`/${localActive}`);
     }
-  }, [user, router]);
+  }, [user, router, localActive]);
 
   useEffect(() => {
-    setMessageAuthError('');
+    setMessageAuthErrorMail('');
+    setMessageAuthPassword('');
   }, [watchPassword, watchEmail]);
 
   return (
     <Box
       sx={{
         maxWidth: 600,
-        width: '50%',
+        width: {
+          xs: '100%',
+          sm: '100%',
+          md: '50%',
+        },
         margin: '0 auto',
         padding: 2,
         marginTop: 20,
@@ -65,32 +86,37 @@ export default function SignUniversal({ mode }: SignUniversalProps) {
         <FormControl fullWidth margin="normal" error={!!errors.email}>
           <TextField
             id={idEmail}
-            label="Email"
+            label={t('labelEmail')}
             variant="outlined"
             {...register('email')}
             required
             sx={{ marginBottom: 2 }}
-            error={!!errors.email || isMessageAuthError}
-            helperText={errors.email?.message ?? messageAuthError ?? ''}
+            error={!!errors.email || isMessageAuthErrorMail}
+            helperText={errors.email?.message ?? messageAuthErrorMail ?? ''}
           />
         </FormControl>
 
         <FormControl fullWidth margin="normal" error={!!errors.password}>
           <TextField
             id={idPassword}
-            label="Password"
+            label={t('labelPassword')}
             variant="outlined"
             type="password"
             {...register('password')}
             required
             sx={{ marginBottom: 2 }}
-            error={!!errors.password || isMessageAuthError}
-            helperText={errors.password?.message ?? messageAuthError ?? ''}
+            error={!!errors.password || isMessageAuthErrorPassword}
+            helperText={errors.password?.message ?? messageAuthErrorPassword ?? ''}
           />
         </FormControl>
 
-        <Button type="submit" variant="contained" color="primary" disabled={!isValid || !isDirty || isMessageAuthError}>
-          {mode === 'signIn' ? 'Sign in' : 'Sign up'}
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          disabled={!isValid || !isDirty || isMessageAuthErrorMail || isMessageAuthErrorPassword}
+        >
+          {mode === 'signIn' ? t('btnSignIn') : t('btnSignUp')}
         </Button>
       </form>
     </Box>

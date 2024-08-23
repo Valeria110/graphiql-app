@@ -1,0 +1,12 @@
+{
+  "HomePage": {
+    "title": "Hi, ru"
+  },
+  "AuthPages": {
+    "labelEmail": "Email",
+    "labelPassword": "Пароль",
+    "btnSignUp": "Регистрация",
+    "btnSignIn": "Войти",
+    "btnSignOut": "Выйти"
+  }
+}
