@@ -1,5 +1,11 @@
 {
   "HomePage": {
-    "title": "Hello world!"
+    "title": "He, en!"
+  },
+  "AuthPages": {
+    "labelEmail": "Email",
+    "labelPassword": "Password",
+    "btnSignUp": "Sign up",
+    "btnSignIn": "Sign in"
   }
 }

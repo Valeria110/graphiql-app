@@ -8,6 +8,7 @@ import { auth } from '@/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { schemaSignUp, valuesSignUp } from '@/validation/schemas';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 
 interface SignUniversalProps {
   mode: 'signIn' | 'signUp';
@@ -27,6 +28,8 @@ export default function SignUniversal({ mode }: SignUniversalProps) {
   const router = useRouter();
   const watchPassword = useWatch({ control, name: 'password' });
   const watchEmail = useWatch({ control, name: 'email' });
+
+  const t = useTranslations('AuthPages');
 
   const { errors, isValid, isDirty } = formState;
 
@@ -65,7 +68,7 @@ export default function SignUniversal({ mode }: SignUniversalProps) {
         <FormControl fullWidth margin="normal" error={!!errors.email}>
           <TextField
             id={idEmail}
-            label="Email"
+            label={t('labelEmail')}
             variant="outlined"
             {...register('email')}
             required
@@ -78,7 +81,7 @@ export default function SignUniversal({ mode }: SignUniversalProps) {
         <FormControl fullWidth margin="normal" error={!!errors.password}>
           <TextField
             id={idPassword}
-            label="Password"
+            label={t('labelPassword')}
             variant="outlined"
             type="password"
             {...register('password')}
@@ -90,7 +93,7 @@ export default function SignUniversal({ mode }: SignUniversalProps) {
         </FormControl>
 
         <Button type="submit" variant="contained" color="primary" disabled={!isValid || !isDirty || isMessageAuthError}>
-          {mode === 'signIn' ? 'Sign in' : 'Sign up'}
+          {mode === 'signIn' ? t('btnSignIn') : t('btnSignUp')}
         </Button>
       </form>
     </Box>

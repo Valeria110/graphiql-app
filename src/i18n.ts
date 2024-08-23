@@ -10,7 +10,24 @@ export default getRequestConfig(async ({ locale }) => {
     notFound();
   }
 
+  const defaultLocalization = (await import(`../localization/en.json`)).default;
+  let localeLocalization = {};
+
+  if (locale !== 'en') {
+    try {
+      localeLocalization = (await import(`../localization/${locale}.json`)).default;
+    } catch (error) {
+      console.warn(`Could not load messages for locale: ${locale}`, error);
+    }
+  }
+
+  // Mix localization if we don't have all keys
+  const messages = {
+    ...defaultLocalization,
+    ...localeLocalization,
+  };
+
   return {
-    messages: (await import(`../localization/${locale}.json`)).default,
+    messages,
   };
 });
