@@ -5,7 +5,8 @@
   "AuthPages": {
     "labelEmail": "Email",
     "labelPassword": "Password",
-    "btnSignUp": "Sign up",
-    "btnSignIn": "Sign in"
+    "btnSignUp": "Sign\u00A0up",
+    "btnSignIn": "Sign\u00A0in",
+    "btnSignOut": "Sign\u00A0out"
   }
 }

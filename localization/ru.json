@@ -6,6 +6,7 @@
     "labelEmail": "Email",
     "labelPassword": "Пароль",
     "btnSignUp": "Зарегестироваться",
-    "btnSignIn": "Войти"
+    "btnSignIn": "Войти",
+    "btnSignOut": "Выйти"
   }
 }

@@ -8,7 +8,7 @@ import { auth } from '@/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { schemaSignUp, valuesSignUp } from '@/validation/schemas';
 import { useRouter } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 
 interface SignUniversalProps {
   mode: 'signIn' | 'signUp';
@@ -28,6 +28,7 @@ export default function SignUniversal({ mode }: SignUniversalProps) {
   const router = useRouter();
   const watchPassword = useWatch({ control, name: 'password' });
   const watchEmail = useWatch({ control, name: 'email' });
+  const localActive = useLocale();
 
   const t = useTranslations('AuthPages');
 
@@ -45,10 +46,10 @@ export default function SignUniversal({ mode }: SignUniversalProps) {
   };
 
   useEffect(() => {
-    if (user) {
-      router.push('/');
+    if (user && localActive) {
+      router.push(`/${localActive}`);
     }
-  }, [user, router]);
+  }, [user, router, localActive]);
 
   useEffect(() => {
     setMessageAuthError('');
