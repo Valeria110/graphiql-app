@@ -2,13 +2,14 @@
 import { auth } from '@/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import welcomePageStyles from './welcomePageStyles.module.scss';
-import restLogo from '../../assets/rest-api-logo.png';
-import graphQLLogo from '../../assets/graphQL-logo.png';
-import rssLogo from '../../assets/svg/rs-school.svg';
+import restLogo from '../../../assets/rest-api-logo.png';
+import graphQLLogo from '../../../assets/graphQL-logo.png';
+import rssLogo from '../../../assets/svg/rs-school.svg';
 import Image from 'next/image';
 import { customUserName } from '@/utils/customNameUser';
 import Link from 'next/link';
 import { TeamList } from '@/components/TeamList/TeamList';
+import { useLocale } from 'next-intl';
 
 const courseDescription = [
   '1. Deep learning of React',
@@ -20,6 +21,7 @@ const courseDescription = [
 
 function WelcomePage() {
   const [user, loading] = useAuthState(auth);
+  const localActive = useLocale();
 
   if (loading) {
     return <div>Loading</div>;
@@ -52,10 +54,10 @@ function WelcomePage() {
             </div>
           ) : (
             <div className={welcomePageStyles['section-welcome__navigate-buttons']}>
-              <Link className={welcomePageStyles['section-welcome__navigate-button']} href={'/sign_in'}>
+              <Link className={welcomePageStyles['section-welcome__navigate-button']} href={`/${localActive}/sign_in`}>
                 Sign In
               </Link>
-              <Link className={welcomePageStyles['section-welcome__navigate-button']} href={'/sign_up'}>
+              <Link className={welcomePageStyles['section-welcome__navigate-button']} href={`/${localActive}/sign_up`}>
                 Sign Up
               </Link>
             </div>

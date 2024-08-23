@@ -20,7 +20,10 @@ export default function RootLayout({
       </head>
       <body className={poppins.className}>
         <CustomThemeProvider>
-          <ErrorBoundary>{children}<ClientRedirect /></ErrorBoundary>
+          <ErrorBoundary>
+            {children}
+            <ClientRedirect />
+          </ErrorBoundary>
         </CustomThemeProvider>
       </body>
     </html>

@@ -1,10 +1,13 @@
 import { auth } from '@/firebase';
 import { onAuthStateChanged } from 'firebase/auth';
+import { useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 
 const ClientRedirect = () => {
   const router = useRouter();
+  const localActive = useLocale();
+
   const [wasAuthenticated, setWasAuthenticated] = useState(false);
 
   useEffect(() => {
@@ -15,12 +18,12 @@ const ClientRedirect = () => {
       }
 
       if (wasAuthenticated) {
-        router.push('/welcome');
+        router.push(`/${localActive}/welcome`);
       }
     });
 
     return () => unsubscribe();
-  }, [router, wasAuthenticated]);
+  }, [localActive, router, wasAuthenticated]);
 
   return null;
 };

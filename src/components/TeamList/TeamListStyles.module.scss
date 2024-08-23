@@ -13,7 +13,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: $blue-primary;
+  background-color: #1769aa;
   padding: 20px;
   border-radius: 5px;
   gap: 20px;
@@ -24,9 +24,13 @@
   justify-content: space-between;
   transition: 0.6s;
 
+  p {
+    margin: 0;
+  }
+
   @media (max-width: 1650px) {
     width: 30%;
-    min-height: 1000px;
+    min-height: 900px;
   }
 
   @media (max-width: 1200px) {
