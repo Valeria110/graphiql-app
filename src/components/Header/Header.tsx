@@ -9,6 +9,7 @@ import { useRouter } from 'next/navigation';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/firebase';
 import { logOutUser } from '@/authService';
+import LocaleSwitcher from '../LocaleSwitcher/LocaleSwitcher';
 
 export default function Header() {
   const [user] = useAuthState(auth);
@@ -18,11 +19,6 @@ export default function Header() {
   const [screenWidth, setScreenWidth] = useState(0);
   const headerClassName = isSticky ? classNames(styles.header, styles.isSticky) : styles.header;
   const router = useRouter();
-
-  const handleChange = () => {
-    //To be done:
-    //change the language in the whole application
-  };
 
   useEffect(() => {
     const handleResize = () => {
@@ -79,14 +75,7 @@ export default function Header() {
               </button>
             </>
           )}
-          <select defaultValue="En" onChange={handleChange} className={styles.langSelect}>
-            <option className={styles.option} value="En">
-              En
-            </option>
-            <option className={styles.option} value="Рус">
-              Рус
-            </option>
-          </select>
+          <LocaleSwitcher />
         </div>
       )}
     </div>
