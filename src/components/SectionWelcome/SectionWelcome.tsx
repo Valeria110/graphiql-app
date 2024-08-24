@@ -41,10 +41,16 @@ export default function SectionWelcome({ t }: SectionsProps) {
           </div>
         ) : (
           <div className={sectionWelcomeStyles['section-welcome__navigate-buttons']}>
-            <Link className={sectionWelcomeStyles['section-welcome__navigate-button']} href={`/${localActive}/sign_in`}>
+            <Link
+              className={sectionWelcomeStyles['section-welcome__navigate-button']}
+              href={`/${localActive}/${PagesRoutes.SignIn}`}
+            >
               {t('sectionWelcomebtnSignIn')}
             </Link>
-            <Link className={sectionWelcomeStyles['section-welcome__navigate-button']} href={`/${localActive}/sign_up`}>
+            <Link
+              className={sectionWelcomeStyles['section-welcome__navigate-button']}
+              href={`/${localActive}/${PagesRoutes.SignUp}`}
+            >
               {t('sectionWelcomebtnSignUp')}
             </Link>
           </div>
