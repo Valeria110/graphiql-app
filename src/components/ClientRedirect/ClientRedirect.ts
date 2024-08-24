@@ -18,7 +18,7 @@ const ClientRedirect = () => {
       }
 
       if (wasAuthenticated) {
-        router.push(`/${localActive}/welcome`);
+        router.push(`/${localActive}/`);
       }
     });
 
