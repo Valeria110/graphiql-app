@@ -1,0 +1,24 @@
+@use '../../../styles/globals.scss' as *;
+
+.main {
+  padding: 20px;
+  margin-bottom: 50px;
+
+  .header {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 20px;
+    margin-right: 100px;
+
+    span {
+      &:nth-child(1) {
+        color: $secondary-blue-500;
+        font-weight: bold;
+      }
+
+      &:nth-child(2) {
+        font-weight: normal;
+      }
+    }
+  }
+}

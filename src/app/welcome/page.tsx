@@ -18,8 +18,6 @@ function WelcomePage() {
     return <div>Loading</div>;
   }
 
-  console.log(user);
-
   return (
     <>
       <div>Hello {user?.email || ''}</div>
