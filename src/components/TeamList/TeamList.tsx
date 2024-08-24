@@ -98,7 +98,7 @@ function MemberAccordion({ title, items }: MemberAccordionProps) {
   return (
     <div>
       <Accordion
-        sx={{ backgroundColor: '#0D47A1', color: '#d4edff', borderRadius: '5px', fontFamily: "'Poppins', sans-serif" }}
+        sx={{ backgroundColor: '#021e40', color: '#d4edff', borderRadius: '5px', fontFamily: "'Poppins', sans-serif" }}
         expanded={expanded}
         onChange={handleChange}
       >

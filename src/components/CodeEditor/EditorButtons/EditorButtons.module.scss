@@ -7,6 +7,10 @@
   margin-left: 10px;
   margin-right: 10px;
 
+  @media screen and (max-width: $sm) {
+    flex-direction: row;
+  }
+
   .btn {
     background: transparent;
     border: 0;

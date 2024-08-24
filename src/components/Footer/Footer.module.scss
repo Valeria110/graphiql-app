@@ -16,7 +16,7 @@
     align-items: center;
     gap: 25px;
 
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: $md) {
       flex-direction: column;
       gap: 10px;
     }
