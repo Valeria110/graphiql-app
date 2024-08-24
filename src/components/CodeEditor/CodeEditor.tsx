@@ -2,10 +2,10 @@
 
 import styles from './CodeEditor.module.scss';
 import { useAppSelector } from '@/hooks/storeHooks';
-import { Editor } from '@monaco-editor/react';
 import { useEffect, useState } from 'react';
 import EditorButtons from './EditorButtons/EditorButtons';
 import { CodeEditorLanguage } from '@/types/types';
+import { Editor } from '@monaco-editor/react';
 
 interface CodeEditorProps {
   language: CodeEditorLanguage;
@@ -13,11 +13,13 @@ interface CodeEditorProps {
 
 export default function CodeEditor({ language }: CodeEditorProps) {
   const editorCodeQueryValue = useAppSelector((state) => state.graphiqlEditor.query);
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState(editorCodeQueryValue);
 
   useEffect(() => {
-    setQuery(editorCodeQueryValue);
-  }, [editorCodeQueryValue]);
+    if (query) {
+      setQuery(editorCodeQueryValue);
+    }
+  }, [editorCodeQueryValue, setQuery]);
 
   const handleChange = (value: string | undefined) => {
     setQuery(value ?? '');
@@ -47,7 +49,7 @@ export default function CodeEditor({ language }: CodeEditorProps) {
           }}
         />
       </div>
-      <EditorButtons query={query} />
+      <EditorButtons setQuery={setQuery} query={query} />
     </div>
   );
 }

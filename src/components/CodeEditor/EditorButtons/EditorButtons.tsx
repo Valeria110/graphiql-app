@@ -2,13 +2,16 @@ import styles from './EditorButtons.module.scss';
 import { fetchGraphQLData } from '@/api/graphqlRequests';
 import { setQuery, setResponse } from '@/features/graphiql/graphiqlEditorSlice';
 import { useAppDispatch } from '@/hooks/storeHooks';
+import { prettifyGraphQL } from '@/utils/utils';
 import classNames from 'classnames';
+import { Dispatch, SetStateAction } from 'react';
 
 interface EditorButtonsProps {
   query: string;
+  setQuery: Dispatch<SetStateAction<string>>;
 }
 
-export default function EditorButtons({ query }: EditorButtonsProps) {
+export default function EditorButtons({ query, setQuery: setEditorQuery }: EditorButtonsProps) {
   const dispatch = useAppDispatch();
 
   const runCode = async () => {
@@ -18,9 +21,9 @@ export default function EditorButtons({ query }: EditorButtonsProps) {
   };
 
   const prettifyCode = () => {
-    // TODO: function for prettifying the graphql
-    // const formattedCode = prettifyGraphQL(query);
-    // dispatch(setQuery(formattedCode));
+    const formattedCode = prettifyGraphQL(query);
+    setEditorQuery(formattedCode);
+    dispatch(setQuery(formattedCode));
   };
 
   return (
@@ -31,7 +34,6 @@ export default function EditorButtons({ query }: EditorButtonsProps) {
         </svg>
       </button>
       <button className={styles.btn} onClick={prettifyCode}>
-        {/* <AutoFixHighOutlinedIcon sx={{ fontSize: 38, color: '#fff', fontWeight: '400' }} /> */}
         <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 16 16">
           <path
             fill="#fff"
