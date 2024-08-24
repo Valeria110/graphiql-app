@@ -1,0 +1,18 @@
+@use '../../styles/globals.scss' as bp;
+
+.codeEditor {
+  display: flex;
+  width: 500px;
+
+  @media screen and (max-width: bp.$sm) {
+    flex-direction: column;
+    gap: 10px;
+    width: 90%;
+  }
+
+  .monacoEditor {
+    width: 100%;
+    border-radius: 40px;
+    overflow: hidden;
+  }
+}

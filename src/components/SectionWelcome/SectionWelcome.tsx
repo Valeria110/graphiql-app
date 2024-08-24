@@ -8,6 +8,7 @@ import { useLocale } from 'next-intl';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/firebase';
 import { SectionsProps } from '@/interfaces';
+import { PagesRoutes } from '@/types/types';
 
 export default function SectionWelcome({ t }: SectionsProps) {
   const localActive = useLocale();
@@ -28,7 +29,10 @@ export default function SectionWelcome({ t }: SectionsProps) {
             <Link className={sectionWelcomeStyles['section-welcome__navigate-button']} href={'/'}>
               {t('sectionWelcomeBtnRestClient')}
             </Link>
-            <Link className={sectionWelcomeStyles['section-welcome__navigate-button']} href={'/'}>
+            <Link
+              className={sectionWelcomeStyles['section-welcome__navigate-button']}
+              href={`/${localActive}/${PagesRoutes.Graphql}`}
+            >
               {t('sectionWelcomeBtnGraphiQLClient')}
             </Link>
             <Link className={sectionWelcomeStyles['section-welcome__navigate-button']} href={'/'}>
@@ -37,10 +41,16 @@ export default function SectionWelcome({ t }: SectionsProps) {
           </div>
         ) : (
           <div className={sectionWelcomeStyles['section-welcome__navigate-buttons']}>
-            <Link className={sectionWelcomeStyles['section-welcome__navigate-button']} href={`/${localActive}/sign_in`}>
+            <Link
+              className={sectionWelcomeStyles['section-welcome__navigate-button']}
+              href={`/${localActive}/${PagesRoutes.SignIn}`}
+            >
               {t('sectionWelcomebtnSignIn')}
             </Link>
-            <Link className={sectionWelcomeStyles['section-welcome__navigate-button']} href={`/${localActive}/sign_up`}>
+            <Link
+              className={sectionWelcomeStyles['section-welcome__navigate-button']}
+              href={`/${localActive}/${PagesRoutes.SignUp}`}
+            >
               {t('sectionWelcomebtnSignUp')}
             </Link>
           </div>

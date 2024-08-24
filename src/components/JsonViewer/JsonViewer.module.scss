@@ -1,0 +1,15 @@
+@use '../../styles/globals.scss' as bp;
+
+.jsonViewer {
+  width: 400px;
+  border-radius: 40px;
+  overflow: hidden;
+
+  @media screen and (max-width: bp.$lg) {
+    width: 500px;
+  }
+
+  @media screen and (max-width: bp.$sm) {
+    width: 80vw;
+  }
+}

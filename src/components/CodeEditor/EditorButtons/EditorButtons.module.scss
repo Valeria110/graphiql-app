@@ -1,0 +1,43 @@
+@use '../../../styles/globals.scss' as *;
+
+.btnsWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+
+  @media screen and (max-width: $sm) {
+    flex-direction: row;
+  }
+
+  .btn {
+    background: transparent;
+    border: 0;
+    padding: 5px;
+    height: 50px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  .runCodeBtn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: $secondary-blue-500;
+    transition: background-color 0.4s;
+
+    svg {
+      margin-left: 4px;
+    }
+
+    &:hover {
+      background-color: $btn-hover;
+    }
+  }
+}
