@@ -28,11 +28,11 @@ export default function BurgerMenu() {
       <nav className={navClass}>
         <ul className={styles.navList}>
           {isUserSignedIn ? (
-            <Link className={styles.navLink} href="/sign-out">
+            <Link className={styles.navLink} href="/">
               Sign Out
             </Link>
           ) : (
-            <Link className={styles.navLink} href="/sign-in">
+            <Link className={styles.navLink} href="/sign_in">
               Sign In
             </Link>
           )}

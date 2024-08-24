@@ -1,8 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
+import graphiqlEditorReducer from '../features/graphiql/graphiqlEditorSlice';
 
-const store = configureStore({
-  reducer: {},
-});
+export const makeStore = () => {
+  return configureStore({
+    reducer: {
+      graphiqlEditor: graphiqlEditorReducer,
+    },
+  });
+};
 
-export type AppDispatch = typeof store.dispatch;
-export type RootState = ReturnType<typeof store.getState>;
+export type AppStore = ReturnType<typeof makeStore>;
+export type RootState = ReturnType<AppStore['getState']>;
+export type AppDispatch = AppStore['dispatch'];
