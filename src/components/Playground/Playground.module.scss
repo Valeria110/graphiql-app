@@ -12,14 +12,19 @@
   flex-wrap: wrap;
   justify-content: center;
 
-  @media screen and (max-width: 768px) {
-    width: 100vw;
+  @media screen and (max-width: $lg) {
+    align-items: center;
+    width: 90%;
   }
 
   .urlUnput {
     height: fit-content;
     width: 435px;
     background-color: $blue-primary;
+
+    @media screen and (max-width: $sm) {
+      width: 90%;
+    }
 
     input {
       color: rgba(255, 255, 255, 0.4);
@@ -33,5 +38,11 @@
     display: flex;
     width: 100%;
     justify-content: flex-start;
+
+    @media screen and (max-width: $lg) {
+      flex-direction: column;
+      gap: 20px;
+      align-items: center;
+    }
   }
 }

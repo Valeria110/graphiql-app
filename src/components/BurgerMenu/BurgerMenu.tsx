@@ -1,17 +1,31 @@
 import Link from 'next/link';
 import styles from './BurgerMenu.module.scss';
-import { useState } from 'react';
+import { ChangeEvent, useState, useTransition } from 'react';
 import classNames from 'classnames';
+import { useLocale } from 'next-intl';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '@/firebase';
+import { usePathname, useRouter } from 'next/navigation';
+import { PagesRoutes } from '@/types/types';
 
 export default function BurgerMenu() {
   const [navClass, setNavClass] = useState(styles.nav);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [burgerBtnClass, setBurgerBtnClass] = useState(styles.burgerBtn);
+  const localActive = useLocale();
+  const [user] = useAuthState(auth);
+  const isUserSignedIn = !!user;
+  const [isPending, startTransition] = useTransition();
+  const router = useRouter();
+  const pathname = usePathname();
 
-  const isUserSignedIn = false; //Here will be the check whether a user is signed in
-  const handleChange = () => {
-    //To be done:
-    //change the language in the whole application
+  const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    const selectedLanguage = e.target.value;
+    const newPathname = pathname.replace(`/${localActive}`, `/${selectedLanguage}`);
+
+    startTransition(() => {
+      router.replace(newPathname);
+    });
   };
   const toggleBurgerMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -28,17 +42,17 @@ export default function BurgerMenu() {
       <nav className={navClass}>
         <ul className={styles.navList}>
           {isUserSignedIn ? (
-            <Link className={styles.navLink} href="/">
+            <Link className={styles.navLink} href={`/${localActive}`}>
               Sign Out
             </Link>
           ) : (
-            <Link className={styles.navLink} href="/sign_in">
+            <Link className={styles.navLink} href={`/${localActive}/${PagesRoutes.SignIn}`}>
               Sign In
             </Link>
           )}
-          <select defaultValue="En" onChange={handleChange} className={styles.langSelect}>
-            <option value="En">En</option>
-            <option value="Рус">Рус</option>
+          <select defaultValue={localActive} onChange={handleChange} className={styles.langSelect} disabled={isPending}>
+            <option value="en">En</option>
+            <option value="ru">Рус</option>
           </select>
         </ul>
       </nav>

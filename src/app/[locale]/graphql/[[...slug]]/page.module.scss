@@ -1,4 +1,4 @@
-@use '../../../styles/globals.scss' as *;
+@use '../../../../styles/globals.scss' as *;
 
 .main {
   padding: 20px;
@@ -9,6 +9,13 @@
     justify-content: flex-end;
     font-size: 20px;
     margin-right: 100px;
+
+    @media screen and (max-width: $lg) {
+      justify-content: center;
+      font-style: 28px;
+      margin-right: 0;
+      margin-bottom: 20px;
+    }
 
     span {
       &:nth-child(1) {

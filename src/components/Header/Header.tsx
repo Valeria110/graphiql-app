@@ -12,6 +12,7 @@ import { logOutUser } from '@/authService';
 import LocaleSwitcher from '../LocaleSwitcher/LocaleSwitcher';
 import { Button } from '@mui/material';
 import { useLocale, useTranslations } from 'next-intl';
+import { PagesRoutes } from '@/types/types';
 
 export default function Header() {
   const [user] = useAuthState(auth);
@@ -51,11 +52,11 @@ export default function Header() {
   };
 
   const handleSignIn = () => {
-    router.replace(`/${localActive}/sign_in`);
+    router.replace(`/${localActive}/${PagesRoutes.SignIn}`);
   };
 
   const handleSignUp = () => {
-    router.replace(`/${localActive}/sign_up`);
+    router.replace(`/${localActive}/${PagesRoutes.SignUp}`);
   };
 
   const handleSignOut = () => {

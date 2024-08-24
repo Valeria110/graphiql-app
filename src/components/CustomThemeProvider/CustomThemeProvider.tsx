@@ -8,7 +8,9 @@ const customTheme = createTheme({
   palette: {
     mode: 'dark',
     primary: {
+      light: teal[200],
       main: teal[400],
+      contrastText: '#fff',
     },
     secondary: {
       main: blue[500], // TODO: what the our secondary color?
