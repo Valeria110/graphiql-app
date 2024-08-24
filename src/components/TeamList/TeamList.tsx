@@ -8,7 +8,7 @@ import { useTranslations } from 'next-intl';
 import leraImg from '../../assets/lera-img.jpg';
 import mishaImg from '../../assets/misha-img.jpg';
 import vikaImg from '../../assets/vika-img.jpg';
-import { splitString } from '@/utils/fgdfg';
+import { splitString } from '@/utils/splitString';
 
 interface MemberAccordionProps {
   title: string;

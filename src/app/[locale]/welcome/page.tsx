@@ -10,7 +10,7 @@ import { customUserName } from '@/utils/customNameUser';
 import Link from 'next/link';
 import { TeamList } from '@/components/TeamList/TeamList';
 import { useLocale, useTranslations } from 'next-intl';
-import { splitString } from '@/utils/fgdfg';
+import { splitString } from '@/utils/splitString';
 
 function WelcomePage() {
   const [user, loading] = useAuthState(auth);
