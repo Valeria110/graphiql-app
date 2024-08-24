@@ -9,7 +9,8 @@
   width: 100%;
 
   @media (max-width: 550px) {
-    gap: 20px;
+    gap: 40px;
+    padding: 10px;
   }
 }
 
@@ -93,14 +94,14 @@
 
   &__navigate-button {
     background-color: #fff;
-    width: 150px;
+    width: auto;
     height: 35px;
     text-decoration: none;
     text-align: center;
     justify-content: center;
     display: flex;
     align-items: center;
-    padding: 10px;
+    padding: 10px 20px;
     font-weight: 600;
     font-family: 'Poppins', sans-serif;
     border-radius: 5px;
@@ -147,10 +148,6 @@
 
   p {
     margin: 0;
-  }
-
-  @media (max-width: 550px) {
-    margin-bottom: 20px;
   }
 
   &__title {
@@ -210,13 +207,11 @@
   margin-bottom: 40px;
 
   @media (max-width: 650px) {
-    margin-bottom: 0px;
-    margin-top: 20px;
+    margin-bottom: 40px;
   }
 
   @media (max-width: 550px) {
-    margin-bottom: 0px;
-    margin-top: 20px;
+    margin-bottom: 40px;
   }
 
   &__title {

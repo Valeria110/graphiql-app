@@ -9,19 +9,13 @@ import Image from 'next/image';
 import { customUserName } from '@/utils/customNameUser';
 import Link from 'next/link';
 import { TeamList } from '@/components/TeamList/TeamList';
-import { useLocale } from 'next-intl';
-
-const courseDescription = [
-  '1. Deep learning of React',
-  '2. Project-oriented approach',
-  '3. Mentoring and code review',
-  '4. Support for modern tools',
-  '5. Community and Career Opportunities',
-];
+import { useLocale, useTranslations } from 'next-intl';
+import { splitString } from '@/utils/fgdfg';
 
 function WelcomePage() {
   const [user, loading] = useAuthState(auth);
   const localActive = useLocale();
+  const t = useTranslations('WelcomePage');
 
   if (loading) {
     return <div>Loading</div>;
@@ -32,33 +26,31 @@ function WelcomePage() {
       <section className={welcomePageStyles['section-welcome']}>
         <div className={welcomePageStyles['section-welcome__info-container']}>
           <h2 className={welcomePageStyles['section-welcome__title']}>
-            {user ? `Hello, ${customUserName(user?.email || 'user')}!` : 'Hello!'}
+            {user
+              ? `${t('sectionWelcomeTitle')}, ${customUserName(user?.email || 'user')}!`
+              : `${t('sectionWelcomeTitle')}!`}
           </h2>
-          <h3 className={welcomePageStyles['section-welcome__subtitle']}>
-            Welcome to a lightweight and powerful application for working with REST and GraphQL API.
-          </h3>
-          <p className={welcomePageStyles['section-welcome__description']}>
-            We have combined the capabilities of Postman and GraphiQL in one simple and convenient application.
-          </p>
+          <h3 className={welcomePageStyles['section-welcome__subtitle']}>{t('sectionWelcomeSubtitle')}</h3>
+          <p className={welcomePageStyles['section-welcome__description']}>{t('sectionWelcomeDescription')}</p>
           {user ? (
             <div className={welcomePageStyles['section-welcome__navigate-buttons']}>
               <Link className={welcomePageStyles['section-welcome__navigate-button']} href={'/'}>
-                REST Client
+                {t('sectionWelcomeBtnRestClient')}
               </Link>
               <Link className={welcomePageStyles['section-welcome__navigate-button']} href={'/'}>
-                GraphiQL Client
+                {t('sectionWelcomeBtnGraphiQLClient')}
               </Link>
               <Link className={welcomePageStyles['section-welcome__navigate-button']} href={'/'}>
-                History{' '}
+                {t('sectionWelcomeBtnHistory')}
               </Link>
             </div>
           ) : (
             <div className={welcomePageStyles['section-welcome__navigate-buttons']}>
               <Link className={welcomePageStyles['section-welcome__navigate-button']} href={`/${localActive}/sign_in`}>
-                Sign In
+                {t('sectionWelcomebtnSignIn')}
               </Link>
               <Link className={welcomePageStyles['section-welcome__navigate-button']} href={`/${localActive}/sign_up`}>
-                Sign Up
+                {t('sectionWelcomebtnSignUp')}
               </Link>
             </div>
           )}
@@ -84,43 +76,39 @@ function WelcomePage() {
         </div>
       </section>
       <section className={welcomePageStyles['section-project']}>
-        <h2 className={welcomePageStyles['section-project__title']}>Our Project</h2>
+        <h2 className={welcomePageStyles['section-project__title']}>{t('sectionProjectTitle')}</h2>
         <div className={welcomePageStyles['section-project__description']}>
-          <p
-            className={welcomePageStyles['section-project__subtitle']}
-          >{`Our tool offers a streamlined interface that simplifies your workflow:`}</p>
+          <p className={welcomePageStyles['section-project__subtitle']}>{t('sectionProjectSubtitle')}</p>
           <ul className={welcomePageStyles['section-project__list']}>
-            <li>{`Test endpoints effortlessly.`}</li>
-            <li>{`Analyze responses quickly.`}</li>
-            <li>{`Manage API requests with ease.`}</li>
-            <li>{`Switch seamlessly between REST and GraphQL.`}</li>
-            <li>{`Customize your requests and view responses in real-time.`}</li>
+            {splitString(t('sectionProjectList')).map((line, index: number) => (
+              <li key={index}>{line}</li>
+            ))}
           </ul>
-          <p>{`It's a one-stop solution for API development and testing, designed to make your work faster, easier, and more productive. Dive in and explore how our tool can transform your API interactions, making them smoother and more efficient than ever before.`}</p>
+          <p>{t('sectionProjecDescriptionText')}</p>
         </div>
       </section>
       <section className={welcomePageStyles['section-team']}>
-        <h2 className={welcomePageStyles['section-team__title']}>Our Team</h2>
+        <h2 className={welcomePageStyles['section-team__title']}>{t('sectionTeamTitle')}</h2>
         <h3 className={welcomePageStyles['section-team__subtitle']}>Jumping Skunk</h3>
         <TeamList />
       </section>
       <section className={welcomePageStyles['section-course']}>
-        <h2 className={welcomePageStyles['section-course__title']}>Our Learning Path</h2>
-        <h3
-          className={welcomePageStyles['section-course__subtitle']}
-        >{`RS School's React course is an advanced educational program aimed at developers who want to master React and become professional front-end developers. `}</h3>
+        <h2 className={welcomePageStyles['section-course__title']}>{t('sectionCourseTitle')}</h2>
+        <h3 className={welcomePageStyles['section-course__subtitle']}>{t('sectionCourseSubtitle')}</h3>
         <div className={welcomePageStyles['section-course__description-container']}>
           <div className={welcomePageStyles['section-course__description']}>
-            <div className={welcomePageStyles['section-course__description-title']}>Main features of the course:</div>
-            {courseDescription.map((line, index) => (
+            <div className={welcomePageStyles['section-course__description-title']}>
+              {t('sectionCourseDescriptionTitle')}
+            </div>
+            {splitString(t('sectionCourseFeature')).map((line, index: number) => (
               <div key={index}>
                 {line}
                 <br />
               </div>
             ))}
-            <div
-              className={welcomePageStyles['section-course__description-text']}
-            >{`RS School's React course is a great opportunity for developers to deepen their knowledge and skills by creating modern web applications using one of the most in-demand tools on the market.`}</div>
+            <div className={welcomePageStyles['section-course__description-text']}>
+              {t('sectionCourseDescriptionText')}
+            </div>
           </div>
           <a
             className={welcomePageStyles['section-course__link']}

@@ -20,9 +20,13 @@
   width: 20vw;
   box-sizing: border-box;
   height: fit-content;
-  min-height: 900px;
+  min-height: 950px;
   justify-content: space-between;
   transition: 0.6s;
+
+  &__role {
+    text-align: center;
+  }
 
   p {
     margin: 0;
@@ -41,10 +45,6 @@
   @media (max-width: 950px) {
     width: 100%;
     min-height: 1000px;
-  }
-
-  &:hover {
-    scale: 1.04;
   }
 
   &__img {
