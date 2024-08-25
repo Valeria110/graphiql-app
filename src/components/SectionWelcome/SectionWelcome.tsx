@@ -26,7 +26,10 @@ export default function SectionWelcome({ t }: SectionsProps) {
         <p className={sectionWelcomeStyles['section-welcome__description']}>{t('sectionWelcomeDescription')}</p>
         {user ? (
           <div className={sectionWelcomeStyles['section-welcome__navigate-buttons']}>
-            <Link className={sectionWelcomeStyles['section-welcome__navigate-button']} href={'/'}>
+            <Link
+              className={sectionWelcomeStyles['section-welcome__navigate-button']}
+              href={`/${localActive}/${PagesRoutes.RESTFul}`}
+            >
               {t('sectionWelcomeBtnRestClient')}
             </Link>
             <Link
