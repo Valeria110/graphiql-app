@@ -1,7 +1,7 @@
 import styles from './EditorButtons.module.scss';
 import { fetchGraphQLData } from '@/api/graphqlRequests';
 import { setQuery, setResponse } from '@/features/graphiql/graphiqlEditorSlice';
-import { useAppDispatch } from '@/hooks/storeHooks';
+import { useAppDispatch, useAppSelector } from '@/hooks/storeHooks';
 import { prettifyGraphQL } from '@/utils/utils';
 import classNames from 'classnames';
 import { Dispatch, SetStateAction } from 'react';
@@ -13,9 +13,10 @@ interface EditorButtonsProps {
 
 export default function EditorButtons({ query, setQuery: setEditorQuery }: EditorButtonsProps) {
   const dispatch = useAppDispatch();
+  const url = useAppSelector((state) => state.graphiqlEditor.urlEndpoint);
 
   const runCode = async () => {
-    const res = await fetchGraphQLData('https://rickandmortyapi.com/graphql', query);
+    const res = await fetchGraphQLData(url, query);
     dispatch(setResponse(res));
     dispatch(setQuery(query));
   };

@@ -1,33 +1,52 @@
 'use client';
 
 import styles from './CodeEditor.module.scss';
-import { useAppSelector } from '@/hooks/storeHooks';
-import { useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '@/hooks/storeHooks';
+import { FocusEvent, useEffect, useState } from 'react';
 import EditorButtons from './EditorButtons/EditorButtons';
-import { CodeEditorLanguage } from '@/types/types';
+import { CodeEditorLanguage, PagesRoutes } from '@/types/types';
 import { Editor } from '@monaco-editor/react';
+import { usePathname } from 'next/navigation';
+import { useLocale } from 'next-intl';
+import { setQuery } from '@/features/graphiql/graphiqlEditorSlice';
+import { formatToBase64 } from '@/utils/utils';
 
 interface CodeEditorProps {
   language: CodeEditorLanguage;
 }
 
 export default function CodeEditor({ language }: CodeEditorProps) {
-  const editorCodeQueryValue = useAppSelector((state) => state.graphiqlEditor.query);
-  const [query, setQuery] = useState(editorCodeQueryValue);
+  const { query: editorCodeQueryValue, urlEndpoint } = useAppSelector((state) => state.graphiqlEditor);
+  const pathUrl = usePathname();
+  const localActive = useLocale();
+  const dispatch = useAppDispatch();
+  const [query, setEditorQuery] = useState(editorCodeQueryValue);
+  const [pathname, setPathname] = useState(pathUrl);
 
   useEffect(() => {
     if (query) {
-      setQuery(editorCodeQueryValue);
+      setEditorQuery(editorCodeQueryValue);
     }
-  }, [editorCodeQueryValue, setQuery]);
+
+    window.history.replaceState(null, '', pathname);
+  }, [editorCodeQueryValue, setEditorQuery, pathname]);
 
   const handleChange = (value: string | undefined) => {
-    setQuery(value ?? '');
+    setEditorQuery(value ?? '');
+  };
+
+  const handleOnBlur = (e: FocusEvent<HTMLInputElement>) => {
+    const inputValue = e.target.value;
+    const queryBase64 = formatToBase64(inputValue);
+    const urlEndpointBase64 = formatToBase64(urlEndpoint);
+    const newPath = `/${localActive}/${PagesRoutes.Graphql}/${urlEndpointBase64}/${queryBase64}`;
+    setPathname(newPath);
+    dispatch(setQuery(inputValue));
   };
 
   return (
     <div className={styles.codeEditor}>
-      <div className={styles.monacoEditor}>
+      <div className={styles.monacoEditor} onBlur={handleOnBlur}>
         <Editor
           height="400px"
           width="100%"
@@ -49,7 +68,7 @@ export default function CodeEditor({ language }: CodeEditorProps) {
           }}
         />
       </div>
-      <EditorButtons setQuery={setQuery} query={query} />
+      <EditorButtons setQuery={setEditorQuery} query={query} />
     </div>
   );
 }

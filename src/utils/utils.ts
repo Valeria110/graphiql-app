@@ -40,3 +40,7 @@ export function prettifyGraphQL(query: string) {
 
   return formattedCode.trim();
 }
+
+export const formatToBase64 = (str: string): string => {
+  return btoa(str);
+};

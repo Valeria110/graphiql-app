@@ -1,4 +1,4 @@
-import { SectionsProps } from '@/interfaces';
+import { SectionsProps } from '@/types/types';
 import sectionTeamStyles from '../../app/[locale]/welcomePageStyles.module.scss';
 import { TeamList } from '../TeamList/TeamList';
 
