@@ -1,3 +1,5 @@
+'use server';
+
 import { getIntrospectionQuery, IntrospectionQuery } from 'graphql';
 
 const fetchGraphQLData = async (
