@@ -1,14 +1,31 @@
 'use client';
-import { Box, Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material';
+import {
+  AppBar,
+  Box,
+  Button,
+  FormControl,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+  Stack,
+  TextField,
+  Toolbar,
+  Typography,
+} from '@mui/material';
 import { useId, useState } from 'react';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { HttpMethod } from '@/types/types';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
+
+// TODO: add icon to submit btn
 
 export default function RESTFul() {
   const [method, setMethod] = useState<HttpMethod>('GET');
   const [url, setUrl] = useState('');
   const [body, setBody] = useState('');
   const [response, setResponse] = useState('');
+  const [responseInfo, setResponseInfo] = useState<ResponseCodeTime>({ code: undefined, timeMs: undefined });
 
   const idLabel = useId();
   const idSelect = useId();
@@ -26,9 +43,12 @@ export default function RESTFul() {
         ...(method === 'POST' && { body: JSON.stringify(JSON.parse(body)) }),
       };
 
+      const start = Date.now();
       const res = await fetch(url, options);
       const data = await res.json();
+      const finish = Date.now();
       setResponse(JSON.stringify(data, null, 2));
+      setResponseInfo({ code: res.status, timeMs: finish - start });
     } catch (error) {
       setResponse(`Error: ${error}`);
     }
@@ -70,7 +90,7 @@ export default function RESTFul() {
 
       {method === 'POST' && <BodyArea value={body} onChange={handleBodyChange} />}
 
-      <ResponseArea response={response} />
+      <ResponseArea response={response} responseInfo={responseInfo} />
     </Box>
   );
 }
@@ -83,9 +103,10 @@ function BodyArea({ value, onChange }: { value: string; onChange: (e: React.Chan
   );
 }
 
-function ResponseArea({ response }: { response: string }) {
+function ResponseArea({ response, responseInfo }: { response: string; responseInfo: ResponseCodeTime }) {
   return (
     <Box sx={{ my: 2, px: 1 }}>
+      <ResponseAreaBar code={responseInfo.code} timeMs={responseInfo.timeMs} />
       <TextField
         label="Response"
         multiline
@@ -95,6 +116,31 @@ function ResponseArea({ response }: { response: string }) {
         value={response}
         InputProps={{ readOnly: true }}
       />
+    </Box>
+  );
+}
+
+interface ResponseCodeTime {
+  code: Response['status'] | undefined;
+  timeMs: number | undefined;
+}
+
+function ResponseAreaBar({ code, timeMs }: ResponseCodeTime) {
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static">
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <IconButton size="small" edge="start" color="inherit" aria-label="menu">
+              <AccessTimeIcon />
+            </IconButton>
+            <Typography variant="body2" sx={{ ml: 1 }}>
+              {`Time: ${timeMs}ms`}
+            </Typography>
+          </Box>
+          <Typography variant="body2">{`Code: ${code}`}</Typography>
+        </Toolbar>
+      </AppBar>
     </Box>
   );
 }
