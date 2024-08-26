@@ -7,8 +7,7 @@ import { customUserName } from '@/utils/customNameUser';
 import { useLocale } from 'next-intl';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/firebase';
-import { SectionsProps } from '@/interfaces';
-import { PagesRoutes } from '@/types/types';
+import { PagesRoutes, SectionsProps } from '@/types/types';
 
 export default function SectionWelcome({ t }: SectionsProps) {
   const localActive = useLocale();

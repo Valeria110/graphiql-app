@@ -1,3 +1,3 @@
-export default function NotFoundPage() {
-  return <h1>Not found</h1>;
+export default function NotFound() {
+  return <h1>Not found page</h1>;
 }
