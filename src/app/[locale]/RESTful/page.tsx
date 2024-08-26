@@ -37,6 +37,16 @@ export default function RESTFul() {
           </Button>
         </Stack>
       </form>
+      <BodyArea value={'text'} />
+    </Box>
+  );
+}
+
+function BodyArea({ value }: { value: string }) {
+  // TODO: replace later with prettier
+  return (
+    <Box sx={{ my: 2, px: 1 }}>
+      <TextField label="Body" multiline rows={4} variant="filled" fullWidth value={value} />
     </Box>
   );
 }
