@@ -6,3 +6,5 @@ export enum PagesRoutes {
   Graphql = 'graphql',
   RESTFul = 'RESTful',
 }
+
+export type HttpMethod = 'GET' | 'POST';
