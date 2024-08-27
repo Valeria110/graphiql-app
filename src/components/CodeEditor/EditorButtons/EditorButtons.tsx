@@ -1,5 +1,6 @@
 import styles from './EditorButtons.module.scss';
-import { fetchGraphQLData } from '@/api/graphqlRequests';
+import { fetchGraphQLData, getGraphqlSchema } from '@/api/graphqlRequests';
+import { setNewSchema } from '@/features/graphiql/docs.slice';
 import { setQuery, setResponse } from '@/features/graphiql/graphiqlEditorSlice';
 import { useAppDispatch, useAppSelector } from '@/hooks/storeHooks';
 import { prettifyGraphQL } from '@/utils/utils';
@@ -30,6 +31,16 @@ export default function EditorButtons({ query, setQuery: setEditorQuery }: Edito
     dispatch(setQuery(formattedCode));
   };
 
+  const onClick = async () => {
+    const schema = await getGraphqlSchema(url);
+
+    if (schema) {
+      dispatch(setNewSchema(schema));
+    } else {
+      console.error('Failed to fetch schema: schema is undefined.'); // TODO: оповестить пользователя
+    }
+  };
+
   return (
     <div className={styles.btnsWrapper}>
       <button className={classNames(styles.btn, styles.runCodeBtn)} onClick={runCode}>
@@ -45,6 +56,7 @@ export default function EditorButtons({ query, setQuery: setEditorQuery }: Edito
           />
         </svg>
       </button>
+      <button onClick={onClick}>schema</button>
     </div>
   );
 }

@@ -1,3 +1,5 @@
+import { IntrospectionQuery } from 'graphql';
+
 export type CodeEditorLanguage = 'graphql' | 'javascript';
 
 export enum PagesRoutes {
@@ -8,4 +10,8 @@ export enum PagesRoutes {
 
 export interface SectionsProps {
   t: (arg0: string) => string;
+}
+
+export interface DocsSectionProps {
+  schema: IntrospectionQuery;
 }
