@@ -11,12 +11,14 @@ interface PlaygroundProps {
 
 export default function Playground({ language }: PlaygroundProps) {
   return (
-    <div className={styles.playground}>
+    <div className={styles['playground-container']}>
       <Docs />
-      <PlaygroundInputs />
-      <div className={styles.editorsWrapper}>
-        <CodeEditor language={language} />
-        <JsonViewer />
+      <div className={styles.playground}>
+        <PlaygroundInputs />
+        <div className={styles.editorsWrapper}>
+          <CodeEditor language={language} />
+          <JsonViewer />
+        </div>
       </div>
     </div>
   );

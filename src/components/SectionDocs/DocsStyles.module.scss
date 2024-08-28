@@ -1,0 +1,62 @@
+@use '../../styles/globals.scss' as *;
+
+.docs-section {
+  background-color: $blue-primary;
+  width: 20%;
+  padding: 20px;
+  border-radius: 15px;
+  min-height: 550px;
+  height: 500px;
+  overflow: scroll;
+  position: relative;
+
+  @media (max-width: 1295px) {
+    width: 100%;
+  }
+
+  &__title {
+    margin: 0;
+  }
+
+  &__header {
+    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__button-close {
+    border: 0;
+    background-color: transparent;
+    font-size: 20px;
+    display: flex;
+    position: absolute;
+    right: 0;
+    margin: 20px;
+  }
+}
+
+.args {
+  &-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-list {
+    display: flex;
+    background-color: $bgc-dark-blue;
+    border-radius: 15px;
+    width: 90%;
+    margin: 10px;
+    padding: 10px 20px;
+    flex-direction: column;
+    gap: 10px;
+
+    p {
+      margin: 0;
+    }
+  }
+}
