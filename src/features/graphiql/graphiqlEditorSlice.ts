@@ -6,6 +6,7 @@ interface InitialState {
   variables: string | null;
   response: string;
   urlEndpoint: string;
+  sdlUrl: string;
 }
 
 const initialState: InitialState = {
@@ -20,6 +21,7 @@ const initialState: InitialState = {
   variables: null,
   response: '',
   urlEndpoint: 'https://rickandmortyapi.com/graphql',
+  sdlUrl: '',
 };
 
 const graphiqlEditorSLice = createSlice({
@@ -41,8 +43,12 @@ const graphiqlEditorSLice = createSlice({
     setUrlEndpoint(state, action: PayloadAction<(typeof initialState)['urlEndpoint']>) {
       state.urlEndpoint = action.payload;
     },
+    setSdlUrl(state, action: PayloadAction<(typeof initialState)['sdlUrl']>) {
+      state.sdlUrl = action.payload;
+    },
   },
 });
 
-export const { setQuery, setHeaders, setVariables, setResponse, setUrlEndpoint } = graphiqlEditorSLice.actions;
+export const { setQuery, setHeaders, setVariables, setResponse, setUrlEndpoint, setSdlUrl } =
+  graphiqlEditorSLice.actions;
 export default graphiqlEditorSLice.reducer;

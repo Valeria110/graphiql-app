@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import rssLogo from '../../assets/svg/rs-school.svg';
 import sectionCourseStyles from '../../app/[locale]/welcomePageStyles.module.scss';
-import { SectionsProps } from '@/interfaces';
 import { splitString } from '@/utils/splitString';
+import { SectionsProps } from '@/types/types';
 
 export default function SectionCourse({ t }: SectionsProps) {
   return (

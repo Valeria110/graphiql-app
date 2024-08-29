@@ -7,13 +7,14 @@ import SectionWelcome from '@/components/SectionWelcome/SectionWelcome';
 import SectionProject from '@/components/SectionProject/SectionProject';
 import SectionTeam from '@/components/SectionTeam/SectionTeam';
 import SectionCourse from '@/components/SectionCourse/SectionCourse';
+import Loader from '@/components/Loader/Loader';
 
 function WelcomePage() {
   const [, loading] = useAuthState(auth);
   const t = useTranslations('WelcomePage');
 
   if (loading) {
-    return <div>Loading</div>;
+    return <Loader />;
   }
 
   return (

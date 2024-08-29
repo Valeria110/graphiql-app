@@ -1,0 +1,18 @@
+@use '../../../styles/globals.scss' as *;
+
+.urlUnput {
+  height: fit-content;
+  width: 435px;
+  background-color: $blue-primary;
+
+  @media screen and (max-width: $sm) {
+    width: 90%;
+  }
+
+  input {
+    color: rgba(255, 255, 255, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 4px;
+    font-size: 16px;
+  }
+}
