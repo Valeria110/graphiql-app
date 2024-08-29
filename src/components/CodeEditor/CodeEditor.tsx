@@ -11,6 +11,7 @@ import { useLocale } from 'next-intl';
 import { setQuery } from '@/features/graphiql/graphiqlEditorSlice';
 import { formatToBase64 } from '@/utils/utils';
 import GraphiqlToolsBar from '../GraphiqlToolsBar/GraphiqlToolsBar';
+import Loader from '../Loader/Loader';
 
 interface CodeEditorProps {
   language: CodeEditorLanguage;
@@ -57,6 +58,7 @@ export default function CodeEditor({ language }: CodeEditorProps) {
             defaultLanguage={language}
             value={query}
             onChange={handleChange}
+            loading={<Loader />}
             options={{
               automaticLayout: true,
               fontSize: 16,
