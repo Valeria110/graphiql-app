@@ -8,23 +8,33 @@ const fetchGraphQLData = async (
   headers?: Record<string, string> | null,
   variables?: string | null,
 ) => {
-  const res = await fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
-      ...headers,
-    },
-    body: variables ? JSON.stringify({ query, variables }) : JSON.stringify({ query }),
-  });
-  const status = res.status;
-  const data = await res.json();
+  try {
+    if (!url) {
+      return 'Please, enter a url to make a request';
+    }
+    const vars = variables ? JSON.parse(variables) : {};
 
-  const formattedResponse = JSON.stringify({ data, status }, null, 2);
-  return formattedResponse;
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        ...headers,
+      },
+      body: JSON.stringify({ query, variables: vars }),
+    });
+    const status = res.status;
+    const { data, errors } = await res.json();
+
+    const formattedResponse = JSON.stringify({ data, errors, status }, null, 2);
+
+    return formattedResponse;
+  } catch (e) {
+    console.error('Network error: ', e);
+    return 'Network error';
+  }
 };
 
-// url - это SDL url, которая находится в соответствующем input, на этот url и нужно делать запрос для получения схемы
 const getGraphqlSchema = async (url: string): Promise<IntrospectionQuery | undefined> => {
   try {
     const res = await fetch(url, {

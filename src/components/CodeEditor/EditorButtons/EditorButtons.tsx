@@ -14,12 +14,14 @@ interface EditorButtonsProps {
 export default function EditorButtons({ query, setQuery: setEditorQuery }: EditorButtonsProps) {
   const dispatch = useAppDispatch();
   const [, startTransition] = useTransition();
-  const url = useAppSelector((state) => state.graphiqlEditor.urlEndpoint);
+  const { urlEndpoint: url, headers, variables } = useAppSelector((state) => state.graphiqlEditor);
 
   const runCode = () => {
     startTransition(async () => {
-      const res = await fetchGraphQLData(url, query);
-      dispatch(setResponse(res));
+      const res = await fetchGraphQLData(url, query, headers, variables);
+      if (res) {
+        dispatch(setResponse(res));
+      }
       dispatch(setQuery(query));
     });
   };

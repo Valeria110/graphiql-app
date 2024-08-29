@@ -1,4 +1,4 @@
-export type CodeEditorLanguage = 'graphql' | 'javascript';
+export type CodeEditorLanguage = 'graphql' | 'javascript' | 'json';
 
 export enum PagesRoutes {
   SignIn = 'sign_in',

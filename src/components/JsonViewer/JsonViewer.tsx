@@ -10,7 +10,7 @@ export default function JsonViewer() {
   return (
     <div className={styles.jsonViewer}>
       <Editor
-        height="400px"
+        height="300px"
         width="100%"
         language="json"
         value={response ? response : ''}
