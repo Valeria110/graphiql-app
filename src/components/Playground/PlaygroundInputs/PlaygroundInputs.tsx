@@ -7,13 +7,13 @@ import { TextField } from '@mui/material';
 import { useLocale } from 'next-intl';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hooks/storeHooks';
-import { setUrlEndpoint } from '@/features/graphiql/graphiqlEditorSlice';
+import { setSdlUrl, setUrlEndpoint } from '@/features/graphiql/graphiqlEditorSlice';
 import { usePathname } from 'next/navigation';
 
 export default function PlaygroundInputs() {
   const localActive = useLocale();
   const dispatch = useAppDispatch();
-  const { urlEndpoint, query } = useAppSelector((state) => state.graphiqlEditor);
+  const { urlEndpoint, query, sdlUrl } = useAppSelector((state) => state.graphiqlEditor);
   const [endpointUrlValue, setEndpointUrlValue] = useState(urlEndpoint);
   const pathUrl = usePathname();
   const [pathname, setPathname] = useState(pathUrl);
@@ -50,7 +50,8 @@ export default function PlaygroundInputs() {
         variant="outlined"
         placeholder="Enter SDL url..."
         style={{ color: 'whitesmoke' }}
-        defaultValue={`${endpointUrlValue}?sdl`}
+        defaultValue={sdlUrl}
+        onBlur={(e: React.FocusEvent<HTMLInputElement>) => dispatch(setSdlUrl(e.target.value))}
       />
     </>
   );
