@@ -1,3 +1,4 @@
+import ClientRedirect from '@/components/ClientRedirect/ClientRedirect';
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 import { NextIntlClientProvider } from 'next-intl';
@@ -13,6 +14,7 @@ export default async function LocaleLayout({ children }: { children: React.React
       <Header />
       {children}
       <Footer />
+      <ClientRedirect />
     </NextIntlClientProvider>
   );
 }
