@@ -10,9 +10,16 @@
     width: 90%;
   }
 
-  .monacoEditor {
+  .editorContainer {
+    display: flex;
+    flex-direction: column;
     width: 100%;
-    border-radius: 40px;
-    overflow: hidden;
+
+    .monacoEditor {
+      width: 100%;
+      border-top-left-radius: 40px;
+      border-top-right-radius: 40px;
+      overflow: hidden;
+    }
   }
 }

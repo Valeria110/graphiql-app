@@ -1,0 +1,27 @@
+@use '../../styles/globals.scss' as *;
+
+.loaderMask {
+  position: relative;
+  left: 0;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+
+  .loader {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 8px solid $light-blue-200;
+    border-left: 8px solid $blue-primary;
+    animation: rotateLoader 1.2s linear infinite;
+  }
+}
+
+@keyframes rotateLoader {
+  100% {
+    transform: rotate(360deg);
+  }
+}

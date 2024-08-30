@@ -1,10 +1,11 @@
 import styles from './EditorButtons.module.scss';
 import { fetchGraphQLData } from '@/api/graphqlRequests';
 import { setQuery, setResponse } from '@/features/graphiql/graphiqlEditorSlice';
-import { useAppDispatch } from '@/hooks/storeHooks';
+import { useAppDispatch, useAppSelector } from '@/hooks/storeHooks';
+import { saveGraphqlRequestsHistory } from '@/utils/saveGraphqlRequestsHistory';
 import { prettifyGraphQL } from '@/utils/utils';
 import classNames from 'classnames';
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction, useTransition } from 'react';
 
 interface EditorButtonsProps {
   query: string;
@@ -13,11 +14,18 @@ interface EditorButtonsProps {
 
 export default function EditorButtons({ query, setQuery: setEditorQuery }: EditorButtonsProps) {
   const dispatch = useAppDispatch();
+  const [, startTransition] = useTransition();
+  const { urlEndpoint: url, sdlUrl, headers, variables } = useAppSelector((state) => state.graphiqlEditor);
 
-  const runCode = async () => {
-    const res = await fetchGraphQLData('https://rickandmortyapi.com/graphql', query);
-    dispatch(setResponse(res));
-    dispatch(setQuery(query));
+  const runCode = () => {
+    startTransition(async () => {
+      const res = await fetchGraphQLData(url, query, headers, variables);
+      if (res) {
+        dispatch(setResponse(res));
+      }
+      dispatch(setQuery(query));
+      saveGraphqlRequestsHistory({ url, sdlUrl, body: query, headers, variables, date: new Date() });
+    });
   };
 
   const prettifyCode = () => {

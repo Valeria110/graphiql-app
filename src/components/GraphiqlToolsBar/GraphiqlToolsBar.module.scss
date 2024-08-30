@@ -1,0 +1,12 @@
+@use '../../styles/globals.scss' as *;
+
+.toolsContainer {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  background-color: $blue-primary;
+
+  .iconBtn {
+    margin-left: auto;
+  }
+}

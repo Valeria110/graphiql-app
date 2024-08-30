@@ -1,4 +1,4 @@
-export type CodeEditorLanguage = 'graphql' | 'javascript';
+export type CodeEditorLanguage = 'graphql' | 'javascript' | 'json';
 
 export enum PagesRoutes {
   SignIn = 'sign_in',
@@ -8,3 +8,7 @@ export enum PagesRoutes {
 }
 
 export type HttpMethod = 'GET' | 'POST';
+
+export interface SectionsProps {
+  t: (arg0: string) => string;
+}
