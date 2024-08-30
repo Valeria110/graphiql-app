@@ -1,7 +1,6 @@
 'use client';
 
 import styles from './Header.module.scss';
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
 import BurgerMenu from '../BurgerMenu/BurgerMenu';
@@ -13,6 +12,7 @@ import LocaleSwitcher from '../LocaleSwitcher/LocaleSwitcher';
 import { Button } from '@mui/material';
 import { useLocale, useTranslations } from 'next-intl';
 import { PagesRoutes } from '@/types/types';
+import HomeBtn from './HomeBtn/HomeBtn';
 
 export default function Header() {
   const [user] = useAuthState(auth);
@@ -65,34 +65,34 @@ export default function Header() {
 
   return (
     <div className={headerClassName}>
-      <button onClick={() => router.push('/')} className={styles.homeBtn}>
-        <HomeRoundedIcon sx={{ fontSize: 30 }} />
-      </button>
       {screenWidth <= 768 ? (
         <BurgerMenu />
       ) : (
-        <div className={styles.rightBtnsWrapper}>
-          {isUserSignedIn ? (
-            <Button variant="contained" color="secondary" onClick={handleSignOut}>
-              {t('btnSignOut')}
-            </Button>
-          ) : (
-            <>
-              <Button variant="contained" color="primary" onClick={handleSignIn}>
-                {t('btnSignIn')}
+        <>
+          <HomeBtn handleCLick={() => router.push('/')} />
+          <div className={styles.rightBtnsWrapper}>
+            {isUserSignedIn ? (
+              <Button variant="contained" color="secondary" onClick={handleSignOut}>
+                {t('btnSignOut')}
               </Button>
-              <Button
-                variant="contained"
-                color="secondary"
-                onClick={handleSignUp}
-                sx={{ whiteSpace: 'nowrap', paddingX: 4 }}
-              >
-                {t('btnSignUp')}
-              </Button>
-            </>
-          )}
-          <LocaleSwitcher />
-        </div>
+            ) : (
+              <>
+                <Button variant="contained" color="primary" onClick={handleSignIn}>
+                  {t('btnSignIn')}
+                </Button>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  onClick={handleSignUp}
+                  sx={{ whiteSpace: 'nowrap', paddingX: 4 }}
+                >
+                  {t('btnSignUp')}
+                </Button>
+              </>
+            )}
+            <LocaleSwitcher />
+          </div>
+        </>
       )}
     </div>
   );
