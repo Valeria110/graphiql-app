@@ -1,22 +1,9 @@
 'use client';
-import {
-  AppBar,
-  Box,
-  Button,
-  FormControl,
-  IconButton,
-  InputLabel,
-  MenuItem,
-  Select,
-  Stack,
-  TextField,
-  Toolbar,
-  Typography,
-} from '@mui/material';
+import { Box, Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material';
 import { useId, useState } from 'react';
 import { SelectChangeEvent } from '@mui/material/Select';
-import { HttpMethod } from '@/types/types';
-import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import { HttpMethod, ResponseCodeTime } from '@/types/types';
+import ResponseArea from './ResponseArea';
 
 // TODO: add icon to submit btn
 
@@ -99,48 +86,6 @@ function BodyArea({ value, onChange }: { value: string; onChange: (e: React.Chan
   return (
     <Box sx={{ my: 2, px: 1 }}>
       <TextField label="Body" multiline rows={4} variant="filled" fullWidth value={value} onChange={onChange} />
-    </Box>
-  );
-}
-
-function ResponseArea({ response, responseInfo }: { response: string; responseInfo: ResponseCodeTime }) {
-  return (
-    <Box sx={{ my: 2, px: 1 }}>
-      <ResponseAreaBar code={responseInfo.code} timeMs={responseInfo.timeMs} />
-      <TextField
-        label="Response"
-        multiline
-        rows={10}
-        variant="outlined"
-        fullWidth
-        value={response}
-        InputProps={{ readOnly: true }}
-      />
-    </Box>
-  );
-}
-
-interface ResponseCodeTime {
-  code: Response['status'] | undefined;
-  timeMs: number | undefined;
-}
-
-function ResponseAreaBar({ code, timeMs }: ResponseCodeTime) {
-  return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
-        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Box sx={{ display: 'flex', alignItems: 'center' }}>
-            <IconButton size="small" edge="start" color="inherit" aria-label="menu">
-              <AccessTimeIcon />
-            </IconButton>
-            <Typography variant="body2" sx={{ ml: 1 }}>
-              {`Time: ${timeMs}ms`}
-            </Typography>
-          </Box>
-          <Typography variant="body2">{`Code: ${code}`}</Typography>
-        </Toolbar>
-      </AppBar>
     </Box>
   );
 }
