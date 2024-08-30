@@ -7,7 +7,7 @@ import { TextField } from '@mui/material';
 import { useLocale } from 'next-intl';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hooks/storeHooks';
-import { setUrlEndpoint } from '@/features/graphiql/graphiqlEditorSlice';
+import { setSdlUrl, setUrlEndpoint } from '@/features/graphiql/graphiqlEditorSlice';
 import { usePathname } from 'next/navigation';
 
 export default function PlaygroundInputs() {
@@ -24,6 +24,11 @@ export default function PlaygroundInputs() {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEndpointUrlValue(e.target.value);
+    dispatch(setSdlUrl(e.target.value + '?sdl'));
+  };
+
+  const handleChangeInputSdl = (e: ChangeEvent<HTMLInputElement>) => {
+    dispatch(setSdlUrl(e.target.value));
   };
 
   const handleFocusOut = () => {
@@ -51,6 +56,7 @@ export default function PlaygroundInputs() {
         placeholder="Enter SDL url..."
         style={{ color: 'whitesmoke' }}
         defaultValue={`${endpointUrlValue}?sdl`}
+        onChange={handleChangeInputSdl}
       />
     </>
   );

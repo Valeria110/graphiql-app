@@ -16,6 +16,9 @@ export default function EditorButtons({ query, setQuery: setEditorQuery }: Edito
   const dispatch = useAppDispatch();
   const [, startTransition] = useTransition();
   const url = useAppSelector((state) => state.graphiqlEditor.urlEndpoint);
+  const sdlUrl = useAppSelector((state) => state.graphiqlEditor.sdlUrl);
+
+  console.log(sdlUrl);
 
   const runCode = () => {
     startTransition(async () => {
@@ -32,12 +35,22 @@ export default function EditorButtons({ query, setQuery: setEditorQuery }: Edito
   };
 
   const getSchema = async () => {
-    const schema = await getGraphqlSchema(url);
+    const schemaUrl = sdlUrl ? `${sdlUrl}` : `${url}?sdl`;
 
-    if (schema) {
-      dispatch(setNewSchema(schema));
+    if (schemaUrl) {
+      try {
+        const schema = await getGraphqlSchema(schemaUrl);
+
+        if (schema) {
+          dispatch(setNewSchema(schema));
+        } else {
+          console.error('Failed to fetch schema: schema is undefined.');
+        }
+      } catch (error) {
+        console.error('Error fetching schema:', error);
+      }
     } else {
-      console.error('Failed to fetch schema: schema is undefined.');
+      console.error('Schema URL is empty.');
     }
   };
 
