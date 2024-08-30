@@ -4,6 +4,7 @@ import {
   IntrospectionListTypeRef,
   IntrospectionNonNullTypeRef,
 } from 'graphql';
+import docsStyles from '../DocsStyles.module.scss';
 
 interface ArgTypeProps {
   type: IntrospectionInputTypeRef;
@@ -22,5 +23,5 @@ function resolveTypeName(type: IntrospectionInputTypeRef): string {
 
 export function ArgType({ type, typeName }: ArgTypeProps) {
   const resolvedTypeName = resolveTypeName(type);
-  return <div>{`${typeName}: ${resolvedTypeName}`}</div>;
+  return <div className={docsStyles['title']}>{`${typeName}: ${resolvedTypeName}`}</div>;
 }

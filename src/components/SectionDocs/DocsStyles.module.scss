@@ -60,3 +60,20 @@
     }
   }
 }
+
+.fields-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  &__item {
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+  }
+}
+
+.title {
+  text-align: center;
+  font-size: 20px;
+}

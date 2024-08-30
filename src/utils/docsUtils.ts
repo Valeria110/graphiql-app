@@ -1,4 +1,5 @@
 import {
+  IntrospectionInputObjectType,
   IntrospectionListTypeRef,
   IntrospectionNamedTypeRef,
   IntrospectionNonNullTypeRef,
@@ -7,7 +8,10 @@ import {
 } from 'graphql';
 
 export function filterSchemaTypes(schema: IntrospectionQuery, nameType: string) {
-  const result = schema?.__schema.types.find(({ name }) => name === nameType) as IntrospectionObjectType | undefined;
+  const result = schema?.__schema.types.find(({ name }) => name === nameType) as
+    | IntrospectionObjectType
+    | IntrospectionInputObjectType
+    | undefined;
   return result;
 }
 
