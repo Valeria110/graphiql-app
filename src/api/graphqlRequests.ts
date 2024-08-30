@@ -1,5 +1,6 @@
 'use server';
 
+// eslint-disable-next-line import/no-unresolved
 import { getIntrospectionQuery, IntrospectionQuery } from 'graphql';
 
 const fetchGraphQLData = async (
