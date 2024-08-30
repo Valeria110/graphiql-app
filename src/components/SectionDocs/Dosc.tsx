@@ -2,6 +2,7 @@
 import { useAppSelector } from '@/hooks/storeHooks';
 import Queries from './SubsectionsDocs/Queries';
 import docsStyles from './DocsStyles.module.scss';
+import Mutations from './SubsectionsDocs/Mutations';
 
 export default function Docs() {
   const schema = useAppSelector((state) => state.docs.schema);
@@ -20,8 +21,8 @@ export default function Docs() {
         </div>
         <div>
           <Queries schema={schema} />
-          {/* <Mutations schema={schema} />
-          <Subscriptions schema={schema} /> */}
+          <Mutations schema={schema} />
+          {/* <Subscriptions schema={schema} /> */}
         </div>
       </div>
     </div>

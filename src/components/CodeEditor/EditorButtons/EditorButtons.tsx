@@ -31,13 +31,13 @@ export default function EditorButtons({ query, setQuery: setEditorQuery }: Edito
     dispatch(setQuery(formattedCode));
   };
 
-  const onClick = async () => {
+  const getSchema = async () => {
     const schema = await getGraphqlSchema(url);
 
     if (schema) {
       dispatch(setNewSchema(schema));
     } else {
-      console.error('Failed to fetch schema: schema is undefined.'); // TODO: оповестить пользователя
+      console.error('Failed to fetch schema: schema is undefined.');
     }
   };
 
@@ -56,7 +56,7 @@ export default function EditorButtons({ query, setQuery: setEditorQuery }: Edito
           />
         </svg>
       </button>
-      <button onClick={onClick}>schema</button>
+      <button onClick={getSchema}>schema</button>
     </div>
   );
 }

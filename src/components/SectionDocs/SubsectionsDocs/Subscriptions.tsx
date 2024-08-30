@@ -1,18 +1,25 @@
 import { DocsSectionProps } from '@/types/types';
+import { List } from '@mui/material';
 import { IntrospectionObjectType } from 'graphql';
+import { DocsItem } from './DocsItem';
+import { NestedItem } from './SubsectionsComponents/NestedItem';
 
 export default function Subscriptions({ schema }: DocsSectionProps) {
   const allSubscriptions = schema?.__schema.types.find(({ name }) => name === 'Subscription') as
     | IntrospectionObjectType
     | undefined;
 
+  if (!allSubscriptions) return null;
+
   return (
-    allSubscriptions && (
-      <div>
-        {allSubscriptions.fields.map((subscription) => (
-          <div key={subscription.name}>{subscription.name}</div>
-        ))}
-      </div>
-    )
+    <List component="nav">
+      <NestedItem name="Mutations" level={1}>
+        <List component="div" disablePadding>
+          {allSubscriptions.fields.map((subscription) => (
+            <DocsItem key={subscription.name} query={subscription} schema={schema} />
+          ))}
+        </List>
+      </NestedItem>
+    </List>
   );
 }
