@@ -5,6 +5,7 @@ import { SelectChangeEvent } from '@mui/material/Select';
 import { HttpMethod, ResponseCodeTime } from '@/types/types';
 import ResponseArea from './ResponseArea';
 import BodyArea from './BodyArea';
+import VariablesArea from './VariablesArea';
 
 // TODO: add icon to submit btn
 // TODO: add warning for body GET, DELETE, HEAD, OPTIONS
@@ -84,6 +85,7 @@ export default function RESTFul() {
       </form>
 
       <BodyArea value={body} onChange={handleBodyChange} />
+      <VariablesArea />
 
       <ResponseArea response={response} responseInfo={responseInfo} />
     </Box>
