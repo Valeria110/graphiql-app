@@ -1,20 +1,29 @@
-import { Box, TextField, AppBar, Toolbar, IconButton, Typography } from '@mui/material';
+import { Box, AppBar, Toolbar, IconButton, Typography } from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { ResponseCodeTime } from '@/types/types';
+
+import { Editor } from '@monaco-editor/react';
 
 export default function ResponseArea({ response, responseInfo }: { response: string; responseInfo: ResponseCodeTime }) {
   return (
     <Box sx={{ my: 2 }}>
       <ResponseAreaBar code={responseInfo.code} timeMs={responseInfo.timeMs} />
-      <TextField
-        label="Response"
-        multiline
-        rows={10}
-        variant="outlined"
-        fullWidth
-        value={response}
-        InputProps={{ readOnly: true }}
-      />
+
+      <div>
+        <Editor
+          height="300px"
+          width="100%"
+          language="json"
+          value={response}
+          options={{
+            readOnly: true,
+            automaticLayout: true,
+            minimap: { enabled: false },
+          }}
+          theme="vs-dark"
+          // loading={<Loader />} TODO: add later
+        />
+      </div>
     </Box>
   );
 }
@@ -29,10 +38,10 @@ function ResponseAreaBar({ code, timeMs }: ResponseCodeTime) {
               <AccessTimeIcon />
             </IconButton>
             <Typography variant="body2" sx={{ ml: 1 }}>
-              {`Time: ${timeMs ?? '   '} ms`}
+              {timeMs ? `Time: ${timeMs} ms` : 'Time: '}
             </Typography>
           </Box>
-          <Typography variant="body2">{`Code: ${code ?? ''}`}</Typography>
+          <Typography variant="body2">{`Code: ${code ?? '\u00A0\u00A0\u00A0'}`}</Typography>
         </Toolbar>
       </AppBar>
     </Box>
