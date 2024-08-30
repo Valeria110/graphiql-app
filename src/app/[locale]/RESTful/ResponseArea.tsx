@@ -21,7 +21,6 @@ export default function ResponseArea({ response, responseInfo }: { response: str
             minimap: { enabled: false },
           }}
           theme="vs-dark"
-          // loading={<Loader />} TODO: add later
         />
       </div>
     </Box>

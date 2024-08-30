@@ -7,7 +7,7 @@ export enum PagesRoutes {
   RESTFul = 'RESTful',
 }
 
-export type HttpMethod = 'GET' | 'POST';
+export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD' | 'OPTIONS';
 
 export interface SectionsProps {
   t: (arg0: string) => string;

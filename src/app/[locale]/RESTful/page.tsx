@@ -4,8 +4,13 @@ import { useId, useState } from 'react';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { HttpMethod, ResponseCodeTime } from '@/types/types';
 import ResponseArea from './ResponseArea';
+import BodyArea from './BodyArea';
 
 // TODO: add icon to submit btn
+// TODO: add warning for body GET, DELETE, HEAD, OPTIONS
+// TODO: maybe loader add later
+
+const httpMethods: HttpMethod[] = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'];
 
 export default function RESTFul() {
   const [method, setMethod] = useState<HttpMethod>('GET');
@@ -27,7 +32,7 @@ export default function RESTFul() {
         headers: {
           'Content-Type': 'application/json',
         },
-        ...(method === 'POST' && { body: JSON.stringify(JSON.parse(body)) }),
+        ...(body && { body }),
       };
 
       const start = Date.now();
@@ -49,19 +54,22 @@ export default function RESTFul() {
     setUrl(event.target.value);
   };
 
-  const handleBodyChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setBody(event.target.value);
+  const handleBodyChange = (newValue: string | undefined) => {
+    setBody(newValue || '');
   };
 
   return (
     <Box sx={{ my: 2, px: 1 }}>
       <form onSubmit={handleSubmit}>
         <Stack direction="row" spacing={1}>
-          <FormControl sx={{ minWidth: 100 }}>
+          <FormControl sx={{ minWidth: 120 }}>
             <InputLabel id={idLabel}>Method</InputLabel>
             <Select labelId={idLabel} id={idSelect} value={method} label="Method" onChange={handleMethodChange}>
-              <MenuItem value={'GET'}>GET</MenuItem>
-              <MenuItem value={'POST'}>POST</MenuItem>
+              {httpMethods.map((method) => (
+                <MenuItem key={method} value={method}>
+                  {method}
+                </MenuItem>
+              ))}
             </Select>
           </FormControl>
 
@@ -75,17 +83,9 @@ export default function RESTFul() {
         </Stack>
       </form>
 
-      {method === 'POST' && <BodyArea value={body} onChange={handleBodyChange} />}
+      <BodyArea value={body} onChange={handleBodyChange} />
 
       <ResponseArea response={response} responseInfo={responseInfo} />
-    </Box>
-  );
-}
-
-function BodyArea({ value, onChange }: { value: string; onChange: (e: React.ChangeEvent<HTMLInputElement>) => void }) {
-  return (
-    <Box sx={{ my: 2, px: 1 }}>
-      <TextField label="Body" multiline rows={4} variant="filled" fullWidth value={value} onChange={onChange} />
     </Box>
   );
 }
