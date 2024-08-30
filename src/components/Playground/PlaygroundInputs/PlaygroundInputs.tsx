@@ -4,7 +4,7 @@ import { PagesRoutes } from '@/types/types';
 import styles from './PlaygroundInputs.module.scss';
 import { formatToBase64 } from '@/utils/utils';
 import { TextField } from '@mui/material';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { ChangeEvent, useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '@/hooks/storeHooks';
 import { setSdlUrl, setUrlEndpoint } from '@/features/graphiql/graphiqlEditorSlice';
@@ -12,6 +12,7 @@ import { usePathname } from 'next/navigation';
 
 export default function PlaygroundInputs() {
   const localActive = useLocale();
+  const t = useTranslations('PlaygroundInputs');
   const dispatch = useAppDispatch();
   const { urlEndpoint, query, sdlUrl } = useAppSelector((state) => state.graphiqlEditor);
   const [endpointUrlValue, setEndpointUrlValue] = useState(urlEndpoint);
@@ -40,7 +41,7 @@ export default function PlaygroundInputs() {
         className={styles.urlUnput}
         variant="outlined"
         value={endpointUrlValue}
-        placeholder="Enter endpoint url..."
+        placeholder={t('urlUnput')}
         style={{ color: 'whitesmoke' }}
         onBlur={handleFocusOut}
         onChange={handleChange}
@@ -48,7 +49,7 @@ export default function PlaygroundInputs() {
       <TextField
         className={styles.urlUnput}
         variant="outlined"
-        placeholder="Enter SDL url..."
+        placeholder={t('sdlUrlUnput')}
         style={{ color: 'whitesmoke' }}
         defaultValue={sdlUrl}
         onBlur={(e: React.FocusEvent<HTMLInputElement>) => dispatch(setSdlUrl(e.target.value))}
