@@ -60,11 +60,14 @@ export default function Queries({ schema }: DocsSectionProps) {
 }
 
 function QueryItem({ query, schema }: { query: IntrospectionField; schema: IntrospectionQuery }) {
+  const typeName = findKeyValue(query.type, 'name');
+
   return (
     <NestedItem name={query.name} description={''} level={2}>
       <List component="div" disablePadding sx={{ pl: 4 }}>
         {query.description && <DescriptionItem description={query.description} />}
         {query.args.length > 0 && <ArgsList args={query.args} schema={schema} />}
+        {typeName && <FieldsList typeName={typeName} schema={schema} />}
       </List>
     </NestedItem>
   );
@@ -99,7 +102,9 @@ function ArgItem({ arg, schema }: { arg: IntrospectionInputValue; schema: Intros
   return (
     <div className={docsStyles['args-container']}>
       <div className={docsStyles['args-list']}>
-        <ArgType type={arg.type} typeName={arg.name} />
+        <strong>
+          <ArgType type={arg.type} typeName={arg.name} className={'args-list__title'} />
+        </strong>
         {argTypeDetails &&
           (argTypeDetails.kind === 'INPUT_OBJECT' ? (
             <InputFieldsList inputFields={argTypeDetails.inputFields} schema={schema} />
@@ -115,7 +120,7 @@ function InputFieldsList({
   inputFields,
   schema,
 }: {
-  inputFields: readonly IntrospectionInputValue[];
+  inputFields: readonly IntrospectionInputValue[] | readonly IntrospectionField[];
   schema: IntrospectionQuery;
 }) {
   return (
@@ -127,12 +132,70 @@ function InputFieldsList({
         return (
           <div key={field.name} className={docsStyles['fields-list__item']}>
             <div>
-              {index + 1}. {field.name}: {fieldTypeName || 'Unknown type'}
+              <strong className={docsStyles['fields-list__header']}>
+                {`${index + 1}. `}{' '}
+                <ArgType type={field.type} typeName={field.name} className={'fields-list__item-title'} />
+              </strong>
             </div>
-            <div>{fieldTypeDetails?.description}</div>
+            {field.description && (
+              <div>
+                <strong>{'Description: '}</strong>
+                {field.description}
+              </div>
+            )}
+            {fieldTypeDetails?.description && (
+              <div>
+                <strong>{'Type: '}</strong>
+                {fieldTypeDetails?.description}
+              </div>
+            )}
           </div>
         );
       })}
     </div>
+  );
+}
+
+function FieldsList({ typeName, schema }: { typeName: string; schema: IntrospectionQuery }) {
+  const fieldTypeDetails = typeName ? filterSchemaTypes(schema, typeName) : null;
+
+  return (
+    <NestedItem name="fields" description={''} level={2}>
+      {fieldTypeDetails?.kind === 'OBJECT' &&
+        (fieldTypeDetails as IntrospectionObjectType).fields.map((field) => {
+          const fieldTypeName = findKeyValue(field.type, 'name');
+          const fieldTypeDetails = fieldTypeName ? filterSchemaTypes(schema, fieldTypeName) : null;
+
+          return (
+            <div key={field.name} className={docsStyles['args-container']}>
+              <div className={docsStyles['args-list']}>
+                {field.name && (
+                  <div className={docsStyles['title']}>
+                    {
+                      <strong>
+                        <ArgType type={field.type} typeName={field.name} className={'args-list__title'} />
+                      </strong>
+                    }
+                  </div>
+                )}
+                {field.description && (
+                  <div>
+                    <strong>{'Description'}:</strong> {field.description}
+                  </div>
+                )}
+                {fieldTypeDetails?.description && (
+                  <div>
+                    {<strong>{'Type: '}</strong>}
+                    {fieldTypeDetails.description}
+                  </div>
+                )}
+                {fieldTypeDetails?.kind === 'OBJECT' && (
+                  <InputFieldsList inputFields={fieldTypeDetails.fields} schema={schema} />
+                )}
+              </div>
+            </div>
+          );
+        })}
+    </NestedItem>
   );
 }
