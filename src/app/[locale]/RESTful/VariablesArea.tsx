@@ -4,11 +4,12 @@ import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import { IconButton, TableRow } from '@mui/material';
+import { IconButton } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -45,18 +46,22 @@ export default function VariablesArea() {
   return (
     <>
       <TableContainer component={Paper}>
-        <Table size="small" aria-label="a dense table">
+        <Table sx={{ width: '100%' }} size="small" aria-label="a dense table">
           <TableHead>
             <TableRow>
-              <TableCell>Variable</TableCell>
-              <TableCell align="left">Value</TableCell>
-              <TableCell align="left">Actions</TableCell>
+              <TableCell sx={{ width: '35%' }}>Variable</TableCell>
+              <TableCell align="left" sx={{ width: '60%' }}>
+                Value
+              </TableCell>
+              <TableCell align="left" sx={{ width: '5%' }}>
+                Actions
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {rows.map((row, index) => (
-              <TableRow key={index} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-                <TableCell component="th" scope="row">
+              <TableRow key={index}>
+                <TableCell component="th" scope="row" sx={{ width: '35%' }}>
                   <TextField
                     value={row.variable}
                     onChange={(e) => {
@@ -66,17 +71,19 @@ export default function VariablesArea() {
                     }}
                     variant="outlined"
                     size="small"
+                    fullWidth
                   />
                 </TableCell>
-                <TableCell align="left">
+                <TableCell align="left" sx={{ width: '60%' }}>
                   <TextField
                     value={row.value}
                     onChange={(e) => handleValueChange(index, e.target.value)}
                     variant="outlined"
                     size="small"
+                    fullWidth
                   />
                 </TableCell>
-                <TableCell align="left">
+                <TableCell align="left" sx={{ width: '5%' }}>
                   <IconButton
                     size="small"
                     edge="start"
