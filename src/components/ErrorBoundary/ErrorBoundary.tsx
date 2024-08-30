@@ -1,5 +1,7 @@
 'use client';
 
+import { Button } from '@mui/material';
+import styles from './ErrorBoundary.module.scss';
 import { Component, ReactNode } from 'react';
 
 interface IErrorBoundaryState {
@@ -36,11 +38,11 @@ class ErrorBoundary extends Component<IProps, IErrorBoundaryState> {
   render() {
     if (this.state.hasError) {
       return (
-        <div className={`error-block`}>
-          <h1 className="error-block__header">Something went wrong :(</h1>
-          <button className={`error-block__try-again-btn`} onClick={this.closeError}>
+        <div className={styles.errorBlock}>
+          <h1 className={styles.header}>Something went wrong :(</h1>
+          <Button variant="contained" onClick={this.closeError}>
             Try again
-          </button>
+          </Button>
         </div>
       );
     } else {

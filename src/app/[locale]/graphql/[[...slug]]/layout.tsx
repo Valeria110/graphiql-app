@@ -1,5 +1,6 @@
 'use client';
 
+import Loader from '@/components/Loader/Loader';
 import { useUser } from '@/hooks/authHook';
 import { PagesRoutes } from '@/types/types';
 import { useLocale } from 'next-intl';
@@ -14,7 +15,7 @@ export default function Layout({
   const localActive = useLocale();
 
   if (user === false) {
-    return <h1 style={{ marginTop: '200px' }}>Loading...</h1>;
+    return <Loader />;
   } else if (!user) {
     return (
       <h1>

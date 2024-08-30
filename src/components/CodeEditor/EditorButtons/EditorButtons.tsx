@@ -3,6 +3,7 @@ import { fetchGraphQLData, getGraphqlSchema } from '@/api/graphqlRequests';
 import { setNewSchema } from '@/features/graphiql/docs.slice';
 import { setQuery, setResponse } from '@/features/graphiql/graphiqlEditorSlice';
 import { useAppDispatch, useAppSelector } from '@/hooks/storeHooks';
+import { saveGraphqlRequestsHistory } from '@/utils/saveGraphqlRequestsHistory';
 import { prettifyGraphQL } from '@/utils/utils';
 import classNames from 'classnames';
 import { Dispatch, SetStateAction, useTransition } from 'react';
@@ -15,16 +16,16 @@ interface EditorButtonsProps {
 export default function EditorButtons({ query, setQuery: setEditorQuery }: EditorButtonsProps) {
   const dispatch = useAppDispatch();
   const [, startTransition] = useTransition();
-  const url = useAppSelector((state) => state.graphiqlEditor.urlEndpoint);
-  const sdlUrl = useAppSelector((state) => state.graphiqlEditor.sdlUrl);
-
-  console.log(sdlUrl);
+  const { urlEndpoint: url, sdlUrl, headers, variables } = useAppSelector((state) => state.graphiqlEditor);
 
   const runCode = () => {
     startTransition(async () => {
-      const res = await fetchGraphQLData(url, query);
-      dispatch(setResponse(res));
+      const res = await fetchGraphQLData(url, query, headers, variables);
+      if (res) {
+        dispatch(setResponse(res));
+      }
       dispatch(setQuery(query));
+      saveGraphqlRequestsHistory({ url, sdlUrl, body: query, headers, variables, date: new Date() });
     });
   };
 

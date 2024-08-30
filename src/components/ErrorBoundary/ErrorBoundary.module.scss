@@ -1,0 +1,18 @@
+@use '../../styles/globals.scss' as *;
+
+.errorBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  background-color: $blue-primary;
+  padding: 10px;
+  margin: auto;
+  margin-top: 50px;
+  border-radius: 10px;
+
+  .header {
+    font-size: 3rem;
+    font-weight: 500;
+  }
+}
