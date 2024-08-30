@@ -21,7 +21,7 @@ const initialState: InitialState = {
   variables: null,
   response: '',
   urlEndpoint: 'https://rickandmortyapi.com/graphql',
-  sdlUrl: '',
+  sdlUrl: 'https://rickandmortyapi.com/graphql?sdl',
 };
 
 const graphiqlEditorSLice = createSlice({

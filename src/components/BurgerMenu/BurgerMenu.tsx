@@ -7,6 +7,8 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/firebase';
 import { usePathname, useRouter } from 'next/navigation';
 import { PagesRoutes } from '@/types/types';
+import { logOutUser } from '@/authService';
+import HomeBtn from '../Header/HomeBtn/HomeBtn';
 
 export default function BurgerMenu() {
   const [navClass, setNavClass] = useState(styles.nav);
@@ -33,8 +35,23 @@ export default function BurgerMenu() {
     setBurgerBtnClass(isMenuOpen ? styles.burgerBtn : classNames(styles.burgerBtn, styles.clicked));
   };
 
+  const handleSignOut = () => {
+    logOutUser();
+    toggleBurgerMenu();
+  };
+
+  const handleSignIn = () => {
+    toggleBurgerMenu();
+  };
+
+  const returnHomePage = () => {
+    router.push(`/${localActive}`);
+    toggleBurgerMenu();
+  };
+
   return (
     <>
+      <HomeBtn handleCLick={returnHomePage} />
       <button onClick={toggleBurgerMenu} className={burgerBtnClass}>
         <span className={styles.burgerLine} />
         <span className={styles.burgerLine} />
@@ -42,11 +59,11 @@ export default function BurgerMenu() {
       <nav className={navClass}>
         <ul className={styles.navList}>
           {isUserSignedIn ? (
-            <Link className={styles.navLink} href={`/${localActive}`}>
+            <Link className={styles.navLink} href={`/${localActive}`} onClick={handleSignOut}>
               Sign Out
             </Link>
           ) : (
-            <Link className={styles.navLink} href={`/${localActive}/${PagesRoutes.SignIn}`}>
+            <Link className={styles.navLink} href={`/${localActive}/${PagesRoutes.SignIn}`} onClick={handleSignIn}>
               Sign In
             </Link>
           )}
