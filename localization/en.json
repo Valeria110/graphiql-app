@@ -54,5 +54,17 @@
     "sectionWelcomeBtnRestClient": "REST Client",
     "sectionWelcomeBtnGraphiQLClient": "GraphiQL Client",
     "sectionWelcomeBtnHistory": "History"
+  },
+  "PlaygroundInputs": {
+    "urlUnput": "Enter an endpoint url...",
+    "sdlUrlUnput": "Enter a SDL url..."
+  },
+  "BurgerMenu": {
+    "signOutBtn": "Sign Out",
+    "signInBtn": "Sign In"
+  },
+  "GraphiqlToolsBar": {
+    "varsBtn": "Variables",
+    "headersBtn": "Headers"
   }
 }
