@@ -44,7 +44,7 @@ export default function ToolsBarCodeEditor({ isHeadersBtnActive }: EditorProps) 
   };
 
   return (
-    <div className={styles.editorContainer} onBlur={handleOnBlur}>
+    <div className={styles.editorContainer} onBlur={handleOnBlur} data-testid="editor-container">
       <Editor
         height="138px"
         width="100%"

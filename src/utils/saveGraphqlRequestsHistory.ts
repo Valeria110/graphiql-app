@@ -1,4 +1,4 @@
-interface IRequestData {
+export interface IRequestData {
   url: string;
   sdlUrl: string;
   body: string;

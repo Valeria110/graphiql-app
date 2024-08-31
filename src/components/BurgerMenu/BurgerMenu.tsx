@@ -55,11 +55,11 @@ export default function BurgerMenu() {
   return (
     <>
       <HomeBtn handleCLick={returnHomePage} />
-      <button onClick={toggleBurgerMenu} className={burgerBtnClass}>
+      <button onClick={toggleBurgerMenu} className={burgerBtnClass} data-testid="burgerToggleBtn">
         <span className={styles.burgerLine} />
         <span className={styles.burgerLine} />
       </button>
-      <nav className={navClass}>
+      <nav className={navClass} data-testid="burgerNav">
         <ul className={styles.navList}>
           {isUserSignedIn ? (
             <Link className={styles.navLink} href={`/${localActive}`} onClick={handleSignOut}>
