@@ -4,11 +4,13 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import { useState } from 'react';
 import ToolsBarCodeEditor from './ToolsBarCodeEditor/ToolsBarCodeEditor';
+import { useTranslations } from 'next-intl';
 
 export default function GraphiqlToolsBar() {
   const [isHeadersBtnActive, setIsHeadersBtnActive] = useState(false);
   const [isVariablesBtnActive, setIsVariablesBtnActive] = useState(true);
   const [isEditorVisible, setIsEditorVisible] = useState(false);
+  const t = useTranslations('GraphiqlToolsBar');
 
   const toggleBtn = () => {
     setIsHeadersBtnActive(!isHeadersBtnActive);
@@ -33,7 +35,7 @@ export default function GraphiqlToolsBar() {
             color: `${isVariablesBtnActive ? '#fff' : '#ffffff99'}`,
           }}
         >
-          Variables
+          {t('varsBtn')}
         </Button>
         <Button
           onClick={toggleBtn}
@@ -41,7 +43,7 @@ export default function GraphiqlToolsBar() {
           color="info"
           sx={{ textTransform: 'capitalize', fontSize: '16px', color: `${isHeadersBtnActive ? '#fff' : '#ffffff99'}` }}
         >
-          Headers
+          {t('headersBtn')}
         </Button>
         <IconButton onClick={toggleIconBtn} className={styles.iconBtn} aria-label="delete">
           {isEditorVisible ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}

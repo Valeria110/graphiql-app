@@ -64,5 +64,17 @@
     "typeTitle": "Type",
     "argsTitle": "Arguments",
     "fieldsTitle": "Fields"
+  },
+  "PlaygroundInputs": {
+    "urlUnput": "Enter an endpoint url...",
+    "sdlUrlUnput": "Enter a SDL url..."
+  },
+  "BurgerMenu": {
+    "signOutBtn": "Sign Out",
+    "signInBtn": "Sign In"
+  },
+  "GraphiqlToolsBar": {
+    "varsBtn": "Variables",
+    "headersBtn": "Headers"
   }
 }

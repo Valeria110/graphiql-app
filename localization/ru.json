@@ -64,5 +64,17 @@
     "typeTitle": "Тип",
     "argsTitle": "Аргументы",
     "fieldsTitle": "Поля"
+  },
+  "PlaygroundInputs": {
+    "urlUnput": "Введите URL-адрес...",
+    "sdlUrlUnput": "Введите SDL-адрес..."
+  },
+  "BurgerMenu": {
+    "signOutBtn": "Выйти",
+    "signInBtn": "Войти"
+  },
+  "GraphiqlToolsBar": {
+    "varsBtn": "Переменные",
+    "headersBtn": "Заголовки"
   }
 }
