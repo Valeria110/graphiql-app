@@ -31,7 +31,7 @@ export default function CodeEditor({ language }: CodeEditorProps) {
     }
 
     window.history.replaceState(null, '', pathname);
-  }, [editorCodeQueryValue, setEditorQuery, pathname, query]);
+  }, [editorCodeQueryValue, setEditorQuery, pathname]);
 
   const handleChange = (value: string | undefined) => {
     setEditorQuery(value ?? '');
