@@ -1,11 +1,14 @@
 'use client';
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material';
-import { useId, useState } from 'react';
+import { useId } from 'react';
 import { SelectChangeEvent } from '@mui/material/Select';
-import { HttpMethod, ResponseCodeTime } from '@/types/types';
+import { HttpMethod } from '@/types/types';
 import ResponseArea from './ResponseArea';
 import BodyArea from './BodyArea';
 import VariablesArea from './VariablesArea';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '@/store/store';
+import { setBodyText, setMethod, setUrl, setResponse } from '@/features/RESTFul/RESTFulSlice';
 
 // TODO: add icon to submit btn
 // TODO: add warning for body GET, DELETE, HEAD, OPTIONS
@@ -14,11 +17,10 @@ import VariablesArea from './VariablesArea';
 const httpMethods: HttpMethod[] = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'];
 
 export default function RESTFul() {
-  const [method, setMethod] = useState<HttpMethod>('GET');
-  const [url, setUrl] = useState('');
-  const [body, setBody] = useState('');
-  const [response, setResponse] = useState('');
-  const [responseInfo, setResponseInfo] = useState<ResponseCodeTime>({ code: undefined, timeMs: undefined });
+  const dispatch = useDispatch<AppDispatch>();
+  const method = useSelector((state: RootState) => state.RESTFul.method);
+  const url = useSelector((state: RootState) => state.RESTFul.url);
+  const bodyText = useSelector((state: RootState) => state.RESTFul.bodyText);
 
   const idLabel = useId();
   const idSelect = useId();
@@ -33,17 +35,24 @@ export default function RESTFul() {
         headers: {
           'Content-Type': 'application/json',
         },
-        ...(body && { body }),
+        ...(bodyText && { body: bodyText }),
       };
 
       const start = Date.now();
       const res = await fetch(url, options);
       const data = await res.json();
       const finish = Date.now();
-      setResponse(JSON.stringify(data, null, 2));
-      setResponseInfo({ code: res.status, timeMs: finish - start });
+
+      dispatch(
+        setResponse({
+          code: res.status,
+          timeMs: finish - start,
+          responseText: JSON.stringify(data, null, 2),
+        }),
+      );
     } catch (error) {
-      setResponse(`Error: ${error}`);
+      // setResponse(`Error: ${error}`);
+      console.error(error);
     }
   };
 
@@ -56,7 +65,7 @@ export default function RESTFul() {
   };
 
   const handleBodyChange = (newValue: string | undefined) => {
-    setBody(newValue || '');
+    setBodyText(newValue || '');
   };
 
   return (
@@ -84,10 +93,10 @@ export default function RESTFul() {
         </Stack>
       </form>
 
-      <BodyArea value={body} onChange={handleBodyChange} />
+      <BodyArea value={bodyText} onChange={handleBodyChange} />
       <VariablesArea />
 
-      <ResponseArea response={response} responseInfo={responseInfo} />
+      <ResponseArea />
     </Box>
   );
 }

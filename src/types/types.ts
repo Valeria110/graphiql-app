@@ -17,3 +17,22 @@ export interface ResponseCodeTime {
   code: Response['status'] | undefined;
   timeMs: number | undefined;
 }
+
+export interface VariableRow {
+  variable: string;
+  value: string;
+}
+
+export interface ResponseObj {
+  code: Response['status'];
+  timeMs: number;
+  responseText: string;
+}
+
+export interface RESTFulState {
+  method: HttpMethod;
+  url: string;
+  variableTable: VariableRow[];
+  bodyText: string;
+  response?: ResponseObj;
+}

@@ -1,20 +1,22 @@
 import { Box, AppBar, Toolbar, IconButton, Typography } from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import { ResponseCodeTime } from '@/types/types';
-
 import { Editor } from '@monaco-editor/react';
+import { RootState } from '@/store/store';
+import { useSelector } from 'react-redux';
 
-export default function ResponseArea({ response, responseInfo }: { response: string; responseInfo: ResponseCodeTime }) {
+export default function ResponseArea() {
+  const response = useSelector((state: RootState) => state.RESTFul.response);
+
   return (
     <Box sx={{ my: 2 }}>
-      <ResponseAreaBar code={responseInfo.code} timeMs={responseInfo.timeMs} />
+      <ResponseAreaBar />
 
       <div>
         <Editor
           height="300px"
           width="100%"
           language="json"
-          value={response}
+          value={response?.responseText}
           options={{
             readOnly: true,
             automaticLayout: true,
@@ -27,7 +29,11 @@ export default function ResponseArea({ response, responseInfo }: { response: str
   );
 }
 
-function ResponseAreaBar({ code, timeMs }: ResponseCodeTime) {
+function ResponseAreaBar() {
+  const response = useSelector((state: RootState) => state.RESTFul.response);
+  const timeMs = response?.timeMs;
+  const code = response?.code;
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">

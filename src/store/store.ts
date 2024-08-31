@@ -1,10 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
 import graphiqlEditorReducer from '../features/graphiql/graphiqlEditorSlice';
+import RESTFulReducer from '../features/RESTFul/RESTFulSlice';
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       graphiqlEditor: graphiqlEditorReducer,
+      RESTFul: RESTFulReducer,
     },
   });
 };
