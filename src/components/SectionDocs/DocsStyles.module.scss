@@ -8,11 +8,21 @@
   min-height: 550px;
   height: 500px;
   overflow: scroll;
-  position: relative;
+  position: fixed;
   font-size: 15px;
+  transform: translateX(-600px);
+  transition: transform 0.5s;
+  border: 1px solid rgba(255, 255, 255, 0.4);
 
-  @media (max-width: 1295px) {
+  @media (max-width: 1395px) {
     width: 100%;
+    transform: translateY(-2000px);
+    min-height: 350px;
+    height: 400px;
+  }
+
+  @media (max-width: 600px) {
+    padding: 5px;
   }
 
   &__title {
@@ -24,7 +34,13 @@
     width: 100%;
     margin-bottom: 10px;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
+    padding: 0px 9px;
+
+    @media (max-width: 600px) {
+      padding: 5px 9px;
+      margin-bottom: 0px;
+    }
   }
 
   &__button-close {
@@ -32,9 +48,12 @@
     background-color: transparent;
     font-size: 20px;
     display: flex;
-    position: absolute;
-    right: 0;
-    margin: 20px;
+    color: white;
+    transform: rotate(45deg);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }
 
@@ -56,6 +75,11 @@
     flex-direction: column;
     gap: 10px;
 
+    @media (max-width: 600px) {
+      width: 100%;
+      overflow: scroll;
+    }
+
     p {
       margin: 0;
     }
@@ -63,6 +87,12 @@
     &__title {
       text-align: center;
       font-size: 20px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+
+      @media (max-width: 600px) {
+        font-size: 17px;
+      }
     }
   }
 }
@@ -84,9 +114,43 @@
     align-items: center;
     gap: 5px;
     font-size: 17px;
+    word-wrap: break-word;
+
+    @media (max-width: 600px) {
+      font-size: 16px;
+    }
   }
 
   &__item-title {
     font-size: 17px;
+    word-wrap: break-word;
+
+    @media (max-width: 600px) {
+      font-size: 16px;
+    }
   }
+}
+
+.open-docs {
+  transform: translateX(0);
+  position: relative;
+
+  @media (max-width: 1395px) {
+    transform: translateY(0);
+  }
+}
+
+.error-message {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+  position: absolute;
+  gap: 10px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
 }

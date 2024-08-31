@@ -1,6 +1,6 @@
 import styles from './EditorButtons.module.scss';
 import { fetchGraphQLData, getGraphqlSchema } from '@/api/graphqlRequests';
-import { setNewSchema } from '@/features/graphiql/docs.slice';
+import { setError, setNewSchema, setOpenDocs } from '@/features/graphiql/docs.slice';
 import { setQuery, setResponse } from '@/features/graphiql/graphiqlEditorSlice';
 import { useAppDispatch, useAppSelector } from '@/hooks/storeHooks';
 import { saveGraphqlRequestsHistory } from '@/utils/saveGraphqlRequestsHistory';
@@ -44,14 +44,26 @@ export default function EditorButtons({ query, setQuery: setEditorQuery }: Edito
 
         if (schema) {
           dispatch(setNewSchema(schema));
+          dispatch(setOpenDocs(true));
+          dispatch(setError(''));
         } else {
-          console.error('Failed to fetch schema: schema is undefined.');
+          const errorMessage = 'Failed to fetch schema: schema is undefined.';
+          dispatch(setError(errorMessage));
         }
       } catch (error) {
-        console.error('Error fetching schema:', error);
+        let errorMessage: string;
+
+        if (error instanceof Error) {
+          errorMessage = `Error fetching schema: ${error.message}`;
+        } else {
+          errorMessage = 'Error fetching schema: Unknown error occurred.';
+        }
+
+        dispatch(setError(errorMessage));
       }
     } else {
-      console.error('Schema URL is empty.');
+      const errorMessage = 'Schema URL is empty.';
+      dispatch(setError(errorMessage));
     }
   };
 
@@ -70,7 +82,7 @@ export default function EditorButtons({ query, setQuery: setEditorQuery }: Edito
           />
         </svg>
       </button>
-      <button onClick={getSchema}>schema</button>
+      <button onClick={getSchema} className={styles['button-docs']} />
     </div>
   );
 }

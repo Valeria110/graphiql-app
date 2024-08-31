@@ -13,7 +13,7 @@ export default function Subscriptions({ schema }: DocsSectionProps) {
 
   return (
     <List component="nav">
-      <NestedItem name="Mutations" level={1}>
+      <NestedItem name="Subscriptions" level={1}>
         <List component="div" disablePadding>
           {allSubscriptions.fields.map((subscription) => (
             <DocsItem key={subscription.name} query={subscription} schema={schema} />

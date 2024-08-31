@@ -3,10 +3,14 @@ import { IntrospectionQuery } from 'graphql';
 
 interface initialStateInt {
   schema: IntrospectionQuery | null;
+  isOpen: boolean;
+  textError: string;
 }
 
 const initialState: initialStateInt = {
   schema: null,
+  isOpen: false,
+  textError: '',
 };
 
 const docsSlice = createSlice({
@@ -16,8 +20,14 @@ const docsSlice = createSlice({
     setNewSchema(state, action: PayloadAction<IntrospectionQuery>) {
       state.schema = { ...action.payload } as Draft<IntrospectionQuery>;
     },
+    setOpenDocs(state, action: PayloadAction<boolean>) {
+      state.isOpen = action.payload;
+    },
+    setError(state, action: PayloadAction<string>) {
+      state.textError = action.payload;
+    },
   },
 });
 
-export const { setNewSchema } = docsSlice.actions;
+export const { setNewSchema, setOpenDocs, setError } = docsSlice.actions;
 export default docsSlice.reducer;
