@@ -49,7 +49,7 @@ export default function GraphiqlToolsBar() {
           {isEditorVisible ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
         </IconButton>
       </div>
-      <div className={styles.EditorContainer}>
+      <div className={styles.EditorContainer} data-testid="tools-editor-container">
         {isEditorVisible ? <ToolsBarCodeEditor isHeadersBtnActive={isHeadersBtnActive} /> : null}
       </div>
     </>
