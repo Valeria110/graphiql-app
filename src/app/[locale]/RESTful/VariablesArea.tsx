@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -12,35 +11,27 @@ import Box from '@mui/material/Box';
 import { IconButton } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddIcon from '@mui/icons-material/Add';
-
-interface VariableRow {
-  variable: string;
-  value: string;
-}
-
-const initialRows: VariableRow[] = [
-  { variable: 'base_url', value: 'https://api.example.com' },
-  { variable: 'token', value: '1234567890' },
-  { variable: 'timeout', value: '5000' },
-];
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '@/store/store';
+import { setVariableTable } from '@/features/RESTFul/RESTFulSlice';
 
 export default function VariablesArea() {
-  const [rows, setRows] = useState<VariableRow[]>(initialRows);
+  const dispatch = useDispatch<AppDispatch>();
+  const variableTable = useSelector((state: RootState) => state.RESTFul.variableTable);
 
-  const handleValueChange = (index: number, newValue: string) => {
-    const updatedRows = [...rows];
-    updatedRows[index].value = newValue;
-    setRows(updatedRows);
+  const handleValueChange = (index: number, field: 'variable' | 'value', newValue: string) => {
+    const updatedRows = variableTable.map((row, i) => (i === index ? { ...row, [field]: newValue } : row));
+    dispatch(setVariableTable(updatedRows));
   };
 
   const handleAddRow = () => {
-    const newRow: VariableRow = { variable: '', value: '' };
-    setRows([...rows, newRow]);
+    const newRow = { variable: '', value: '' };
+    dispatch(setVariableTable([...variableTable, newRow]));
   };
 
   const handleRemoveRow = (index: number) => {
-    const updatedRows = rows.filter((_, i) => i !== index);
-    setRows(updatedRows);
+    const updatedRows = variableTable.filter((_, i) => i !== index);
+    dispatch(setVariableTable(updatedRows));
   };
 
   return (
@@ -59,16 +50,12 @@ export default function VariablesArea() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row, index) => (
+            {variableTable.map((row, index) => (
               <TableRow key={index}>
                 <TableCell component="th" scope="row" sx={{ width: '35%' }}>
                   <TextField
                     value={row.variable}
-                    onChange={(e) => {
-                      const updatedRows = [...rows];
-                      updatedRows[index].variable = e.target.value;
-                      setRows(updatedRows);
-                    }}
+                    onChange={(e) => handleValueChange(index, 'variable', e.target.value)}
                     variant="outlined"
                     size="small"
                     fullWidth
@@ -77,7 +64,7 @@ export default function VariablesArea() {
                 <TableCell align="left" sx={{ width: '60%' }}>
                   <TextField
                     value={row.value}
-                    onChange={(e) => handleValueChange(index, e.target.value)}
+                    onChange={(e) => handleValueChange(index, 'value', e.target.value)}
                     variant="outlined"
                     size="small"
                     fullWidth

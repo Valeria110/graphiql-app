@@ -4,7 +4,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 const initialState: RESTFulState = {
   method: 'GET',
   url: 'http://localhost:3001/posts',
-  variableTable: [],
+  variableTable: [{ variable: 'test', value: 'test' }],
   bodyText: '',
   response: undefined,
 };
