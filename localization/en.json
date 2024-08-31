@@ -55,6 +55,16 @@
     "sectionWelcomeBtnGraphiQLClient": "GraphiQL Client",
     "sectionWelcomeBtnHistory": "History"
   },
+  "Docs": {
+    "docsTitle": "Documentation",
+    "queriesTitle": "Queries",
+    "mutationsTitle": "Mutations",
+    "subscriptionsTitle": "Subscriptions",
+    "descriptionTitle": "Description",
+    "typeTitle": "Type",
+    "argsTitle": "Arguments",
+    "fieldsTitle": "Fields"
+  },
   "PlaygroundInputs": {
     "urlUnput": "Enter an endpoint url...",
     "sdlUrlUnput": "Enter a SDL url..."

@@ -25,6 +25,7 @@ export default function PlaygroundInputs() {
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEndpointUrlValue(e.target.value);
+    dispatch(setSdlUrl(e.target.value + '?sdl'));
   };
 
   const handleFocusOut = () => {

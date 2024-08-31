@@ -29,3 +29,20 @@
     }
   }
 }
+
+.playground-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.docsError {
+  width: fit-content;
+  background-color: rgba(199, 14, 14, 0.596);
+  margin-bottom: 20px;
+  position: absolute;
+
+  @media (max-width: 1700px) {
+    position: relative;
+  }
+}

@@ -55,6 +55,16 @@
     "sectionWelcomeBtnGraphiQLClient": "GraphiQL Клиент",
     "sectionWelcomeBtnHistory": "История"
   },
+  "Docs": {
+    "docsTitle": "Документация",
+    "queriesTitle": "Запросы",
+    "mutationsTitle": "Мутации",
+    "subscriptionsTitle": "Подписки",
+    "descriptionTitle": "Описание",
+    "typeTitle": "Тип",
+    "argsTitle": "Аргументы",
+    "fieldsTitle": "Поля"
+  },
   "PlaygroundInputs": {
     "urlUnput": "Введите URL-адрес...",
     "sdlUrlUnput": "Введите SDL-адрес..."
