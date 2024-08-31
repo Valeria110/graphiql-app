@@ -54,5 +54,15 @@
     "sectionWelcomeBtnRestClient": "REST Client",
     "sectionWelcomeBtnGraphiQLClient": "GraphiQL Client",
     "sectionWelcomeBtnHistory": "History"
+  },
+  "Docs": {
+    "docsTitle": "Documentation",
+    "queriesTitle": "Queries",
+    "mutationsTitle": "Mutations",
+    "subscriptionsTitle": "Subscriptions",
+    "descriptionTitle": "Description",
+    "typeTitle": "Type",
+    "argsTitle": "Arguments",
+    "fieldsTitle": "Fields"
   }
 }

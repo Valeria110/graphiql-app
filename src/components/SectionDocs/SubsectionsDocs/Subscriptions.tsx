@@ -4,7 +4,7 @@ import { IntrospectionObjectType } from 'graphql';
 import { DocsItem } from './DocsItem';
 import { NestedItem } from './SubsectionsComponents/NestedItem';
 
-export default function Subscriptions({ schema }: DocsSectionProps) {
+export default function Subscriptions({ schema, t }: DocsSectionProps) {
   const allSubscriptions = schema?.__schema.types.find(({ name }) => name === 'Subscription') as
     | IntrospectionObjectType
     | undefined;
@@ -13,7 +13,7 @@ export default function Subscriptions({ schema }: DocsSectionProps) {
 
   return (
     <List component="nav">
-      <NestedItem name="Subscriptions" level={1}>
+      <NestedItem name={t('subscriptionsTitle')} level={1}>
         <List component="div" disablePadding>
           {allSubscriptions.fields.map((subscription) => (
             <DocsItem key={subscription.name} query={subscription} schema={schema} />

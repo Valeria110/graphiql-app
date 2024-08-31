@@ -14,4 +14,5 @@ export interface SectionsProps {
 
 export interface DocsSectionProps {
   schema: IntrospectionQuery;
+  t: (arg0: string) => string;
 }

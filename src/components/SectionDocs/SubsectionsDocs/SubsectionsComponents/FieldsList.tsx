@@ -3,52 +3,14 @@ import { IntrospectionInputValue, IntrospectionField, IntrospectionQuery, Intros
 import { ArgType } from '../ReturnType';
 import { NestedItem } from './NestedItem';
 import docsStyles from '../../DocsStyles.module.scss';
-
-export function InputFieldsList({
-  inputFields,
-  schema,
-}: {
-  inputFields: readonly IntrospectionInputValue[] | readonly IntrospectionField[];
-  schema: IntrospectionQuery;
-}) {
-  return (
-    <div className={docsStyles['fields-list']}>
-      {inputFields.map((field, index) => {
-        const fieldTypeName = findKeyValue(field.type, 'name');
-        const fieldTypeDetails = fieldTypeName ? filterSchemaTypes(schema, fieldTypeName) : null;
-
-        return (
-          <div key={field.name} className={docsStyles['fields-list__item']}>
-            <div>
-              <strong className={docsStyles['fields-list__header']}>
-                {`${index + 1}. `}{' '}
-                <ArgType type={field.type} typeName={field.name} className={'fields-list__item-title'} />
-              </strong>
-            </div>
-            {field.description && (
-              <div>
-                <strong>{'Description: '}</strong>
-                {field.description}
-              </div>
-            )}
-            {fieldTypeDetails?.description && (
-              <div>
-                <strong>{'Type: '}</strong>
-                {fieldTypeDetails?.description}
-              </div>
-            )}
-          </div>
-        );
-      })}
-    </div>
-  );
-}
+import { useTranslations } from 'next-intl';
 
 export function FieldsList({ typeName, schema }: { typeName: string; schema: IntrospectionQuery }) {
   const fieldTypeDetails = typeName ? filterSchemaTypes(schema, typeName) : null;
+  const t = useTranslations('Docs');
 
   return (
-    <NestedItem name="fields" description={''} level={2}>
+    <NestedItem name={t('fieldsTitle')} description={''} level={2}>
       {fieldTypeDetails?.kind === 'OBJECT' &&
         (fieldTypeDetails as IntrospectionObjectType).fields.map((field) => {
           const fieldTypeName = findKeyValue(field.type, 'name');
@@ -68,12 +30,12 @@ export function FieldsList({ typeName, schema }: { typeName: string; schema: Int
                 )}
                 {field.description && (
                   <div>
-                    <strong>{'Description'}:</strong> {field.description}
+                    <strong>{t('descriptionTitle')}: </strong> {field.description}
                   </div>
                 )}
                 {fieldTypeDetails?.description && (
                   <div>
-                    {<strong>{'Type: '}</strong>}
+                    {<strong>{t('typeTitle')}: </strong>}
                     {fieldTypeDetails.description}
                   </div>
                 )}
@@ -85,5 +47,47 @@ export function FieldsList({ typeName, schema }: { typeName: string; schema: Int
           );
         })}
     </NestedItem>
+  );
+}
+
+export function InputFieldsList({
+  inputFields,
+  schema,
+}: {
+  inputFields: readonly IntrospectionInputValue[] | readonly IntrospectionField[];
+  schema: IntrospectionQuery;
+}) {
+  const t = useTranslations('Docs');
+
+  return (
+    <div className={docsStyles['fields-list']}>
+      {inputFields.map((field, index) => {
+        const fieldTypeName = findKeyValue(field.type, 'name');
+        const fieldTypeDetails = fieldTypeName ? filterSchemaTypes(schema, fieldTypeName) : null;
+
+        return (
+          <div key={field.name} className={docsStyles['fields-list__item']}>
+            <div>
+              <strong className={docsStyles['fields-list__header']}>
+                {`${index + 1}. `}{' '}
+                <ArgType type={field.type} typeName={field.name} className={'fields-list__item-title'} />
+              </strong>
+            </div>
+            {field.description && (
+              <div>
+                <strong>{t('descriptionTitle')}: </strong>
+                {field.description}
+              </div>
+            )}
+            {fieldTypeDetails?.description && (
+              <div>
+                <strong>{t('typeTitle')}: </strong>
+                {fieldTypeDetails?.description}
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
   );
 }

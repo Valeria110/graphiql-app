@@ -4,10 +4,13 @@ import { ArgType } from '../ReturnType';
 import { NestedItem } from './NestedItem';
 import docsStyles from '../../DocsStyles.module.scss';
 import { InputFieldsList } from './FieldsList';
+import { useTranslations } from 'next-intl';
 
 export function ArgsList({ args, schema }: { args: readonly IntrospectionInputValue[]; schema: IntrospectionQuery }) {
+  const t = useTranslations('Docs');
+
   return (
-    <NestedItem name="args" description={''} level={2}>
+    <NestedItem name={t('argsTitle')} description={''} level={2}>
       {args.map((arg) => (
         <ArgItem key={arg.name} arg={arg} schema={schema} />
       ))}

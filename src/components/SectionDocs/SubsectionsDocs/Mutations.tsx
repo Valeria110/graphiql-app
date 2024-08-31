@@ -4,7 +4,7 @@ import { IntrospectionObjectType } from 'graphql';
 import { DocsItem } from './DocsItem';
 import { NestedItem } from './SubsectionsComponents/NestedItem';
 
-export default function Mutations({ schema }: DocsSectionProps) {
+export default function Mutations({ schema, t }: DocsSectionProps) {
   const allMutations = schema?.__schema.types.find(({ name }) => name === 'Mutation') as
     | IntrospectionObjectType
     | undefined;
@@ -13,7 +13,7 @@ export default function Mutations({ schema }: DocsSectionProps) {
 
   return (
     <List component="nav">
-      <NestedItem name="Mutations" level={1}>
+      <NestedItem name={t('mutationsTitle')} level={1}>
         <List component="div" disablePadding>
           {allMutations.fields.map((mutation) => (
             <DocsItem key={mutation.name} query={mutation} schema={schema} />
