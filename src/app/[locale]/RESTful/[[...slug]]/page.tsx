@@ -11,6 +11,8 @@ import { AppDispatch, RootState } from '@/store/store';
 import { setBodyText, setMethod, setUrl, setResponse } from '@/features/RESTFul/RESTFulSlice';
 import insertVariablesInBody from './insertVariablesInBody';
 import { useRouter } from 'next/navigation';
+import { formatToBase64 } from '@/utils/utils';
+import { arrayToBase64 } from './arrayBase64';
 
 // TODO: add icon to submit btn
 // TODO: add warning for body GET, DELETE, HEAD, OPTIONS
@@ -48,12 +50,14 @@ export default function RESTFul({ params }: { params: { slug: string } }) {
     const currentURL = new URL(window.location.href);
     const currentSlug = [...(params.slug || [])];
     currentSlug[0] = method;
+    currentSlug[1] = formatToBase64(bodyText); // body
+    currentSlug[2] = arrayToBase64(variableTable); // params
 
     const newURL = new URL(currentURL);
     newURL.pathname = `/en/RESTful/${currentSlug.join('/')}`;
 
     router.replace(newURL.toString(), undefined);
-  }, [method, params.slug, router]);
+  }, [method, params.slug, router, bodyText, variableTable]);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
