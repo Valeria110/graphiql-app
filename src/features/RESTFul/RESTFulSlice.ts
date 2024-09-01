@@ -2,13 +2,19 @@ import { RESTFulState, HttpMethod, VariableRow, ResponseObj } from '@/types/type
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: RESTFulState = {
-  method: 'GET',
+  method: 'POST',
   url: 'http://localhost:3001/posts',
-  variableTable: [{ variable: 'test', value: 'test' }],
-  bodyText: '',
+  variableTable: [{ variable: 'test', value: '"test string"' }],
+  bodyType: 'json',
+  bodyText: `    {
+        "likes": 30,
+        "title": "new data333",
+        "body": {{test}}
+    }`,
   response: undefined,
 };
 
+// TODO: change between JSON and text
 export const RESTFulSlice = createSlice({
   name: 'RESTFul',
   initialState,

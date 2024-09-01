@@ -34,5 +34,6 @@ export interface RESTFulState {
   url: string;
   variableTable: VariableRow[];
   bodyText: string;
+  bodyType: 'plain text' | 'json';
   response?: ResponseObj;
 }

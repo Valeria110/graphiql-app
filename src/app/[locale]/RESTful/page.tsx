@@ -13,6 +13,7 @@ import { setBodyText, setMethod, setUrl, setResponse } from '@/features/RESTFul/
 // TODO: add icon to submit btn
 // TODO: add warning for body GET, DELETE, HEAD, OPTIONS
 // TODO: maybe loader add later
+// TODO: preatier fix with variable
 
 const httpMethods: HttpMethod[] = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'];
 
@@ -21,6 +22,7 @@ export default function RESTFul() {
   const method = useSelector((state: RootState) => state.RESTFul.method);
   const url = useSelector((state: RootState) => state.RESTFul.url);
   const bodyText = useSelector((state: RootState) => state.RESTFul.bodyText);
+  const variableTable = useSelector((state: RootState) => state.RESTFul.variableTable);
 
   const idLabel = useId();
   const idSelect = useId();
@@ -29,13 +31,20 @@ export default function RESTFul() {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
+    const replacedBody = bodyText.replace(/{{(.*?)}}/g, (_, variable) => {
+      const foundVariable = variableTable.find((v) => v.variable === variable.trim());
+      return foundVariable ? foundVariable.value : '';
+    });
+
+    console.log('replacedBody', replacedBody);
+
     try {
       const options: RequestInit = {
         method,
         headers: {
           'Content-Type': 'application/json',
         },
-        ...(bodyText && { body: bodyText }),
+        ...(replacedBody && { body: replacedBody }),
       };
 
       const start = Date.now();
@@ -57,15 +66,15 @@ export default function RESTFul() {
   };
 
   const handleMethodChange = (event: SelectChangeEvent<HttpMethod>) => {
-    setMethod(event.target.value as HttpMethod);
+    dispatch(setMethod(event.target.value as HttpMethod));
   };
 
   const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setUrl(event.target.value);
+    dispatch(setUrl(event.target.value));
   };
 
   const handleBodyChange = (newValue: string | undefined) => {
-    setBodyText(newValue || '');
+    dispatch(setBodyText(newValue || ''));
   };
 
   return (
