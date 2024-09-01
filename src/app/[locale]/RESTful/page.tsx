@@ -9,6 +9,7 @@ import VariablesArea from './VariablesArea';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store/store';
 import { setBodyText, setMethod, setUrl, setResponse } from '@/features/RESTFul/RESTFulSlice';
+import insertVariablesInBody from './insertVariablesInBody';
 
 // TODO: add icon to submit btn
 // TODO: add warning for body GET, DELETE, HEAD, OPTIONS
@@ -31,10 +32,7 @@ export default function RESTFul() {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    const replacedBody = bodyText.replace(/{{(.*?)}}/g, (_, variable) => {
-      const foundVariable = variableTable.find((v) => v.variable === variable.trim());
-      return foundVariable ? foundVariable.value : '';
-    });
+    const replacedBody = insertVariablesInBody(variableTable, bodyText);
 
     console.log('replacedBody', replacedBody);
 

@@ -4,12 +4,15 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 const initialState: RESTFulState = {
   method: 'POST',
   url: 'http://localhost:3001/posts',
-  variableTable: [{ variable: 'test', value: '"test string"' }],
+  variableTable: [
+    { variable: 'string', value: '"test string"' },
+    { variable: 'number', value: 555 },
+  ],
   bodyType: 'json',
   bodyText: `    {
-        "likes": 30,
+        "likes": "__number__",
         "title": "new data333",
-        "body": {{test}}
+        "body": "__string__"
     }`,
   response: undefined,
 };
