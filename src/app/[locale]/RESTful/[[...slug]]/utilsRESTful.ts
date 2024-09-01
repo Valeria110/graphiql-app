@@ -1,14 +1,4 @@
-import { HttpMethod, RESTFulState, RESTFulStateMini, VariableRow } from '@/types/types';
-
-export function arrayToBase64(array: VariableRow[]): string {
-  const jsonString = JSON.stringify(array);
-  return btoa(jsonString);
-}
-
-export function base64ToArray(base64: string): VariableRow[] {
-  const jsonString = atob(base64);
-  return JSON.parse(jsonString) as VariableRow[];
-}
+import { HttpMethod, RESTFulState, RESTFulStateMini } from '@/types/types';
 
 export function convertObjToSlug(obj: RESTFulState): string[] {
   const answer: string[] = [];
@@ -24,11 +14,6 @@ export function convertObjToSlug(obj: RESTFulState): string[] {
     };
 
     const base64 = encodeObjectToBase64Url(miniObj);
-
-    console.log('convertObjToSlug');
-    console.log(miniObj);
-    console.log(base64);
-
     answer.push(base64);
   }
 
@@ -51,11 +36,10 @@ export function convertSlugToObj(slug: string[]): RESTFulState {
 
   try {
     if (slug.length > 1) {
-      console.log('convertSlugToObj');
       miniObj = decodeBase64UrlToObject(slug[1]);
     }
   } catch (error) {
-    console.error('Failed to restore miniObj:', error);
+    console.error('Failed to restore miniObj');
   }
 
   const answer: RESTFulState = {
@@ -103,5 +87,31 @@ export function decodeBase64UrlToObject(base64Url: string): RESTFulStateMini {
   } catch (error) {
     console.error('Error decoding Base64 URL to object:', error);
     throw error;
+  }
+}
+
+export function addObjectToLocalStorage(obj: RESTFulState): void {
+  const key = 'RESTFul-store';
+  try {
+    const existingData = localStorage.getItem(key);
+    const dataArray: RESTFulState[] = existingData ? JSON.parse(existingData) : [];
+
+    dataArray.push(obj);
+
+    localStorage.setItem(key, JSON.stringify(dataArray));
+  } catch (error) {
+    console.error('Error adding object to Local Storage:', error);
+  }
+}
+
+export function getArrayFromLocalStorage(): RESTFulState[] {
+  const key = 'RESTFul-store';
+  try {
+    const data = localStorage.getItem(key);
+
+    return data ? JSON.parse(data) : [];
+  } catch (error) {
+    console.error('Error getting array from Local Storage:', error);
+    return [];
   }
 }

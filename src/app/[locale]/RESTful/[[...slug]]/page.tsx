@@ -11,7 +11,7 @@ import { AppDispatch, RootState } from '@/store/store';
 import { setBodyText, setMethod, setUrl, setResponse, setObj } from '@/features/RESTFul/RESTFulSlice';
 import insertVariablesInBody from './insertVariablesInBody';
 import { useRouter } from 'next/navigation';
-import { convertObjToSlug, convertSlugToObj, getHttpMethods } from './arrayBase64';
+import { addObjectToLocalStorage, convertObjToSlug, convertSlugToObj, getHttpMethods } from './utilsRESTful';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 // TODO: add icon to submit btn
@@ -39,7 +39,6 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
   useEffect(() => {
     if (params.slug) {
       const newObj = convertSlugToObj(params.slug);
-      console.log('newObj', newObj);
       dispatch(setObj(newObj));
     }
   }, [params.slug, dispatch]);
@@ -48,10 +47,9 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
     event.preventDefault();
 
     updateURL(router, obj);
+    addObjectToLocalStorage(obj);
 
     const replacedBody = insertVariablesInBody(variableTable, bodyText);
-
-    console.log('replacedBody', replacedBody);
 
     try {
       const options: RequestInit = {
