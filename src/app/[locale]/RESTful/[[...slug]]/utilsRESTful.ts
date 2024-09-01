@@ -20,6 +20,12 @@ export function convertObjToSlug(obj: RESTFulState): string[] {
   return answer;
 }
 
+export function functionConvertObjToURL(locale: 'en' | 'ru', obj: RESTFulState) {
+  const currentSlug = convertObjToSlug(obj);
+  const pathname = `/${locale}/RESTful/${currentSlug.join('/')}`;
+  return pathname;
+}
+
 export function getHttpMethods() {
   const httpMethods: HttpMethod[] = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'];
   return httpMethods;

@@ -11,7 +11,7 @@ import { AppDispatch, RootState } from '@/store/store';
 import { setBodyText, setMethod, setUrl, setResponse, setObj } from '@/features/RESTFul/RESTFulSlice';
 import insertVariablesInBody from './insertVariablesInBody';
 import { useRouter } from 'next/navigation';
-import { addObjectToLocalStorage, convertObjToSlug, convertSlugToObj, getHttpMethods } from './utilsRESTful';
+import { addObjectToLocalStorage, convertSlugToObj, functionConvertObjToURL, getHttpMethods } from './utilsRESTful';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 // TODO: add icon to submit btn
@@ -123,9 +123,8 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
 
 function updateURL(router: AppRouterInstance, obj: RESTFulState) {
   const currentURL = new URL(window.location.href);
-  const currentSlug = convertObjToSlug(obj);
 
   const newURL = new URL(currentURL);
-  newURL.pathname = `/en/RESTful/${currentSlug.join('/')}`;
+  newURL.pathname = functionConvertObjToURL('en', obj);
   router.replace(newURL.toString(), undefined);
 }

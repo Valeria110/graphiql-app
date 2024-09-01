@@ -20,7 +20,7 @@ export interface ResponseCodeTime {
 
 export interface VariableRow {
   variable: string;
-  value: string | number;
+  value: string;
 }
 
 export interface ResponseObj {

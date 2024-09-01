@@ -39,32 +39,10 @@ export const RESTFulSlice = createSlice({
     setObj: (_, action: PayloadAction<RESTFulState>) => {
       return action.payload;
     },
-    setExampleObj: (state) => {
-      return {
-        ...state,
-        method: 'POST',
-        url: 'http://localhost:3001/posts',
-        variableTable: [
-          { variable: 'string', value: '"test string"' },
-          { variable: 'number', value: 555 },
-        ],
-        bodyType: 'json',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        bodyText: `    {
-              "likes": "__number__",
-              "title": "new data333",
-              "body": "__string__"
-          }`,
-        response: undefined,
-      };
-    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setMethod, setUrl, setBodyText, setVariableTable, setResponse, setExampleObj, setObj } =
-  RESTFulSlice.actions;
+export const { setMethod, setUrl, setBodyText, setVariableTable, setResponse, setObj } = RESTFulSlice.actions;
 
 export default RESTFulSlice.reducer;
