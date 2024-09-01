@@ -13,7 +13,6 @@ const initialState: RESTFulState = {
   response: undefined,
 };
 
-// TODO: change between JSON and text
 export const RESTFulSlice = createSlice({
   name: 'RESTFul',
   initialState,

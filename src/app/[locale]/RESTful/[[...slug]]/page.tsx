@@ -11,17 +11,23 @@ import { AppDispatch, RootState } from '@/store/store';
 import { setBodyText, setMethod, setUrl, setResponse, setObj } from '@/features/RESTFul/RESTFulSlice';
 import insertVariablesInBody from './insertVariablesInBody';
 import { useRouter } from 'next/navigation';
-import { addObjectToLocalStorage, convertSlugToObj, functionConvertObjToURL, getHttpMethods } from './utilsRESTful';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
+import {
+  addObjectToLocalStorage,
+  convertSlugToObj,
+  functionConvertObjToURL,
+  getHttpMethods,
+} from '@/utils/utilsRESTful';
 
 // TODO: add icon to submit btn
 // TODO: add warning for body GET, DELETE, HEAD, OPTIONS
-// TODO: maybe loader add later
+// TODO: loader for code area
+// TODO: change between JSON and text
+// TODO: delete "" in var table
 
 const httpMethods: HttpMethod[] = getHttpMethods();
 
 export default function RESTFul({ params }: { params: { slug: string[] } }) {
-  console.log('params', params);
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const method = useSelector((state: RootState) => state.RESTFul.method);
@@ -71,7 +77,6 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
         }),
       );
     } catch (error) {
-      // setResponse(`Error: ${error}`);
       console.error(error);
     }
   };
