@@ -1,3 +1,5 @@
+import { IntrospectionQuery } from 'graphql';
+
 export type CodeEditorLanguage = 'graphql' | 'javascript' | 'json';
 
 export enum PagesRoutes {
@@ -43,4 +45,9 @@ export interface RESTFulStateMini {
   url: string;
   variableTable: VariableRow[];
   bodyText: string;
+}
+
+export interface DocsSectionProps {
+  schema: IntrospectionQuery;
+  t: (arg0: string) => string;
 }

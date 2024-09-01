@@ -1,8 +1,10 @@
+'use client';
+
 import Link from 'next/link';
 import styles from './BurgerMenu.module.scss';
 import { ChangeEvent, useState, useTransition } from 'react';
 import classNames from 'classnames';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from '@/firebase';
 import { usePathname, useRouter } from 'next/navigation';
@@ -20,6 +22,7 @@ export default function BurgerMenu() {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const pathname = usePathname();
+  const t = useTranslations('BurgerMenu');
 
   const handleChange = (e: ChangeEvent<HTMLSelectElement>) => {
     const selectedLanguage = e.target.value;
@@ -60,11 +63,11 @@ export default function BurgerMenu() {
         <ul className={styles.navList}>
           {isUserSignedIn ? (
             <Link className={styles.navLink} href={`/${localActive}`} onClick={handleSignOut}>
-              Sign Out
+              {t('signOutBtn')}
             </Link>
           ) : (
             <Link className={styles.navLink} href={`/${localActive}/${PagesRoutes.SignIn}`} onClick={handleSignIn}>
-              Sign In
+              {t('signInBtn')}
             </Link>
           )}
           <select defaultValue={localActive} onChange={handleChange} className={styles.langSelect} disabled={isPending}>

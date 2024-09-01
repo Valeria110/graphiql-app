@@ -3,12 +3,14 @@
 .btnsWrapper {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 20px;
   margin-left: 10px;
   margin-right: 10px;
 
   @media screen and (max-width: $sm) {
     flex-direction: row;
+    align-items: center;
   }
 
   .btn {
@@ -40,4 +42,15 @@
       background-color: $btn-hover;
     }
   }
+}
+
+.button-docs {
+  border: 0;
+  background-image: url(../../../assets/document.png);
+  height: 30px;
+  width: 30px;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  cursor: pointer;
 }

@@ -1,5 +1,6 @@
 import styles from './EditorButtons.module.scss';
-import { fetchGraphQLData } from '@/api/graphqlRequests';
+import { fetchGraphQLData, getGraphqlSchema } from '@/api/graphqlRequests';
+import { setError, setNewSchema, setOpenDocs } from '@/features/graphiql/docs.slice';
 import { setQuery, setResponse } from '@/features/graphiql/graphiqlEditorSlice';
 import { useAppDispatch, useAppSelector } from '@/hooks/storeHooks';
 import { saveGraphqlRequestsHistory } from '@/utils/saveGraphqlRequestsHistory';
@@ -34,6 +35,38 @@ export default function EditorButtons({ query, setQuery: setEditorQuery }: Edito
     dispatch(setQuery(formattedCode));
   };
 
+  const getSchema = async () => {
+    const schemaUrl = sdlUrl ? `${sdlUrl}` : `${url}?sdl`;
+
+    if (schemaUrl) {
+      try {
+        const schema = await getGraphqlSchema(schemaUrl);
+
+        if (schema) {
+          dispatch(setNewSchema(schema));
+          dispatch(setOpenDocs(true));
+          dispatch(setError(''));
+        } else {
+          const errorMessage = 'Failed to fetch schema: schema is undefined.';
+          dispatch(setError(errorMessage));
+        }
+      } catch (error) {
+        let errorMessage: string;
+
+        if (error instanceof Error) {
+          errorMessage = `Error fetching schema: ${error.message}`;
+        } else {
+          errorMessage = 'Error fetching schema: Unknown error occurred.';
+        }
+
+        dispatch(setError(errorMessage));
+      }
+    } else {
+      const errorMessage = 'Schema URL is empty.';
+      dispatch(setError(errorMessage));
+    }
+  };
+
   return (
     <div className={styles.btnsWrapper}>
       <button className={classNames(styles.btn, styles.runCodeBtn)} onClick={runCode}>
@@ -49,6 +82,7 @@ export default function EditorButtons({ query, setQuery: setEditorQuery }: Edito
           />
         </svg>
       </button>
+      <button onClick={getSchema} className={styles['button-docs']} />
     </div>
   );
 }
