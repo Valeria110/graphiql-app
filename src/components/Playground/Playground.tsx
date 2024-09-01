@@ -14,6 +14,8 @@ interface PlaygroundProps {
 
 export default function Playground({ language }: PlaygroundProps) {
   const { textError } = useAppSelector((state) => state.docs);
+  const { currentRequest } = useAppSelector((state) => state.history);
+  console.log(currentRequest);
 
   return (
     <>
