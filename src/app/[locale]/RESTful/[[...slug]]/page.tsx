@@ -1,6 +1,6 @@
 'use client';
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material';
-import { useId } from 'react';
+import { useEffect, useId } from 'react';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { HttpMethod } from '@/types/types';
 import ResponseArea from './ResponseArea';
@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store/store';
 import { setBodyText, setMethod, setUrl, setResponse } from '@/features/RESTFul/RESTFulSlice';
 import insertVariablesInBody from './insertVariablesInBody';
+import { useRouter } from 'next/navigation';
 
 // TODO: add icon to submit btn
 // TODO: add warning for body GET, DELETE, HEAD, OPTIONS
@@ -17,8 +18,10 @@ import insertVariablesInBody from './insertVariablesInBody';
 
 const httpMethods: HttpMethod[] = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'];
 
-export default function RESTFul() {
+export default function RESTFul({ params }: { params: { slug: string } }) {
+  console.log('params', params);
   const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
   const method = useSelector((state: RootState) => state.RESTFul.method);
   const url = useSelector((state: RootState) => state.RESTFul.url);
   const headers = useSelector((state: RootState) => state.RESTFul.headers);
@@ -28,6 +31,29 @@ export default function RESTFul() {
   const idLabel = useId();
   const idSelect = useId();
   const idURL = useId();
+
+  // from URL to redux
+  useEffect(() => {
+    if (params.slug) {
+      const methodFromSlug = params.slug[0];
+      if (httpMethods.includes(methodFromSlug as HttpMethod)) {
+        dispatch(setMethod(methodFromSlug as HttpMethod));
+      }
+    }
+  }, [params.slug, dispatch]);
+
+  // update URL
+  // TODO: use locale
+  useEffect(() => {
+    const currentURL = new URL(window.location.href);
+    const currentSlug = [...(params.slug || [])];
+    currentSlug[0] = method;
+
+    const newURL = new URL(currentURL);
+    newURL.pathname = `/en/RESTful/${currentSlug.join('/')}`;
+
+    router.replace(newURL.toString(), undefined);
+  }, [method, params.slug, router]);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
