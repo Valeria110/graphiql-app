@@ -1,5 +1,4 @@
 import { HttpMethod, RESTFulState, RESTFulStateMini, VariableRow } from '@/types/types';
-import { formatFromBase64, formatToBase64 } from '@/utils/utils';
 
 export function arrayToBase64(array: VariableRow[]): string {
   const jsonString = JSON.stringify(array);
@@ -23,7 +22,14 @@ export function convertObjToSlug(obj: RESTFulState): string[] {
       variableTable: obj.variableTable,
       bodyText: obj.bodyText,
     };
-    answer.push(formatToBase64(JSON.stringify(miniObj)));
+
+    const base64 = encodeObjectToBase64Url(miniObj);
+
+    console.log('convertObjToSlug');
+    console.log(miniObj);
+    console.log(base64);
+
+    answer.push(base64);
   }
 
   return answer;
@@ -45,13 +51,11 @@ export function convertSlugToObj(slug: string[]): RESTFulState {
 
   try {
     if (slug.length > 1) {
-      console.log('slug[1]', slug[1]);
-      const test1 = formatFromBase64(slug[1]);
-      miniObj = JSON.parse(test1);
-      console.log('востановили из URL miniObj', miniObj);
+      console.log('convertSlugToObj');
+      miniObj = decodeBase64UrlToObject(slug[1]);
     }
-  } catch {
-    console.error('не удалось востановить miniObj');
+  } catch (error) {
+    console.error('Failed to restore miniObj:', error);
   }
 
   const answer: RESTFulState = {
@@ -73,4 +77,31 @@ export function convertSlugToObj(slug: string[]): RESTFulState {
   }
 
   return answer;
+}
+
+export function encodeObjectToBase64Url(obj: RESTFulStateMini): string {
+  try {
+    const jsonString = JSON.stringify(obj);
+    const base64 = btoa(jsonString);
+    // Replace symbols with problems in URL
+    return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
+  } catch (error) {
+    console.error('Error encoding object to Base64 URL:', error);
+    throw error;
+  }
+}
+
+export function decodeBase64UrlToObject(base64Url: string): RESTFulStateMini {
+  try {
+    // Replace symbols with problems in URL back
+    const base64 = base64Url
+      .replace(/-/g, '+')
+      .replace(/_/g, '/')
+      .padEnd(base64Url.length + ((4 - (base64Url.length % 4)) % 4), '=');
+    const jsonString = atob(base64);
+    return JSON.parse(jsonString);
+  } catch (error) {
+    console.error('Error decoding Base64 URL to object:', error);
+    throw error;
+  }
 }
