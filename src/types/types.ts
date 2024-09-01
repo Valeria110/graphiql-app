@@ -38,3 +38,9 @@ export interface RESTFulState {
   bodyType: 'plain text' | 'json';
   response?: ResponseObj;
 }
+
+export interface RESTFulStateMini {
+  url: string;
+  variableTable: VariableRow[];
+  bodyText: string;
+}

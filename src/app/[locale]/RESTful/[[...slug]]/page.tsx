@@ -2,25 +2,25 @@
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material';
 import { useEffect, useId } from 'react';
 import { SelectChangeEvent } from '@mui/material/Select';
-import { HttpMethod } from '@/types/types';
+import { HttpMethod, RESTFulState } from '@/types/types';
 import ResponseArea from './ResponseArea';
 import BodyArea from './BodyArea';
 import VariablesArea from './VariablesArea';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store/store';
-import { setBodyText, setMethod, setUrl, setResponse } from '@/features/RESTFul/RESTFulSlice';
+import { setBodyText, setMethod, setUrl, setResponse, setObj } from '@/features/RESTFul/RESTFulSlice';
 import insertVariablesInBody from './insertVariablesInBody';
 import { useRouter } from 'next/navigation';
-import { formatToBase64 } from '@/utils/utils';
-import { arrayToBase64 } from './arrayBase64';
+import { convertObjToSlug, convertSlugToObj, getHttpMethods } from './arrayBase64';
+import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 
 // TODO: add icon to submit btn
 // TODO: add warning for body GET, DELETE, HEAD, OPTIONS
 // TODO: maybe loader add later
 
-const httpMethods: HttpMethod[] = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'];
+const httpMethods: HttpMethod[] = getHttpMethods();
 
-export default function RESTFul({ params }: { params: { slug: string } }) {
+export default function RESTFul({ params }: { params: { slug: string[] } }) {
   console.log('params', params);
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
@@ -29,6 +29,7 @@ export default function RESTFul({ params }: { params: { slug: string } }) {
   const headers = useSelector((state: RootState) => state.RESTFul.headers);
   const bodyText = useSelector((state: RootState) => state.RESTFul.bodyText);
   const variableTable = useSelector((state: RootState) => state.RESTFul.variableTable);
+  const obj = useSelector((state: RootState) => state.RESTFul);
 
   const idLabel = useId();
   const idSelect = useId();
@@ -37,30 +38,16 @@ export default function RESTFul({ params }: { params: { slug: string } }) {
   // from URL to redux
   useEffect(() => {
     if (params.slug) {
-      const methodFromSlug = params.slug[0];
-      if (httpMethods.includes(methodFromSlug as HttpMethod)) {
-        dispatch(setMethod(methodFromSlug as HttpMethod));
-      }
+      const newObj = convertSlugToObj(params.slug);
+      console.log('newObj', newObj);
+      dispatch(setObj(newObj));
     }
   }, [params.slug, dispatch]);
 
-  // update URL
-  // TODO: use locale
-  useEffect(() => {
-    const currentURL = new URL(window.location.href);
-    const currentSlug = [...(params.slug || [])];
-    currentSlug[0] = method;
-    currentSlug[1] = formatToBase64(bodyText); // body
-    currentSlug[2] = arrayToBase64(variableTable); // params
-
-    const newURL = new URL(currentURL);
-    newURL.pathname = `/en/RESTful/${currentSlug.join('/')}`;
-
-    router.replace(newURL.toString(), undefined);
-  }, [method, params.slug, router, bodyText, variableTable]);
-
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
+    updateURL(router, obj);
 
     const replacedBody = insertVariablesInBody(variableTable, bodyText);
 
@@ -134,4 +121,13 @@ export default function RESTFul({ params }: { params: { slug: string } }) {
       <ResponseArea />
     </Box>
   );
+}
+
+function updateURL(router: AppRouterInstance, obj: RESTFulState) {
+  const currentURL = new URL(window.location.href);
+  const currentSlug = convertObjToSlug(obj);
+
+  const newURL = new URL(currentURL);
+  newURL.pathname = `/en/RESTful/${currentSlug.join('/')}`;
+  router.replace(newURL.toString(), undefined);
 }

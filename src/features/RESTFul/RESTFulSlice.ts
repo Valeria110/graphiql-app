@@ -2,21 +2,14 @@ import { RESTFulState, HttpMethod, VariableRow, ResponseObj } from '@/types/type
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState: RESTFulState = {
-  method: 'POST',
-  url: 'http://localhost:3001/posts',
-  variableTable: [
-    { variable: 'string', value: '"test string"' },
-    { variable: 'number', value: 555 },
-  ],
+  method: 'GET',
+  url: '',
+  variableTable: [],
   bodyType: 'json',
   headers: {
     'Content-Type': 'application/json',
   },
-  bodyText: `    {
-        "likes": "__number__",
-        "title": "new data333",
-        "body": "__string__"
-    }`,
+  bodyText: '',
   response: undefined,
 };
 
@@ -43,17 +36,35 @@ export const RESTFulSlice = createSlice({
     setResponse: (state, action: PayloadAction<ResponseObj>) => {
       state.response = action.payload;
     },
-    resetState: (state) => {
-      state.method = initialState.method;
-      state.url = initialState.url;
-      state.variableTable = initialState.variableTable;
-      state.bodyText = initialState.bodyText;
-      state.response = initialState.response;
+    setObj: (_, action: PayloadAction<RESTFulState>) => {
+      return action.payload;
+    },
+    setExampleObj: (state) => {
+      return {
+        ...state,
+        method: 'POST',
+        url: 'http://localhost:3001/posts',
+        variableTable: [
+          { variable: 'string', value: '"test string"' },
+          { variable: 'number', value: 555 },
+        ],
+        bodyType: 'json',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        bodyText: `    {
+              "likes": "__number__",
+              "title": "new data333",
+              "body": "__string__"
+          }`,
+        response: undefined,
+      };
     },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setMethod, setUrl, setBodyText, setVariableTable, setResponse, resetState } = RESTFulSlice.actions;
+export const { setMethod, setUrl, setBodyText, setVariableTable, setResponse, setExampleObj, setObj } =
+  RESTFulSlice.actions;
 
 export default RESTFulSlice.reducer;
