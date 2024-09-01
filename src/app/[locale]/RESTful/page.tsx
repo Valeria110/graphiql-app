@@ -14,7 +14,6 @@ import insertVariablesInBody from './insertVariablesInBody';
 // TODO: add icon to submit btn
 // TODO: add warning for body GET, DELETE, HEAD, OPTIONS
 // TODO: maybe loader add later
-// TODO: preatier fix with variable
 
 const httpMethods: HttpMethod[] = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'];
 
@@ -22,6 +21,7 @@ export default function RESTFul() {
   const dispatch = useDispatch<AppDispatch>();
   const method = useSelector((state: RootState) => state.RESTFul.method);
   const url = useSelector((state: RootState) => state.RESTFul.url);
+  const headers = useSelector((state: RootState) => state.RESTFul.headers);
   const bodyText = useSelector((state: RootState) => state.RESTFul.bodyText);
   const variableTable = useSelector((state: RootState) => state.RESTFul.variableTable);
 
@@ -39,9 +39,7 @@ export default function RESTFul() {
     try {
       const options: RequestInit = {
         method,
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: headers,
         ...(replacedBody && { body: replacedBody }),
       };
 

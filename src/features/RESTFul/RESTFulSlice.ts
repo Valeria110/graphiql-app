@@ -9,6 +9,9 @@ const initialState: RESTFulState = {
     { variable: 'number', value: 555 },
   ],
   bodyType: 'json',
+  headers: {
+    'Content-Type': 'application/json',
+  },
   bodyText: `    {
         "likes": "__number__",
         "title": "new data333",
@@ -24,6 +27,9 @@ export const RESTFulSlice = createSlice({
   reducers: {
     setMethod: (state, action: PayloadAction<HttpMethod>) => {
       state.method = action.payload;
+    },
+    setHeader: (state, action: PayloadAction<HeadersInit | undefined>) => {
+      state.headers = action.payload;
     },
     setUrl: (state, action: PayloadAction<string>) => {
       state.url = action.payload;

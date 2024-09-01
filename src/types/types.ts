@@ -33,6 +33,7 @@ export interface RESTFulState {
   method: HttpMethod;
   url: string;
   variableTable: VariableRow[];
+  headers?: HeadersInit;
   bodyText: string;
   bodyType: 'plain text' | 'json';
   response?: ResponseObj;
