@@ -19,8 +19,8 @@ import {
   getHttpMethods,
 } from '@/utils/utilsRESTful';
 import { useLocale } from 'next-intl';
+import SendIcon from '@mui/icons-material/Send';
 
-// TODO: add icon to submit btn
 // TODO: add warning for body GET, DELETE, HEAD, OPTIONS
 // TODO: loader for code area
 // TODO: delete "" in var table
@@ -127,7 +127,7 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
             />
           </FormControl>
 
-          <Button variant="contained" type="submit">
+          <Button endIcon={<SendIcon />} variant="contained" type="submit">
             Send
           </Button>
         </Stack>
