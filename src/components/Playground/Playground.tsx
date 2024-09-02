@@ -22,9 +22,9 @@ export default function Playground({ language }: PlaygroundProps) {
           {textError}
         </Alert>
       )}
-      <div className={styles['playground-container']}>
+      <div className={styles['playground-container']} data-testid="playground-container">
         <Docs />
-        <div className={styles.playground}>
+        <div className={styles.playground} data-testid="playground">
           <PlaygroundInputs />
           <div className={styles.editorsWrapper}>
             <CodeEditor language={language} />

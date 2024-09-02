@@ -9,7 +9,7 @@ export default function JsonViewer() {
   const response = useAppSelector((state) => state.graphiqlEditor.response);
 
   return (
-    <div className={styles.jsonViewer}>
+    <div className={styles.jsonViewer} data-testid="json-viewer">
       <Editor
         height="300px"
         width="100%"

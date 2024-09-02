@@ -2,7 +2,6 @@ import { render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import EditorButtons from './EditorButtons';
 import StoreProvider from '@/components/StoreProvider/StoreProvider';
-import styles from './EditorButtons.module.scss';
 import { userEvent } from '@testing-library/user-event';
 import * as fetchGraphQLData from '@/api/graphqlRequests';
 import * as prettifyGraphQL from '@/utils/utils';
@@ -25,7 +24,7 @@ describe('EditorButtons', () => {
       </StoreProvider>,
     );
     expect(screen.getByTestId('editor-btns-wrapper')).toBeInTheDocument();
-    screen.getAllByRole('button').forEach((btn) => expect(btn).toHaveClass(styles.btn));
+    expect(screen.getAllByRole('button').length).toBe(3);
   });
 
   it('should make a call api when clicking on the run code button', async () => {
