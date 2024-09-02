@@ -72,6 +72,10 @@ export function convertSlugToObj(slug: string[]): RESTFulState {
     answer.url = miniObj.url;
     answer.bodyText = miniObj.bodyText;
     answer.variableTable = miniObj.variableTable;
+
+    if (!isJSON(answer.bodyText)) {
+      answer.bodyType = 'text';
+    }
   }
   answer.urlInner = functionConvertObjToShortURL(answer);
 
@@ -128,5 +132,14 @@ export function getArrayFromLocalStorage(): RESTFulState[] {
   } catch (error) {
     console.error('Error getting array from Local Storage:', error);
     return [];
+  }
+}
+
+function isJSON(str: string) {
+  try {
+    JSON.parse(str);
+    return true;
+  } catch (e) {
+    return false;
   }
 }

@@ -1,4 +1,4 @@
-import { RESTFulState, HttpMethod, VariableRow, ResponseObj } from '@/types/types';
+import { RESTFulState, HttpMethod, VariableRow, ResponseObj, BodyType } from '@/types/types';
 import { functionConvertObjToShortURL } from '@/utils/utilsRESTful';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
@@ -40,6 +40,10 @@ export const RESTFulSlice = createSlice({
     setResponse: (state, action: PayloadAction<ResponseObj>) => {
       state.response = action.payload;
     },
+    setBodyType: (state, action: PayloadAction<BodyType>) => {
+      state.bodyType = action.payload;
+      RESTFulSlice.caseReducers.updateURLInner(state);
+    },
     updateURLInner: (state) => {
       state.urlInner = functionConvertObjToShortURL(state);
     },
@@ -50,6 +54,7 @@ export const RESTFulSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setMethod, setUrl, setBodyText, setVariableTable, setResponse, setObj } = RESTFulSlice.actions;
+export const { setMethod, setUrl, setBodyText, setVariableTable, setResponse, setObj, setBodyType } =
+  RESTFulSlice.actions;
 
 export default RESTFulSlice.reducer;

@@ -37,11 +37,13 @@ export interface RESTFulState {
   variableTable: VariableRow[];
   headers?: HeadersInit;
   bodyText: string;
-  bodyType: 'plain text' | 'json';
+  bodyType: BodyType;
   response?: ResponseObj;
   urlInner: string;
   isInitialized: boolean;
 }
+
+export type BodyType = 'text' | 'json';
 
 export interface RESTFulStateMini {
   url: string;
