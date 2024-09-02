@@ -1,8 +1,11 @@
 import { AppBar, Box, Toolbar, Typography, IconButton } from '@mui/material';
 import { Editor } from '@monaco-editor/react';
+import { useSelector, useDispatch } from 'react-redux';
+import { AppDispatch, RootState } from '@/store/store';
 import AutoFixHighIcon from '@mui/icons-material/AutoFixHigh';
-import { useState } from 'react';
 import prettifyJSON from '@/utils/prettifyJSON';
+import { setBodyText } from '@/features/RESTFul/RESTFulSlice';
+import { useCallback, useState } from 'react';
 
 interface BodyBarAreaProps {
   prettifyCode: () => void;
@@ -28,41 +31,42 @@ function BodyBarArea({ prettifyCode }: BodyBarAreaProps) {
 }
 
 // TODO: hide minimap for small devices
-export default function BodyArea({
-  value,
-  onChange,
-}: {
-  value: string;
-  onChange: (value: string | undefined) => void;
-}) {
-  const [editorValue, setEditorValue] = useState(value);
+export default function BodyArea() {
+  const dispatch = useDispatch<AppDispatch>();
+  const bodyTextFromRedux = useSelector((state: RootState) => state.RESTFul.bodyText);
+  const [editorValue, setEditorValue] = useState(bodyTextFromRedux);
 
-  const prettifyCode = () => {
+  const prettifyCode = useCallback(() => {
     const updateCode = prettifyJSON(editorValue);
     setEditorValue(updateCode);
-    onChange(updateCode);
-  };
+    dispatch(setBodyText(updateCode));
+  }, [editorValue, dispatch]);
+
+  const handleBlur = useCallback(() => {
+    if (editorValue !== bodyTextFromRedux) {
+      dispatch(setBodyText(editorValue));
+    }
+  }, [editorValue, bodyTextFromRedux, dispatch]);
 
   return (
     <Box sx={{ my: 2 }}>
       <BodyBarArea prettifyCode={prettifyCode} />
-      <div>
+      <Box sx={{ height: '300px', width: '100%' }} tabIndex={0} onBlur={handleBlur}>
         <Editor
-          height="300px"
+          height="100%"
           width="100%"
           language="json"
+          value={editorValue}
           onChange={(newValue) => {
             setEditorValue(newValue ?? '');
-            onChange(newValue);
           }}
-          value={value}
           options={{
             automaticLayout: true,
             minimap: { enabled: true },
           }}
           theme="vs-dark"
         />
-      </div>
+      </Box>
     </Box>
   );
 }

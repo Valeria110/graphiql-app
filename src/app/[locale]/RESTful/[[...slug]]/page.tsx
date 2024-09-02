@@ -8,7 +8,7 @@ import BodyArea from './BodyArea';
 import VariablesArea from './VariablesArea';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store/store';
-import { setBodyText, setMethod, setUrl, setResponse, setObj } from '@/features/RESTFul/RESTFulSlice';
+import { setMethod, setUrl, setResponse, setObj } from '@/features/RESTFul/RESTFulSlice';
 import insertVariablesInBody from './insertVariablesInBody';
 import { useRouter } from 'next/navigation';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
@@ -99,10 +99,6 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
     dispatch(setUrl(event.target.value));
   };
 
-  const handleBodyChange = (newValue: string | undefined) => {
-    dispatch(setBodyText(newValue || ''));
-  };
-
   return (
     <Box sx={{ my: 2, px: 1 }}>
       <form onSubmit={handleSubmit}>
@@ -128,7 +124,7 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
         </Stack>
       </form>
 
-      <BodyArea value={bodyText} onChange={handleBodyChange} />
+      <BodyArea />
       <VariablesArea />
 
       <ResponseArea />

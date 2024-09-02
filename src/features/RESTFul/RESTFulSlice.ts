@@ -32,6 +32,7 @@ export const RESTFulSlice = createSlice({
     },
     setBodyText: (state, action: PayloadAction<string>) => {
       state.bodyText = action.payload;
+      RESTFulSlice.caseReducers.updateURLInner(state);
     },
     setVariableTable: (state, action: PayloadAction<VariableRow[]>) => {
       state.variableTable = action.payload;
