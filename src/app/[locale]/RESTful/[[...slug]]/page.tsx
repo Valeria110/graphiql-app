@@ -18,6 +18,7 @@ import {
   functionConvertObjToURL,
   getHttpMethods,
 } from '@/utils/utilsRESTful';
+import { useLocale } from 'next-intl';
 
 // TODO: add icon to submit btn
 // TODO: add warning for body GET, DELETE, HEAD, OPTIONS
@@ -30,24 +31,33 @@ const httpMethods: HttpMethod[] = getHttpMethods();
 export default function RESTFul({ params }: { params: { slug: string[] } }) {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
+  const localActive = useLocale();
+
   const method = useSelector((state: RootState) => state.RESTFul.method);
   const url = useSelector((state: RootState) => state.RESTFul.url);
   const headers = useSelector((state: RootState) => state.RESTFul.headers);
   const bodyText = useSelector((state: RootState) => state.RESTFul.bodyText);
   const variableTable = useSelector((state: RootState) => state.RESTFul.variableTable);
   const obj = useSelector((state: RootState) => state.RESTFul);
+  const urlInner = useSelector((state: RootState) => state.RESTFul.urlInner);
+  const isInitialized = useSelector((state: RootState) => state.RESTFul.isInitialized);
 
   const idLabel = useId();
   const idSelect = useId();
   const idURL = useId();
 
-  // from URL to redux
   useEffect(() => {
-    if (params.slug) {
+    if (!isInitialized && params.slug) {
+      console.log('🟨 useEffect firstUpdateRedux');
       const newObj = convertSlugToObj(params.slug);
       dispatch(setObj(newObj));
     }
-  }, [params.slug, dispatch]);
+  }, [params.slug, isInitialized, dispatch]);
+
+  useEffect(() => {
+    console.log('useEffect urlInner');
+    updateURL2(router, localActive as 'en' | 'ru', urlInner);
+  }, [urlInner]);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -131,5 +141,16 @@ function updateURL(router: AppRouterInstance, obj: RESTFulState) {
 
   const newURL = new URL(currentURL);
   newURL.pathname = functionConvertObjToURL('en', obj);
+
+  console.log('updateURL', newURL.pathname);
+  router.replace(newURL.toString(), undefined);
+}
+
+function updateURL2(router: AppRouterInstance, locale: 'en' | 'ru', urlInner: string) {
+  const currentURL = new URL(window.location.href);
+
+  const newURL = new URL(currentURL);
+  newURL.pathname = `/${locale}/RESTful/` + (urlInner ?? '');
+
   router.replace(newURL.toString(), undefined);
 }

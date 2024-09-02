@@ -26,6 +26,12 @@ export function functionConvertObjToURL(locale: 'en' | 'ru', obj: RESTFulState) 
   return pathname;
 }
 
+export function functionConvertObjToShortURL(obj: RESTFulState) {
+  const currentSlug = convertObjToSlug(obj);
+  const pathname = currentSlug.join('/');
+  return pathname;
+}
+
 export function getHttpMethods() {
   const httpMethods: HttpMethod[] = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'HEAD', 'OPTIONS'];
   return httpMethods;
@@ -57,7 +63,9 @@ export function convertSlugToObj(slug: string[]): RESTFulState {
       'Content-Type': 'application/json',
     },
     bodyText: '',
+    urlInner: '',
     response: undefined,
+    isInitialized: true,
   };
 
   if (miniObj !== undefined) {
@@ -65,6 +73,7 @@ export function convertSlugToObj(slug: string[]): RESTFulState {
     answer.bodyText = miniObj.bodyText;
     answer.variableTable = miniObj.variableTable;
   }
+  answer.urlInner = functionConvertObjToShortURL(answer);
 
   return answer;
 }

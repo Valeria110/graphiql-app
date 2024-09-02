@@ -39,6 +39,8 @@ export interface RESTFulState {
   bodyText: string;
   bodyType: 'plain text' | 'json';
   response?: ResponseObj;
+  urlInner: string;
+  isInitialized: boolean;
 }
 
 export interface RESTFulStateMini {
