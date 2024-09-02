@@ -44,3 +44,7 @@ export function prettifyGraphQL(query: string) {
 export const formatToBase64 = (str: string): string => {
   return btoa(str);
 };
+
+export const formatFromBase64 = (base64: string): string => {
+  return atob(base64);
+};

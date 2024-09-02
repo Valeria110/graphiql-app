@@ -20,6 +20,15 @@ const customTheme = createTheme({
       paper: blue[800], // card background
     },
   },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 576,
+      md: 768,
+      lg: 992,
+      xl: 1200,
+    },
+  },
   typography: {
     fontFamily: 'Poppins, sans-serif',
   },
