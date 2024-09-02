@@ -30,6 +30,10 @@ export const RESTFulSlice = createSlice({
     setUrl: (state, action: PayloadAction<string>) => {
       state.url = action.payload;
     },
+    setUrlAndUpdateURLInner: (state, action: PayloadAction<string>) => {
+      state.url = action.payload;
+      RESTFulSlice.caseReducers.updateURLInner(state);
+    },
     setBodyText: (state, action: PayloadAction<string>) => {
       state.bodyText = action.payload;
       RESTFulSlice.caseReducers.updateURLInner(state);
@@ -54,7 +58,15 @@ export const RESTFulSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setMethod, setUrl, setBodyText, setVariableTable, setResponse, setObj, setBodyType } =
-  RESTFulSlice.actions;
+export const {
+  setMethod,
+  setUrl,
+  setBodyText,
+  setVariableTable,
+  setResponse,
+  setObj,
+  setBodyType,
+  setUrlAndUpdateURLInner,
+} = RESTFulSlice.actions;
 
 export default RESTFulSlice.reducer;

@@ -8,7 +8,7 @@ import BodyArea from './BodyArea';
 import VariablesArea from './VariablesArea';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store/store';
-import { setMethod, setUrl, setResponse, setObj } from '@/features/RESTFul/RESTFulSlice';
+import { setMethod, setUrl, setResponse, setObj, setUrlAndUpdateURLInner } from '@/features/RESTFul/RESTFulSlice';
 import insertVariablesInBody from './insertVariablesInBody';
 import { useRouter } from 'next/navigation';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
@@ -23,7 +23,6 @@ import { useLocale } from 'next-intl';
 // TODO: add icon to submit btn
 // TODO: add warning for body GET, DELETE, HEAD, OPTIONS
 // TODO: loader for code area
-// TODO: change between JSON and text
 // TODO: delete "" in var table
 
 const httpMethods: HttpMethod[] = getHttpMethods();
@@ -48,14 +47,12 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
 
   useEffect(() => {
     if (!isInitialized && params.slug) {
-      console.log('🟨 useEffect firstUpdateRedux');
       const newObj = convertSlugToObj(params.slug);
       dispatch(setObj(newObj));
     }
   }, [params.slug, isInitialized, dispatch]);
 
   useEffect(() => {
-    console.log('useEffect urlInner');
     updateURL2(router, localActive as 'en' | 'ru', urlInner);
   }, [urlInner]);
 
@@ -99,6 +96,10 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
     dispatch(setUrl(event.target.value));
   };
 
+  const handleUrlBlur = (event: React.FocusEvent<HTMLInputElement>) => {
+    dispatch(setUrlAndUpdateURLInner(event.target.value));
+  };
+
   return (
     <Box sx={{ my: 2, px: 1 }}>
       <form onSubmit={handleSubmit}>
@@ -115,7 +116,15 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
           </FormControl>
 
           <FormControl fullWidth>
-            <TextField id={idURL} label="URL" variant="outlined" fullWidth value={url} onChange={handleUrlChange} />
+            <TextField
+              id={idURL}
+              label="URL"
+              variant="outlined"
+              fullWidth
+              value={url}
+              onChange={handleUrlChange}
+              onBlur={handleUrlBlur}
+            />
           </FormControl>
 
           <Button variant="contained" type="submit">
