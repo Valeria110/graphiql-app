@@ -3,7 +3,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface InitialState {
   query: string;
   headers: Record<string, string> | null;
-  variables: string | null;
+  variables: Record<string, string> | null;
   response: string;
   urlEndpoint: string;
   sdlUrl: string;
@@ -46,9 +46,12 @@ const graphiqlEditorSLice = createSlice({
     setSdlUrl(state, action: PayloadAction<(typeof initialState)['sdlUrl']>) {
       state.sdlUrl = action.payload;
     },
+    restoreAllFieldsGraphiql(state, action: PayloadAction<InitialState>) {
+      return { ...state, ...action.payload };
+    },
   },
 });
 
-export const { setQuery, setHeaders, setVariables, setResponse, setUrlEndpoint, setSdlUrl } =
+export const { setQuery, setHeaders, setVariables, setResponse, setUrlEndpoint, setSdlUrl, restoreAllFieldsGraphiql } =
   graphiqlEditorSLice.actions;
 export default graphiqlEditorSLice.reducer;

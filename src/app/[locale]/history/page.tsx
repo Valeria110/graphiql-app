@@ -8,6 +8,7 @@ import { getArrayFromLocalStorage } from '@/utils/utils';
 import EmptyHistoryNotification from '@/components/HistoryPageComponents/EmptyHistoryNotification';
 import HistoryItem from '@/components/HistoryPageComponents/HistoryItem';
 import { Pagination, Stack, Typography } from '@mui/material';
+import { useRedirectToRequest } from '@/hooks/historyHook';
 
 const KEY_RESTFUL = 'RESTFul-store';
 const KEY_GRAPHQL = 'graphqlRequests';
@@ -17,6 +18,7 @@ export default function HistoryPage() {
   const [requests, setRequests] = useState<(GraphqlRequest | RESTFulState)[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useAppDispatch();
+  const redirectToRequest = useRedirectToRequest();
 
   useEffect(() => {
     const restRequests = getArrayFromLocalStorage(KEY_RESTFUL);
@@ -31,6 +33,7 @@ export default function HistoryPage() {
 
   const handleRequestClick = (request: GraphqlRequest | RESTFulState) => {
     dispatch(setCurrentRequest(request));
+    redirectToRequest(request);
   };
 
   const handlePageChange = (_: React.ChangeEvent<unknown>, page: number) => {
