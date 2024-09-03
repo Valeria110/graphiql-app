@@ -1,3 +1,5 @@
+@use '../../../styles/globals.scss' as *;
+
 .user-message {
   display: flex;
   flex-direction: column;
@@ -45,4 +47,46 @@
   align-items: center;
   justify-content: center;
   flex-direction: column;
+
+  &__requests-container {
+    width: 100%;
+    padding: 0px 20px;
+    padding-bottom: 30px;
+    display: flex;
+    gap: 30px;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+.history-item {
+  width: 100%;
+  height: fit-content;
+  padding: 20px;
+  display: flex;
+  background-color: $blue-primary;
+  border-radius: 15px;
+  gap: 10px;
+  border: 1px solid $light-blue-200;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+
+  &__button {
+    border: 0;
+    font-size: 17px;
+    background-color: transparent;
+    cursor: pointer;
+    color: $secondary-blue-500;
+
+    &:hover {
+      color: $btn-hover;
+    }
+  }
+
+  &__info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
 }
