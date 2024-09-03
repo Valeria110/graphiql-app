@@ -1,6 +1,4 @@
 'use client';
-import { setCurrentRequest } from '@/features/history/history.slice';
-import { useAppDispatch } from '@/hooks/storeHooks';
 import { GraphqlRequest, RESTFulState } from '@/types/types';
 import { useState, useEffect, useMemo } from 'react';
 import historyStyles from './historyPageStyles.module.scss';
@@ -9,6 +7,7 @@ import EmptyHistoryNotification from '@/components/HistoryPageComponents/EmptyHi
 import HistoryItem from '@/components/HistoryPageComponents/HistoryItem';
 import { Pagination, Stack, Typography } from '@mui/material';
 import { useRedirectToRequest } from '@/hooks/historyHook';
+import { useTranslations } from 'next-intl';
 
 const KEY_RESTFUL = 'RESTFul-store';
 const KEY_GRAPHQL = 'graphqlRequests';
@@ -17,8 +16,8 @@ const ITEMS_PER_PAGE = 10;
 export default function HistoryPage() {
   const [requests, setRequests] = useState<(GraphqlRequest | RESTFulState)[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const dispatch = useAppDispatch();
   const redirectToRequest = useRedirectToRequest();
+  const t = useTranslations('HistoryPage');
 
   useEffect(() => {
     const restRequests = getArrayFromLocalStorage(KEY_RESTFUL);
@@ -32,7 +31,6 @@ export default function HistoryPage() {
   }, []);
 
   const handleRequestClick = (request: GraphqlRequest | RESTFulState) => {
-    dispatch(setCurrentRequest(request));
     redirectToRequest(request);
   };
 
@@ -48,14 +46,16 @@ export default function HistoryPage() {
 
   return (
     <div className={historyStyles['history-page']}>
-      <h2>History Requests</h2>
-      {requests.length === 0 && <EmptyHistoryNotification />}
+      <h2>{t('HistoryPageTitle')}</h2>
+      {requests.length === 0 && <EmptyHistoryNotification t={t} />}
       {requests.length > 0 && (
         <div className={historyStyles['history-page__requests-container']}>
-          <Typography>Page: {currentPage}</Typography>
+          <Typography>
+            {t('HistoryPaginationTitle')} {currentPage}
+          </Typography>
           {currentRequests.map((request, index) => (
             <div key={index} className={historyStyles['history-item']}>
-              <HistoryItem request={request} handleRequestClick={handleRequestClick} />
+              <HistoryItem request={request} handleRequestClick={handleRequestClick} t={t} />
             </div>
           ))}
 

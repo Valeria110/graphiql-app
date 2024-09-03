@@ -4,31 +4,32 @@ import historyStyles from '../../app/[locale]/history/historyPageStyles.module.s
 interface HistoryItemProps {
   request: GraphqlRequest | RESTFulState;
   handleRequestClick: (request: GraphqlRequest | RESTFulState) => void;
+  t: (arg0: string) => string;
 }
 
-export default function HistoryItem({ request, handleRequestClick }: HistoryItemProps) {
+export default function HistoryItem({ request, handleRequestClick, t }: HistoryItemProps) {
   const isREST = (req: GraphqlRequest | RESTFulState): req is RESTFulState => 'method' in req;
 
   return (
     <>
       <div className={historyStyles['history-item__info-container']}>
         <div>
-          <strong>Type: </strong> {isREST(request) ? 'RESTfull' : 'GraphQL'}
+          <strong>{t('HistoryTypeTitle')}</strong> {isREST(request) ? 'RESTfull' : 'GraphQL'}
         </div>
         {isREST(request) && (
           <div>
-            <strong>Method: </strong> {request.method}
+            <strong>{t('HistoryMethodTitle')}</strong> {request.method}
           </div>
         )}
         <div>
-          <strong>URL: </strong>
+          <strong>{t('HistoryUrlTitle')}</strong>
           <button className={historyStyles['history-item__button']} onClick={() => handleRequestClick(request)}>
             {request.url}
           </button>
         </div>
       </div>
       <div>
-        <strong>Date: </strong> {new Date(request.date).toLocaleString()}
+        <strong>{t('HistoryDateTitle')}</strong> {new Date(request.date).toLocaleString()}
       </div>
     </>
   );

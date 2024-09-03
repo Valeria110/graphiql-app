@@ -76,5 +76,16 @@
   "GraphiqlToolsBar": {
     "varsBtn": "Переменные",
     "headersBtn": "Заголовки"
+  },
+  "HistoryPage": {
+    "HistoryPageTitle": "История запросов",
+    "EmptyHistory": "Вы не выполнили ни одного запроса. Здесь пусто. Попробуйте эти варианты:",
+    "HistoryBtnRest": "REST Клиент",
+    "HistoryBtnGraphiQL": "GraphiQL Клиент",
+    "HistoryPaginationTitle": "Страница:",
+    "HistoryTypeTitle": "Тип:",
+    "HistoryMethodTitle": "Метод:",
+    "HistoryUrlTitle": "URL-адрес:",
+    "HistoryDateTitle": "Дата:"
   }
 }

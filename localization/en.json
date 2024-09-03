@@ -76,5 +76,16 @@
   "GraphiqlToolsBar": {
     "varsBtn": "Variables",
     "headersBtn": "Headers"
+  },
+  "HistoryPage": {
+    "HistoryPageTitle": "History Requests",
+    "EmptyHistory": "You haven't executed any requests. It's empty here. Try these options:",
+    "HistoryBtnRest": "REST Client",
+    "HistoryBtnGraphiQL": "GraphiQL Client",
+    "HistoryPaginationTitle": "Page:",
+    "HistoryTypeTitle": "Type:",
+    "HistoryMethodTitle": "Method:",
+    "HistoryUrlTitle": "URL:",
+    "HistoryDateTitle": "Date:"
   }
 }

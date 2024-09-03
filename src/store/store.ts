@@ -2,7 +2,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import graphiqlEditorReducer from '../features/graphiql/graphiqlEditorSlice';
 import RESTFulReducer from '../features/RESTFul/RESTFulSlice';
 import docsSlice from '@/features/graphiql/docs.slice';
-import historySlice from '@/features/history/history.slice';
 
 export const makeStore = () => {
   return configureStore({
@@ -10,7 +9,6 @@ export const makeStore = () => {
       graphiqlEditor: graphiqlEditorReducer,
       RESTFul: RESTFulReducer,
       docs: docsSlice,
-      history: historySlice,
     },
   });
 };
