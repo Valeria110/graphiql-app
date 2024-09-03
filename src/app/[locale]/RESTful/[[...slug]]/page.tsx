@@ -48,7 +48,15 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
   useEffect(() => {
     if (!isInitialized && params.slug) {
       const newObj = convertSlugToObj(params.slug);
-      dispatch(setObj(newObj));
+
+      const date = new Date().toISOString();
+
+      const updatedObj = {
+        ...newObj,
+        date,
+      };
+
+      dispatch(setObj(updatedObj));
     }
   }, [params.slug, isInitialized, dispatch]);
 

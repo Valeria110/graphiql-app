@@ -56,6 +56,7 @@ export function convertSlugToObj(slug: string[]): RESTFulState {
 
   const answer: RESTFulState = {
     method: method,
+    date: '',
     url: '',
     variableTable: [],
     bodyType: 'json',
@@ -120,18 +121,6 @@ export function addObjectToLocalStorage(obj: RESTFulState): void {
     localStorage.setItem(key, JSON.stringify(dataArray));
   } catch (error) {
     console.error('Error adding object to Local Storage:', error);
-  }
-}
-
-export function getArrayFromLocalStorage(): RESTFulState[] {
-  const key = 'RESTFul-store';
-  try {
-    const data = localStorage.getItem(key);
-
-    return data ? JSON.parse(data) : [];
-  } catch (error) {
-    console.error('Error getting array from Local Storage:', error);
-    return [];
   }
 }
 

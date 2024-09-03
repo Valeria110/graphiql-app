@@ -1,8 +1,8 @@
-import { GraphqlRequest } from '@/types/types';
+import { GraphqlRequest, RESTFulState } from '@/types/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit/react';
 
 interface initialStateInt {
-  currentRequest: null | GraphqlRequest;
+  currentRequest: null | GraphqlRequest | RESTFulState;
 }
 
 const initialState: initialStateInt = {
@@ -13,7 +13,7 @@ const historySlice = createSlice({
   name: 'history',
   initialState,
   reducers: {
-    setCurrentRequest(state, action: PayloadAction<GraphqlRequest>) {
+    setCurrentRequest(state, action: PayloadAction<GraphqlRequest | RESTFulState>) {
       state.currentRequest = action.payload;
     },
   },

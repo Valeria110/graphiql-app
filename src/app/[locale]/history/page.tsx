@@ -1,57 +1,50 @@
 'use client';
 import { setCurrentRequest } from '@/features/history/history.slice';
 import { useAppDispatch } from '@/hooks/storeHooks';
-import { GraphqlRequest, PagesRoutes } from '@/types/types';
+import { GraphqlRequest, PagesRoutes, RESTFulState } from '@/types/types';
 import { useLocale, useTranslations } from 'next-intl';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import historyStyles from './historyPageStyles.module.scss';
+import { getArrayFromLocalStorage } from '@/utils/utils';
+
+const KEY_RESTFUL = 'RESTFul-store';
+const KEY_GRAPHQL = 'graphqlRequests';
 
 export default function HistoryPage() {
-  const [graphqlRequests, setGraphqlRequests] = useState<GraphqlRequest[]>([]);
+  const [requests, setRequests] = useState<(GraphqlRequest | RESTFulState)[]>([]);
   const localActive = useLocale();
-  const router = useRouter();
   const dispatch = useAppDispatch();
   const t = useTranslations('WelcomePage');
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const storedRequests = localStorage.getItem('graphqlRequests');
-      if (storedRequests) {
-        try {
-          const parsedRequests = JSON.parse(storedRequests);
-          const sortedRequests = parsedRequests.sort((a: GraphqlRequest, b: GraphqlRequest) => {
-            return new Date(b.date).getTime() - new Date(a.date).getTime();
-          });
+    const restRequests = getArrayFromLocalStorage(KEY_RESTFUL);
+    const graphqlRequests = getArrayFromLocalStorage(KEY_GRAPHQL);
 
-          setGraphqlRequests(sortedRequests);
-        } catch (error) {
-          console.error('Failed to parse requests:', error);
-        }
-      }
-    }
+    const combinedRequests = [...restRequests, ...graphqlRequests];
+
+    combinedRequests.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+
+    setRequests(combinedRequests);
   }, []);
 
-  const handleRequestClick = (request: GraphqlRequest) => {
+  const handleRequestClick = (request: GraphqlRequest | RESTFulState) => {
     dispatch(setCurrentRequest(request));
-    router.push(`/${localActive}/${PagesRoutes.Graphql}`);
   };
 
   return (
     <div className={historyStyles['history-page']}>
       <h2>History Requests</h2>
       {}
-      {graphqlRequests.length > 0 ? (
+      {requests.length > 0 ? (
         <ul>
-          {graphqlRequests.map((request, index) => (
+          {requests.map((request, index) => (
             <li key={index} style={{ marginBottom: '20px' }}>
               <div>
                 <strong>Запрос:</strong>
               </div>
-              <a href="#" onClick={() => handleRequestClick(request)}>
-                {request.url}
-              </a>
+              <button onClick={() => handleRequestClick(request)}>{request.url}</button>
+              <div>{request.date}</div>
             </li>
           ))}
         </ul>

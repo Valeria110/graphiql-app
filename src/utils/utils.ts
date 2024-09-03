@@ -1,3 +1,5 @@
+import { GraphqlRequest, RESTFulState } from '@/types/types';
+
 export function prettifyGraphQL(query: string) {
   const indentSize = 2;
   const TAB_SPACING = ' '.repeat(indentSize);
@@ -48,3 +50,14 @@ export const formatToBase64 = (str: string): string => {
 export const formatFromBase64 = (base64: string): string => {
   return atob(base64);
 };
+
+export function getArrayFromLocalStorage(key: string): RESTFulState[] | GraphqlRequest[] {
+  try {
+    const data = localStorage.getItem(key);
+
+    return data ? JSON.parse(data) : [];
+  } catch (error) {
+    console.error('Error getting array from Local Storage:', error);
+    return [];
+  }
+}

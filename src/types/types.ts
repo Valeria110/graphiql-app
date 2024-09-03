@@ -42,6 +42,7 @@ export interface RESTFulState {
   response?: ResponseObj;
   urlInner: string;
   isInitialized: boolean;
+  date: string;
 }
 
 export type BodyType = 'text' | 'json';
