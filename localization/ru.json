@@ -97,6 +97,6 @@
     "signInBtn": "Войти",
     "GraphQLText": "песочницу GraphQL",
     "HistoryText": "историю запросов",
-    "RESTText": "песочницу RESTFul"
+    "RESTText": "песочницу RESTFull"
   }
 }
