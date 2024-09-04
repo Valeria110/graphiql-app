@@ -48,15 +48,7 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
   useEffect(() => {
     if (!isInitialized && params.slug) {
       const newObj = convertSlugToObj(params.slug);
-
-      const date = new Date().toISOString();
-
-      const updatedObj = {
-        ...newObj,
-        date,
-      };
-
-      dispatch(setObj(updatedObj));
+      dispatch(setObj(newObj));
     }
   }, [params.slug, isInitialized, dispatch]);
 
@@ -68,7 +60,15 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
     event.preventDefault();
 
     updateURL(router, obj);
-    addObjectToLocalStorage(obj);
+
+    const date = new Date().toISOString();
+
+    const updatedObj = {
+      ...obj,
+      date,
+    };
+
+    addObjectToLocalStorage(updatedObj);
 
     const replacedBody = insertVariablesInBody(variableTable, bodyText);
 

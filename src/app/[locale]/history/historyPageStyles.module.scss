@@ -78,6 +78,7 @@
     background-color: transparent;
     cursor: pointer;
     color: $secondary-blue-500;
+    word-break: break-word;
 
     &:hover {
       color: $btn-hover;

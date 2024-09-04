@@ -87,6 +87,9 @@
     "HistoryMethodTitle": "Method:",
     "HistoryUrlTitle": "URL:",
     "HistoryDateTitle": "Date:",
-    "ErrorLC": "An error occurred while retrieving your request history. Please try again later."
+    "ErrorLC": "An error occurred while retrieving your request history. Please try again later.",
+    "HistoryBtnClear": "Clear history",
+    "HistoryBtnAsc": "Asc",
+    "HistoryBtnDesc": "Desc"
   }
 }
