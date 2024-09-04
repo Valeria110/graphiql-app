@@ -10,13 +10,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store/store';
 import { setMethod, setUrl, setResponse, setObj, setUrlAndUpdateURLInner } from '@/features/RESTFul/RESTFulSlice';
 import insertVariablesInBody from './insertVariablesInBody';
-import { useRouter } from 'next/navigation';
-import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { addObjectToLocalStorage, convertSlugToObj, getHttpMethods } from '@/utils/utilsRESTful';
-import { useLocale } from 'next-intl';
 import SendIcon from '@mui/icons-material/Send';
 import { useUser } from '@/hooks/authHook';
 import LoginRequired from '@/components/LoginRequired/LoginRequired';
+import { URLUpdate } from './URLUpdate';
 
 // TODO: add warning for body GET, DELETE, HEAD, OPTIONS
 // TODO: loader for code area
@@ -25,17 +23,13 @@ const httpMethods: HttpMethod[] = getHttpMethods();
 
 export default function RESTFul({ params }: { params: { slug: string[] } }) {
   const dispatch = useDispatch<AppDispatch>();
-  const router = useRouter();
-  const localActive = useLocale();
   const user = useUser();
-
   const method = useSelector((state: RootState) => state.RESTFul.method);
   const url = useSelector((state: RootState) => state.RESTFul.url);
   const headers = useSelector((state: RootState) => state.RESTFul.headers);
   const bodyText = useSelector((state: RootState) => state.RESTFul.bodyText);
   const variableTable = useSelector((state: RootState) => state.RESTFul.variableTable);
   const obj = useSelector((state: RootState) => state.RESTFul);
-  const urlInner = useSelector((state: RootState) => state.RESTFul.urlInner);
   const isInitialized = useSelector((state: RootState) => state.RESTFul.isInitialized);
 
   const idLabel = useId();
@@ -48,10 +42,6 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
       dispatch(setObj(newObj));
     }
   }, [params.slug, isInitialized, dispatch]);
-
-  useEffect(() => {
-    updateURL2(router, localActive as 'en' | 'ru', urlInner);
-  }, [urlInner]);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -133,51 +123,44 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
   }
 
   return (
-    <Box sx={{ my: 2, px: 1 }}>
-      <form onSubmit={handleSubmit}>
-        <Stack direction="row" spacing={1}>
-          <FormControl sx={{ minWidth: 120 }}>
-            <InputLabel id={idLabel}>Method</InputLabel>
-            <Select labelId={idLabel} id={idSelect} value={method} label="Method" onChange={handleMethodChange}>
-              {httpMethods.map((method) => (
-                <MenuItem key={method} value={method}>
-                  {method}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+    <URLUpdate>
+      <Box sx={{ my: 2, px: 1 }}>
+        <form onSubmit={handleSubmit}>
+          <Stack direction="row" spacing={1}>
+            <FormControl sx={{ minWidth: 120 }}>
+              <InputLabel id={idLabel}>Method</InputLabel>
+              <Select labelId={idLabel} id={idSelect} value={method} label="Method" onChange={handleMethodChange}>
+                {httpMethods.map((method) => (
+                  <MenuItem key={method} value={method}>
+                    {method}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
 
-          <FormControl fullWidth>
-            <TextField
-              id={idURL}
-              label="URL"
-              variant="outlined"
-              fullWidth
-              value={url}
-              onChange={handleUrlChange}
-              onBlur={handleUrlBlur}
-            />
-          </FormControl>
+            <FormControl fullWidth>
+              <TextField
+                id={idURL}
+                label="URL"
+                variant="outlined"
+                fullWidth
+                value={url}
+                onChange={handleUrlChange}
+                onBlur={handleUrlBlur}
+              />
+            </FormControl>
 
-          <Button endIcon={<SendIcon />} variant="contained" type="submit">
-            Send
-          </Button>
-        </Stack>
-      </form>
+            <Button endIcon={<SendIcon />} variant="contained" type="submit">
+              Send
+            </Button>
+          </Stack>
+        </form>
 
-      <BodyArea />
-      <VariablesArea />
+        <BodyArea />
+        <VariablesArea />
 
-      <ResponseArea />
-    </Box>
+        <ResponseArea />
+      </Box>
+    </URLUpdate>
   );
-}
-
-function updateURL2(router: AppRouterInstance, locale: 'en' | 'ru', urlInner: string) {
-  const currentURL = new URL(window.location.href);
-
-  const newURL = new URL(currentURL);
-  newURL.pathname = `/${locale}/RESTful/` + (urlInner ?? '');
-
-  router.replace(newURL.toString(), undefined);
 }
