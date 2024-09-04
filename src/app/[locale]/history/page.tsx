@@ -9,6 +9,8 @@ import { useRedirectToRequest } from '@/hooks/historyHook';
 import { useTranslations } from 'next-intl';
 import Loading from '@/app/loading';
 import { getSortedRequests, KEY_RESTFUL, KEY_GRAPHQL } from '@/utils/historyUtils';
+import { useUser } from '@/hooks/authHook';
+import LoginRequired from '@/components/LoginRequired/LoginRequired';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -19,7 +21,7 @@ export default function HistoryPage() {
   const [error, setError] = useState<string | null>(null);
   const [isEmpty, setIsEmpty] = useState(false);
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
-
+  const user = useUser();
   const redirectToRequest = useRedirectToRequest();
   const t = useTranslations('HistoryPage');
 
@@ -67,6 +69,10 @@ export default function HistoryPage() {
     const indexOfFirstItem = indexOfLastItem - ITEMS_PER_PAGE;
     return requests.slice(indexOfFirstItem, indexOfLastItem);
   }, [requests, currentPage]);
+
+  if (!user) {
+    return <LoginRequired serviceName="History" />;
+  }
 
   if (isLoading) {
     return <Loading />;

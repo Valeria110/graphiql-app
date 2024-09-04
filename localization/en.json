@@ -91,5 +91,12 @@
     "HistoryBtnClear": "Clear history",
     "HistoryBtnAsc": "Asc",
     "HistoryBtnDesc": "Desc"
+  },
+  "LoginRequired": {
+    "InfoText": "Please, sign in to open the",
+    "signInBtn": "Sign in",
+    "GraphQLText": "GraphQL Playground",
+    "HistoryText": "history requests",
+    "RESTText": "RESTFull Playground"
   }
 }

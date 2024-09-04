@@ -91,5 +91,12 @@
     "HistoryBtnClear": "Очистить историю",
     "HistoryBtnAsc": "По возрастанию",
     "HistoryBtnDesc": "По убыванию"
+  },
+  "LoginRequired": {
+    "InfoText": "Пожалуйста, войдите, чтобы открыть",
+    "signInBtn": "Войти",
+    "GraphQLText": "песочницу GraphQL",
+    "HistoryText": "историю запросов",
+    "RESTText": "песочницу RESTFul"
   }
 }

@@ -1,0 +1,31 @@
+.login-required {
+  width: 100%;
+  height: calc(100vh - 300px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+
+  &__button-navigate {
+    background-color: #fff;
+    width: auto;
+    height: 45px;
+    text-decoration: none;
+    text-align: center;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-weight: 600;
+    font-family: 'Poppins', sans-serif;
+    border-radius: 5px;
+    transition: background-color 0.4s;
+    color: black;
+
+    &:hover {
+      cursor: pointer;
+      background-color: #ddd6d6;
+    }
+  }
+}

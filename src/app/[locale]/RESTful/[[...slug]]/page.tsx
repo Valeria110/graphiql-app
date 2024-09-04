@@ -20,6 +20,8 @@ import {
 } from '@/utils/utilsRESTful';
 import { useLocale } from 'next-intl';
 import SendIcon from '@mui/icons-material/Send';
+import { useUser } from '@/hooks/authHook';
+import LoginRequired from '@/components/LoginRequired/LoginRequired';
 
 // TODO: add warning for body GET, DELETE, HEAD, OPTIONS
 // TODO: loader for code area
@@ -31,6 +33,7 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const localActive = useLocale();
+  const user = useUser();
 
   const method = useSelector((state: RootState) => state.RESTFul.method);
   const url = useSelector((state: RootState) => state.RESTFul.url);
@@ -107,6 +110,10 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
   const handleUrlBlur = (event: React.FocusEvent<HTMLInputElement>) => {
     dispatch(setUrlAndUpdateURLInner(event.target.value));
   };
+
+  if (!user) {
+    return <LoginRequired serviceName="REST" />;
+  }
 
   return (
     <Box sx={{ my: 2, px: 1 }}>
