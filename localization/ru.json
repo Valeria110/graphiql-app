@@ -86,6 +86,7 @@
     "HistoryTypeTitle": "Тип:",
     "HistoryMethodTitle": "Метод:",
     "HistoryUrlTitle": "URL-адрес:",
-    "HistoryDateTitle": "Дата:"
+    "HistoryDateTitle": "Дата:",
+    "ErrorLC": "Произошла ошибка при получении истории ваших запросов. Пожалуйста, повторите попытку позже."
   }
 }
