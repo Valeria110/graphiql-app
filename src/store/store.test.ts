@@ -22,6 +22,20 @@ const docsInitialState = {
   textError: '',
 };
 
+const restfulInitialState = {
+  method: 'GET',
+  url: '',
+  variableTable: [],
+  bodyType: 'json',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  bodyText: '',
+  urlInner: 'GET',
+  response: undefined,
+  isInitialized: false,
+};
+
 describe('Redux Store', () => {
   it('should properly make a redux store', () => {
     const store = makeStore();
@@ -30,6 +44,7 @@ describe('Redux Store', () => {
     expect(store.getState()).toEqual({
       graphiqlEditor: graphiqlEditorInitialState,
       docs: docsInitialState,
+      RESTFul: restfulInitialState,
     });
   });
 
