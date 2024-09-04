@@ -12,6 +12,7 @@ export default function ToolsBarCodeEditor({ isHeadersBtnActive }: EditorProps) 
   const dispatch = useAppDispatch();
   const headers = useAppSelector((state) => state.graphiqlEditor.headers) ?? '';
   const variables = useAppSelector((state) => state.graphiqlEditor.variables) ?? '';
+
   const pathname = usePathname();
 
   const handleOnBlur = (e: React.FocusEvent<HTMLInputElement>) => {
@@ -32,7 +33,15 @@ export default function ToolsBarCodeEditor({ isHeadersBtnActive }: EditorProps) 
         }
       }
     } else {
-      dispatch(setVariables(inputValue));
+      if (!inputValue || inputValue === '{}') {
+        dispatch(setVariables(null));
+      } else {
+        try {
+          dispatch(setVariables(JSON.parse(inputValue)));
+        } catch (e) {
+          console.error(e);
+        }
+      }
     }
   };
 
@@ -49,7 +58,13 @@ export default function ToolsBarCodeEditor({ isHeadersBtnActive }: EditorProps) 
         height="138px"
         width="100%"
         language="json"
-        value={isHeadersBtnActive ? (headers ? JSON.stringify(headers, null, 2) : '') : variables}
+        value={
+          isHeadersBtnActive
+            ? headers
+              ? JSON.stringify(headers, null, 2)
+              : ''
+            : (JSON.stringify(variables, null, 2) ?? '')
+        }
         theme="vs-dark"
         options={{
           automaticLayout: true,

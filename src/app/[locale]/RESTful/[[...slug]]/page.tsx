@@ -161,8 +161,6 @@ function updateURL(router: AppRouterInstance, obj: RESTFulState) {
 
   const newURL = new URL(currentURL);
   newURL.pathname = functionConvertObjToURL('en', obj);
-
-  console.log('updateURL', newURL.pathname);
   router.replace(newURL.toString(), undefined);
 }
 
