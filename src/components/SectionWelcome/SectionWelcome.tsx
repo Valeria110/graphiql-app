@@ -37,7 +37,10 @@ export default function SectionWelcome({ t }: SectionsProps) {
             >
               {t('sectionWelcomeBtnGraphiQLClient')}
             </Link>
-            <Link className={sectionWelcomeStyles['section-welcome__navigate-button']} href={'/'}>
+            <Link
+              className={sectionWelcomeStyles['section-welcome__navigate-button']}
+              href={`/${localActive}/${PagesRoutes.History}`}
+            >
               {t('sectionWelcomeBtnHistory')}
             </Link>
           </div>

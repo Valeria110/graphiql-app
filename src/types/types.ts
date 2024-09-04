@@ -6,6 +6,7 @@ export enum PagesRoutes {
   SignIn = 'sign_in',
   SignUp = 'sign_up',
   Graphql = 'graphql',
+  History = 'history',
   RESTFul = 'RESTful',
 }
 
@@ -41,6 +42,7 @@ export interface RESTFulState {
   response?: ResponseObj;
   urlInner: string;
   isInitialized: boolean;
+  date: string;
 }
 
 export type BodyType = 'text' | 'json';
@@ -54,4 +56,13 @@ export interface RESTFulStateMini {
 export interface DocsSectionProps {
   schema: IntrospectionQuery;
   t: (arg0: string) => string;
+}
+
+export interface GraphqlRequest {
+  url: string;
+  sdlUrl?: string;
+  body: string;
+  headers?: Record<string, string> | null;
+  variables?: Record<string, string> | null;
+  date: string;
 }

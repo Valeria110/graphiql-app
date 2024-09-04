@@ -76,5 +76,27 @@
   "GraphiqlToolsBar": {
     "varsBtn": "Переменные",
     "headersBtn": "Заголовки"
+  },
+  "HistoryPage": {
+    "HistoryPageTitle": "История запросов",
+    "EmptyHistory": "Вы не выполнили ни одного запроса. Здесь пусто. Попробуйте эти варианты:",
+    "HistoryBtnRest": "REST Клиент",
+    "HistoryBtnGraphiQL": "GraphiQL Клиент",
+    "HistoryPaginationTitle": "Страница:",
+    "HistoryTypeTitle": "Тип:",
+    "HistoryMethodTitle": "Метод:",
+    "HistoryUrlTitle": "URL-адрес:",
+    "HistoryDateTitle": "Дата:",
+    "ErrorLC": "Произошла ошибка при получении истории ваших запросов. Пожалуйста, повторите попытку позже.",
+    "HistoryBtnClear": "Очистить историю",
+    "HistoryBtnAsc": "По возрастанию",
+    "HistoryBtnDesc": "По убыванию"
+  },
+  "LoginRequired": {
+    "InfoText": "Пожалуйста, войдите, чтобы открыть",
+    "signInBtn": "Войти",
+    "GraphQLText": "песочницу GraphQL",
+    "HistoryText": "историю запросов",
+    "RESTText": "песочницу RESTFull"
   }
 }

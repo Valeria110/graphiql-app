@@ -14,6 +14,7 @@ const initialState: RESTFulState = {
   urlInner: 'GET',
   response: undefined,
   isInitialized: false,
+  date: '',
 };
 
 export const RESTFulSlice = createSlice({
@@ -54,6 +55,9 @@ export const RESTFulSlice = createSlice({
     setObj: (_, action: PayloadAction<RESTFulState>) => {
       return action.payload;
     },
+    restoreAllFieldsRest: (state, action: PayloadAction<RESTFulState>) => {
+      return { ...state, ...action.payload };
+    },
   },
 });
 
@@ -67,6 +71,7 @@ export const {
   setObj,
   setBodyType,
   setUrlAndUpdateURLInner,
+  restoreAllFieldsRest,
 } = RESTFulSlice.actions;
 
 export default RESTFulSlice.reducer;
