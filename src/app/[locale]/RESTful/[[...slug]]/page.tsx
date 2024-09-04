@@ -2,7 +2,7 @@
 import { Box, Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material';
 import { useEffect, useId } from 'react';
 import { SelectChangeEvent } from '@mui/material/Select';
-import { HttpMethod, RESTFulState } from '@/types/types';
+import { HttpMethod } from '@/types/types';
 import ResponseArea from './ResponseArea';
 import BodyArea from './BodyArea';
 import VariablesArea from './VariablesArea';
@@ -12,12 +12,7 @@ import { setMethod, setUrl, setResponse, setObj, setUrlAndUpdateURLInner } from 
 import insertVariablesInBody from './insertVariablesInBody';
 import { useRouter } from 'next/navigation';
 import { AppRouterInstance } from 'next/dist/shared/lib/app-router-context.shared-runtime';
-import {
-  addObjectToLocalStorage,
-  convertSlugToObj,
-  functionConvertObjToURL,
-  getHttpMethods,
-} from '@/utils/utilsRESTful';
+import { addObjectToLocalStorage, convertSlugToObj, getHttpMethods } from '@/utils/utilsRESTful';
 import { useLocale } from 'next-intl';
 import SendIcon from '@mui/icons-material/Send';
 import { useUser } from '@/hooks/authHook';
@@ -25,7 +20,6 @@ import LoginRequired from '@/components/LoginRequired/LoginRequired';
 
 // TODO: add warning for body GET, DELETE, HEAD, OPTIONS
 // TODO: loader for code area
-// TODO: delete "" in var table
 
 const httpMethods: HttpMethod[] = getHttpMethods();
 
@@ -62,8 +56,6 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
-    updateURL(router, obj);
-
     const date = new Date().toISOString();
 
     const updatedObj = {
@@ -79,23 +71,48 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
       const options: RequestInit = {
         method,
         headers: headers,
-        ...(replacedBody && { body: replacedBody }),
+        body: replacedBody,
       };
 
       const start = Date.now();
       const res = await fetch(url, options);
-      const data = await res.json();
       const finish = Date.now();
+
+      let responseText = '';
+      const contentType = res.headers.get('content-type');
+      if (contentType && contentType.includes('application/json')) {
+        try {
+          const json = await res.json();
+          responseText = JSON.stringify(json, null, 2);
+        } catch {
+          responseText = '';
+        }
+      } else {
+        try {
+          responseText = await res.text();
+        } catch {
+          responseText = '';
+        }
+      }
 
       dispatch(
         setResponse({
           code: res.status,
           timeMs: finish - start,
-          responseText: JSON.stringify(data, null, 2),
+          responseText: responseText,
         }),
       );
-    } catch (error) {
-      console.error(error);
+    } catch (error: unknown) {
+      const errorMessage = 'An unexpected error occurred';
+      const statusCode = 500;
+
+      dispatch(
+        setResponse({
+          code: statusCode,
+          timeMs: 0,
+          responseText: errorMessage,
+        }),
+      );
     }
   };
 
@@ -154,16 +171,6 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
       <ResponseArea />
     </Box>
   );
-}
-
-function updateURL(router: AppRouterInstance, obj: RESTFulState) {
-  const currentURL = new URL(window.location.href);
-
-  const newURL = new URL(currentURL);
-  newURL.pathname = functionConvertObjToURL('en', obj);
-
-  console.log('updateURL', newURL.pathname);
-  router.replace(newURL.toString(), undefined);
 }
 
 function updateURL2(router: AppRouterInstance, locale: 'en' | 'ru', urlInner: string) {
