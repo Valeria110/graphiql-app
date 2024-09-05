@@ -27,7 +27,7 @@ export default function VariablesArea() {
   };
 
   const handleAddRow = () => {
-    const newRow = { variable: `var${varTable.length}`, value: '' };
+    const newRow = { variable: `var${varTable.length + 1}`, value: '' };
     dispatch(setVariableTable([...varTable, newRow]));
   };
 
