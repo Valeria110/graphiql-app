@@ -15,6 +15,7 @@ import { useUser } from '@/hooks/authHook';
 import LoginRequired from '@/components/LoginRequired/LoginRequired';
 import { URLUpdate } from './URLUpdate';
 import SubmitBtn from './SubmitBtn';
+import HeadersArea from './HeadersArea';
 
 // TODO: loader for code area
 
@@ -92,6 +93,7 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
         <BodyArea />
 
         <VariablesArea />
+        <HeadersArea />
 
         <ResponseArea />
       </Container>

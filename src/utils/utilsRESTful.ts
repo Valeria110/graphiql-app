@@ -60,9 +60,7 @@ export function convertSlugToObj(slug: string[]): RESTFulState {
     url: '',
     variableTable: [],
     bodyType: 'json',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers: [],
     bodyText: '',
     urlInner: '',
     response: undefined,

@@ -30,6 +30,7 @@ export default function ExampleBtn() {
       urlInner: '',
       isInitialized: true,
       date: '',
+      headers: [['Content-Type', 'application/json']],
     };
     dispatch(setObj(newObj));
     dispatch(updateURLInner());

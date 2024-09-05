@@ -36,7 +36,7 @@ export interface RESTFulState {
   method: HttpMethod;
   url: string;
   variableTable: VariableRow[];
-  headers?: HeadersInit;
+  headers: [string, string][];
   bodyText: string;
   bodyType: BodyType;
   response?: ResponseObj;
@@ -44,6 +44,7 @@ export interface RESTFulState {
   isInitialized: boolean;
   date: string;
   isVariableTableOpen?: boolean;
+  isHeaderTableOpen?: boolean;
 }
 
 export type BodyType = 'text' | 'json';

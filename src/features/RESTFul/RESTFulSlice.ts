@@ -7,9 +7,7 @@ const initialState: RESTFulState = {
   url: '',
   variableTable: [],
   bodyType: 'json',
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  headers: [],
   bodyText: '',
   urlInner: 'GET',
   response: undefined,
@@ -25,7 +23,7 @@ export const RESTFulSlice = createSlice({
       state.method = action.payload;
       RESTFulSlice.caseReducers.updateURLInner(state);
     },
-    setHeader: (state, action: PayloadAction<HeadersInit | undefined>) => {
+    setHeader: (state, action: PayloadAction<[string, string][]>) => {
       state.headers = action.payload;
       RESTFulSlice.caseReducers.updateURLInner(state);
     },
@@ -80,6 +78,7 @@ export const {
   restoreAllFieldsRest,
   updateURLInner,
   toggleIsVariableTableOpen,
+  setHeader,
 } = RESTFulSlice.actions;
 
 export default RESTFulSlice.reducer;
