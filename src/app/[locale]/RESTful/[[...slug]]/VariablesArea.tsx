@@ -14,9 +14,8 @@ import AddIcon from '@mui/icons-material/Add';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '@/store/store';
 import { setVariableTable } from '@/features/RESTFul/RESTFulSlice';
-import CollapsibleComponent from '@/components/CollapsibleComponent/CollapsibleComponent';
+import CollapsibleComponent from './CollapsibleComponent';
 
-// TODO: Collapse if change row
 export default function VariablesArea() {
   const dispatch = useDispatch<AppDispatch>();
   const varTable = useSelector((state: RootState) => state.RESTFul.variableTable);

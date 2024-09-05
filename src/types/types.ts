@@ -43,6 +43,7 @@ export interface RESTFulState {
   urlInner: string;
   isInitialized: boolean;
   date: string;
+  isVariableTableOpen?: boolean;
 }
 
 export type BodyType = 'text' | 'json';

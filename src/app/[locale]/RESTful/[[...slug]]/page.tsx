@@ -21,7 +21,6 @@ import SubmitBtn from './SubmitBtn';
 const httpMethods: HttpMethod[] = getHttpMethods();
 
 export default function RESTFul({ params }: { params: { slug: string[] } }) {
-  console.log('RESTFul');
   const dispatch = useDispatch<AppDispatch>();
   const user = useUser();
   const method = useSelector((state: RootState) => state.RESTFul.method);
@@ -34,7 +33,6 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
 
   useEffect(() => {
     if (!isInitialized && params.slug) {
-      console.log('конвертировали slug to obj');
       const newObj = convertSlugToObj(params.slug);
       dispatch(setObj(newObj));
     }

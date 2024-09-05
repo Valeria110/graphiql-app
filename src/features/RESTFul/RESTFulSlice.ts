@@ -60,6 +60,10 @@ export const RESTFulSlice = createSlice({
     restoreAllFieldsRest: (state, action: PayloadAction<RESTFulState>) => {
       return { ...state, ...action.payload };
     },
+    toggleIsVariableTableOpen: (state) => {
+      const prev = state.isVariableTableOpen ?? false;
+      state.isVariableTableOpen = !prev;
+    },
   },
 });
 
@@ -75,6 +79,7 @@ export const {
   setUrlAndUpdateURLInner,
   restoreAllFieldsRest,
   updateURLInner,
+  toggleIsVariableTableOpen,
 } = RESTFulSlice.actions;
 
 export default RESTFulSlice.reducer;
