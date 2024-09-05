@@ -27,6 +27,7 @@ export const RESTFulSlice = createSlice({
     },
     setHeader: (state, action: PayloadAction<HeadersInit | undefined>) => {
       state.headers = action.payload;
+      RESTFulSlice.caseReducers.updateURLInner(state);
     },
     setUrl: (state, action: PayloadAction<string>) => {
       state.url = action.payload;
@@ -41,6 +42,7 @@ export const RESTFulSlice = createSlice({
     },
     setVariableTable: (state, action: PayloadAction<VariableRow[]>) => {
       state.variableTable = action.payload;
+      RESTFulSlice.caseReducers.updateURLInner(state);
     },
     setResponse: (state, action: PayloadAction<ResponseObj>) => {
       state.response = action.payload;

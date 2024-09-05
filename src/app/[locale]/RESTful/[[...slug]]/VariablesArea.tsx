@@ -14,84 +14,88 @@ import AddIcon from '@mui/icons-material/Add';
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '@/store/store';
 import { setVariableTable } from '@/features/RESTFul/RESTFulSlice';
+import CollapsibleComponent from '@/components/CollapsibleComponent/CollapsibleComponent';
 
+// TODO: Collapse if change row
 export default function VariablesArea() {
   const dispatch = useDispatch<AppDispatch>();
-  const variableTable = useSelector((state: RootState) => state.RESTFul.variableTable);
+  const varTable = useSelector((state: RootState) => state.RESTFul.variableTable);
 
   const handleValueChange = (index: number, field: 'variable' | 'value', newValue: string) => {
-    const updatedRows = variableTable.map((row, i) => (i === index ? { ...row, [field]: newValue } : row));
+    const updatedRows = varTable.map((row, i) => (i === index ? { ...row, [field]: newValue } : row));
     dispatch(setVariableTable(updatedRows));
   };
 
   const handleAddRow = () => {
-    const newRow = { variable: '', value: '' };
-    dispatch(setVariableTable([...variableTable, newRow]));
+    const newRow = { variable: `var${varTable.length}`, value: '' };
+    dispatch(setVariableTable([...varTable, newRow]));
   };
 
   const handleRemoveRow = (index: number) => {
-    const updatedRows = variableTable.filter((_, i) => i !== index);
+    const updatedRows = varTable.filter((_, i) => i !== index);
     dispatch(setVariableTable(updatedRows));
   };
 
   return (
     <>
-      <TableContainer component={Paper}>
-        <Table sx={{ width: '100%' }} size="small" aria-label="a dense table">
-          <TableHead>
-            <TableRow>
-              <TableCell sx={{ width: '35%' }}>Variable</TableCell>
-              <TableCell align="left" sx={{ width: '60%' }}>
-                Value
-              </TableCell>
-              <TableCell align="left" sx={{ width: '5%' }}>
-                Actions
-              </TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {variableTable.map((row, index) => (
-              <TableRow key={index}>
-                <TableCell component="th" scope="row" sx={{ width: '35%' }}>
-                  <TextField
-                    value={row.variable}
-                    onChange={(e) => handleValueChange(index, 'variable', e.target.value)}
-                    variant="outlined"
-                    size="small"
-                    fullWidth
-                  />
-                </TableCell>
+      <CollapsibleComponent tabName={`Variables ${varTable.length > 0 ? `(${varTable.length})` : ''}`}>
+        <TableContainer component={Paper}>
+          <Table sx={{ width: '100%' }} size="small" aria-label="a dense table">
+            <TableHead>
+              <TableRow>
+                <TableCell sx={{ width: '35%' }}>Variable</TableCell>
                 <TableCell align="left" sx={{ width: '60%' }}>
-                  <TextField
-                    value={row.value}
-                    onChange={(e) => handleValueChange(index, 'value', e.target.value)}
-                    variant="outlined"
-                    size="small"
-                    fullWidth
-                  />
+                  Value
                 </TableCell>
                 <TableCell align="left" sx={{ width: '5%' }}>
-                  <IconButton
-                    size="small"
-                    edge="start"
-                    color="inherit"
-                    aria-label="menu"
-                    onClick={() => handleRemoveRow(index)}
-                  >
-                    <DeleteOutlineIcon />
-                  </IconButton>
+                  Actions
                 </TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {varTable.map((row, index) => (
+                <TableRow key={index}>
+                  <TableCell component="th" scope="row" sx={{ width: '35%' }}>
+                    <TextField
+                      value={row.variable}
+                      onChange={(e) => handleValueChange(index, 'variable', e.target.value)}
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                    />
+                  </TableCell>
+                  <TableCell align="left" sx={{ width: '60%' }}>
+                    <TextField
+                      value={row.value}
+                      onChange={(e) => handleValueChange(index, 'value', e.target.value)}
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                    />
+                  </TableCell>
+                  <TableCell align="left" sx={{ width: '5%' }}>
+                    <IconButton
+                      size="small"
+                      edge="start"
+                      color="inherit"
+                      aria-label="menu"
+                      onClick={() => handleRemoveRow(index)}
+                    >
+                      <DeleteOutlineIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
 
-      <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}>
-        <Button variant="contained" startIcon={<AddIcon />} onClick={handleAddRow}>
-          Add Row
-        </Button>
-      </Box>
+        <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}>
+          <Button variant="contained" startIcon={<AddIcon />} onClick={handleAddRow}>
+            Add Row
+          </Button>
+        </Box>
+      </CollapsibleComponent>
     </>
   );
 }
