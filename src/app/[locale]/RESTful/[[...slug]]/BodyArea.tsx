@@ -7,6 +7,7 @@ import { setBodyText, setBodyType } from '@/features/RESTFul/RESTFulSlice';
 import { useCallback, useEffect, useId, useState } from 'react';
 import { BodyType } from '@/types/types';
 import { prettifyJSON, prettifyText } from '@/utils/prettifyBody';
+import { isMethodWithoutBody } from '@/utils/utilsRESTful';
 
 interface BodyBarAreaProps {
   prettifyCode: () => void;
@@ -54,6 +55,7 @@ export default function BodyArea() {
   const dispatch = useDispatch<AppDispatch>();
   const bodyTextFromRedux = useSelector((state: RootState) => state.RESTFul.bodyText);
   const bodyType = useSelector((state: RootState) => state.RESTFul.bodyType);
+  const readOnly = useSelector((state: RootState) => isMethodWithoutBody(state.RESTFul.method));
 
   const [editorValue, setEditorValue] = useState(bodyTextFromRedux);
 
@@ -92,6 +94,7 @@ export default function BodyArea() {
           }}
           options={{
             automaticLayout: true,
+            readOnly: readOnly,
             minimap: { enabled: true },
           }}
           theme="vs-dark"

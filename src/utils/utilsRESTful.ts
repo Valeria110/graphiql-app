@@ -132,3 +132,8 @@ function isJSON(str: string) {
     return false;
   }
 }
+
+export function isMethodWithoutBody(method: HttpMethod) {
+  const methodsWithoutBody: HttpMethod[] = ['GET']; // TODO: add more
+  return methodsWithoutBody.includes(method);
+}

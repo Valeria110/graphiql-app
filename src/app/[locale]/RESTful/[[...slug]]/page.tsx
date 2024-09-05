@@ -8,15 +8,21 @@ import BodyArea from './BodyArea';
 import VariablesArea from './VariablesArea';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store/store';
-import { setMethod, setUrl, setResponse, setObj, setUrlAndUpdateURLInner } from '@/features/RESTFul/RESTFulSlice';
-import { addObjectToLocalStorage, convertSlugToObj, getHttpMethods } from '@/utils/utilsRESTful';
+import {
+  setMethod,
+  setUrl,
+  setResponse,
+  setObj,
+  setUrlAndUpdateURLInner,
+  setBodyText,
+} from '@/features/RESTFul/RESTFulSlice';
+import { addObjectToLocalStorage, convertSlugToObj, getHttpMethods, isMethodWithoutBody } from '@/utils/utilsRESTful';
 import SendIcon from '@mui/icons-material/Send';
 import { useUser } from '@/hooks/authHook';
 import LoginRequired from '@/components/LoginRequired/LoginRequired';
 import { URLUpdate } from './URLUpdate';
 import { RESTFulRequests } from '@/api/RESTFulRequests';
 
-// TODO: add warning for body GET, DELETE, HEAD, OPTIONS
 // TODO: loader for code area
 
 const httpMethods: HttpMethod[] = getHttpMethods();
@@ -57,7 +63,11 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
   };
 
   const handleMethodChange = (event: SelectChangeEvent<HttpMethod>) => {
-    dispatch(setMethod(event.target.value as HttpMethod));
+    const chosenMethod = event.target.value as HttpMethod;
+    dispatch(setMethod(chosenMethod));
+    if (isMethodWithoutBody(chosenMethod)) {
+      dispatch(setBodyText(''));
+    }
   };
 
   const handleUrlChange = (event: React.ChangeEvent<HTMLInputElement>) => {
