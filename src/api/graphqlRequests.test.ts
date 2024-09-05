@@ -64,7 +64,7 @@ describe('fetchGraphQLData', () => {
 
     global.fetch = mockFetch;
 
-    const variables = JSON.stringify({ name: 'John Doe' });
+    const variables = { name: 'John Doe' };
     const result = await fetchGraphQLData('http://example.com', 'query', null, variables);
 
     expect(mockFetch).toHaveBeenCalledWith('http://example.com', {

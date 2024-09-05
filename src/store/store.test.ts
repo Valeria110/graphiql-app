@@ -34,6 +34,7 @@ const restfulInitialState = {
   urlInner: 'GET',
   response: undefined,
   isInitialized: false,
+  date: '',
 };
 
 describe('Redux Store', () => {

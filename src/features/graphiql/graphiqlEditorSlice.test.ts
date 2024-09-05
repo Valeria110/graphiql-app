@@ -7,6 +7,7 @@ import graphiqlEditorSLiceReducer, {
   setResponse,
   setUrlEndpoint,
   setSdlUrl,
+  restoreAllFieldsGraphiql,
 } from './graphiqlEditorSlice';
 
 describe('graphiqlEditorSLice', () => {
@@ -26,8 +27,8 @@ describe('graphiqlEditorSLice', () => {
   });
 
   it('should set variables correctly', () => {
-    const state = graphiqlEditorSLiceReducer(initialState, setVariables('some variables'));
-    expect(state).toEqual({ ...initialState, variables: 'some variables' });
+    const state = graphiqlEditorSLiceReducer(initialState, setVariables({ id: '1' }));
+    expect(state).toEqual({ ...initialState, variables: { id: '1' } });
   });
 
   it('should set a response correctly', () => {
@@ -43,5 +44,13 @@ describe('graphiqlEditorSLice', () => {
   it('should set a url endpoint correctly', () => {
     const state = graphiqlEditorSLiceReducer(initialState, setSdlUrl('some sdl url'));
     expect(state).toEqual({ ...initialState, sdlUrl: 'some sdl url' });
+  });
+
+  it('should restore all graphql fields', () => {
+    const state = graphiqlEditorSLiceReducer(
+      initialState,
+      restoreAllFieldsGraphiql({ ...initialState, urlEndpoint: 'some endpoint url' }),
+    );
+    expect(state).toEqual({ ...initialState, urlEndpoint: 'some endpoint url' });
   });
 });

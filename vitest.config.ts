@@ -1,4 +1,4 @@
-import { defineConfig } from 'vitest/config';
+import { coverageConfigDefaults, defineConfig } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 import path from 'path';
 
@@ -11,6 +11,7 @@ export default defineConfig({
     include: ['./src/**/*.test.{ts,tsx}'],
     coverage: {
       include: ['src/**/*.{ts,tsx}'],
+      exclude: ['src/tests/**/*', 'src/middleware.ts', ...coverageConfigDefaults.exclude],
     },
   },
   resolve: {

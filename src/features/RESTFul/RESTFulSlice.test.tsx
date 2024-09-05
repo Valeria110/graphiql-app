@@ -9,6 +9,7 @@ import RESTFulSliceReducer, {
   setObj,
   setBodyType,
   setUrlAndUpdateURLInner,
+  restoreAllFieldsRest,
 } from './RESTFulSlice';
 import { functionConvertObjToShortURL } from '@/utils/utilsRESTful';
 
@@ -62,5 +63,10 @@ describe('RESTFulSliceReducer', () => {
     const newObj = { ...initialState, url: 'some url', bodyText: 'body text' };
     const state = RESTFulSliceReducer(initialState, setObj(newObj));
     expect(state).toEqual(newObj);
+  });
+
+  it('should restore all RESTful fields', () => {
+    const state = RESTFulSliceReducer(initialState, restoreAllFieldsRest({ ...initialState, method: 'POST' }));
+    expect(state).toEqual({ ...initialState, method: 'POST' });
   });
 });

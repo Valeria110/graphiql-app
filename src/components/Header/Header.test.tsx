@@ -67,6 +67,7 @@ describe('Header', () => {
     expect(screen.getAllByRole('button').length).toBe(2);
     expect(screen.getByRole('combobox')).toBeInTheDocument();
     screen.getAllByText(/language/i).forEach((item) => expect(item).toBeInTheDocument());
+    expect(screen.getByText(/en/i)).toBeInTheDocument();
   });
 
   it('should render the sign Out button when a user is signed in', () => {
