@@ -9,6 +9,13 @@ export default function ExampleBtn() {
   const dispatch = useDispatch<AppDispatch>();
 
   const handleClick = () => {
+    const bodyObj = {
+      likes: 30,
+      title: 'Some title',
+      body: '__body__',
+    };
+    const formattedBodyText = JSON.stringify(bodyObj, null, 2);
+
     const newObj: RESTFulState = {
       method: 'POST',
       url: 'https://httpbin.org/post',
@@ -18,11 +25,7 @@ export default function ExampleBtn() {
           value: 'An example of the text we store in the body variable',
         },
       ],
-      bodyText: `{
-        "likes": 30,
-        "title": "Some title",
-        "body": "__body__"
-    }`,
+      bodyText: formattedBodyText,
       bodyType: 'json',
       urlInner: '',
       isInitialized: true,

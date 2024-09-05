@@ -57,7 +57,8 @@ export default function BodyArea() {
   const dispatch = useDispatch<AppDispatch>();
   const bodyTextFromRedux = useSelector((state: RootState) => state.RESTFul.bodyText);
   const bodyType = useSelector((state: RootState) => state.RESTFul.bodyType);
-  const readOnly = useSelector((state: RootState) => isMethodWithoutBody(state.RESTFul.method));
+  const method = useSelector((state: RootState) => state.RESTFul.method);
+  const readOnly = isMethodWithoutBody(method);
 
   const [editorValue, setEditorValue] = useState(bodyTextFromRedux);
 
@@ -97,6 +98,7 @@ export default function BodyArea() {
           options={{
             automaticLayout: true,
             readOnly: readOnly,
+            readOnlyMessage: { value: `Disable for ${method}` },
             minimap: { enabled: true },
           }}
           theme="vs-dark"
