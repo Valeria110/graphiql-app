@@ -30,6 +30,9 @@ function BodyBarArea({ prettifyCode }: BodyBarAreaProps) {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Typography variant="body1" sx={{ m: 1 }}>
+            Body
+          </Typography>
           <Select labelId={idLabel} id={idSelect} value={bodyType} label="Method" onChange={handleMethodChange}>
             {bodyTypes.map((type) => (
               <MenuItem key={type} value={type}>
@@ -37,9 +40,6 @@ function BodyBarArea({ prettifyCode }: BodyBarAreaProps) {
               </MenuItem>
             ))}
           </Select>
-          <Typography variant="body2" sx={{ m: 1 }}>
-            Body
-          </Typography>
           <ExampleBtn />
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <IconButton size="small" edge="start" color="inherit" aria-label="menu" onClick={prettifyCode}>

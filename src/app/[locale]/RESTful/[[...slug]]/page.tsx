@@ -1,5 +1,5 @@
 'use client';
-import { Box, FormControl, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material';
+import { Container, FormControl, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material';
 import { useEffect, useId } from 'react';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { HttpMethod } from '@/types/types';
@@ -60,7 +60,7 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
 
   return (
     <URLUpdate>
-      <Box sx={{ my: 2, px: 1 }}>
+      <Container maxWidth="xl" sx={{ my: 2 }}>
         <form>
           <Stack direction="row" spacing={1}>
             <FormControl sx={{ minWidth: 120 }}>
@@ -94,7 +94,7 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
         <VariablesArea />
 
         <ResponseArea />
-      </Box>
+      </Container>
     </URLUpdate>
   );
 }
