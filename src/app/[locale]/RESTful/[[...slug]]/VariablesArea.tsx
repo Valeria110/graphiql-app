@@ -12,6 +12,7 @@ import { IconButton } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddIcon from '@mui/icons-material/Add';
 import { useSelector, useDispatch } from 'react-redux';
+import { useState } from 'react';
 import { RootState, AppDispatch } from '@/store/store';
 import { setVariableTable } from '@/features/RESTFul/RESTFulSlice';
 import CollapsibleComponent from './CollapsibleComponent';
@@ -20,24 +21,33 @@ export default function VariablesArea() {
   const dispatch = useDispatch<AppDispatch>();
   const varTable = useSelector((state: RootState) => state.RESTFul.variableTable);
 
-  const handleValueChange = (index: number, field: 'variable' | 'value', newValue: string) => {
+  const [localTable, setLocalTable] = useState(varTable);
+
+  const handleInputChange = (index: number, field: 'variable' | 'value', newValue: string) => {
+    const updatedRows = localTable.map((row, i) => (i === index ? { ...row, [field]: newValue } : row));
+    setLocalTable(updatedRows);
+  };
+
+  const handleBlur = (index: number, field: 'variable' | 'value', newValue: string) => {
     const updatedRows = varTable.map((row, i) => (i === index ? { ...row, [field]: newValue } : row));
     dispatch(setVariableTable(updatedRows));
   };
 
   const handleAddRow = () => {
-    const newRow = { variable: `var${varTable.length + 1}`, value: '' };
-    dispatch(setVariableTable([...varTable, newRow]));
+    const newRow = { variable: `var${localTable.length + 1}`, value: '' };
+    setLocalTable([...localTable, newRow]);
+    dispatch(setVariableTable([...localTable, newRow]));
   };
 
   const handleRemoveRow = (index: number) => {
-    const updatedRows = varTable.filter((_, i) => i !== index);
+    const updatedRows = localTable.filter((_, i) => i !== index);
+    setLocalTable(updatedRows);
     dispatch(setVariableTable(updatedRows));
   };
 
   return (
     <>
-      <CollapsibleComponent tabName={`Variables ${varTable.length > 0 ? `(${varTable.length})` : ''}`}>
+      <CollapsibleComponent tabName={`Variables ${localTable.length > 0 ? `(${localTable.length})` : ''}`}>
         <TableContainer component={Paper}>
           <Table sx={{ width: '100%' }} size="small" aria-label="a dense table">
             <TableHead>
@@ -52,12 +62,13 @@ export default function VariablesArea() {
               </TableRow>
             </TableHead>
             <TableBody>
-              {varTable.map((row, index) => (
+              {localTable.map((row, index) => (
                 <TableRow key={index}>
                   <TableCell component="th" scope="row" sx={{ width: '35%' }}>
                     <TextField
                       value={row.variable}
-                      onChange={(e) => handleValueChange(index, 'variable', e.target.value)}
+                      onChange={(e) => handleInputChange(index, 'variable', e.target.value)}
+                      onBlur={(e) => handleBlur(index, 'variable', e.target.value)}
                       variant="outlined"
                       size="small"
                       fullWidth
@@ -66,7 +77,8 @@ export default function VariablesArea() {
                   <TableCell align="left" sx={{ width: '60%' }}>
                     <TextField
                       value={row.value}
-                      onChange={(e) => handleValueChange(index, 'value', e.target.value)}
+                      onChange={(e) => handleInputChange(index, 'value', e.target.value)}
+                      onBlur={(e) => handleBlur(index, 'value', e.target.value)}
                       variant="outlined"
                       size="small"
                       fullWidth
