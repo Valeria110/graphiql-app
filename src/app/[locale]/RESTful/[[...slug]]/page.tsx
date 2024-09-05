@@ -1,5 +1,5 @@
 'use client';
-import { Box, Button, FormControl, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material';
+import { Box, FormControl, InputLabel, MenuItem, Select, Stack, TextField } from '@mui/material';
 import { useEffect, useId } from 'react';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { HttpMethod } from '@/types/types';
@@ -8,20 +8,13 @@ import BodyArea from './BodyArea';
 import VariablesArea from './VariablesArea';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store/store';
-import {
-  setMethod,
-  setUrl,
-  setResponse,
-  setObj,
-  setUrlAndUpdateURLInner,
-  setBodyText,
-} from '@/features/RESTFul/RESTFulSlice';
-import { addObjectToLocalStorage, convertSlugToObj, getHttpMethods, isMethodWithoutBody } from '@/utils/utilsRESTful';
-import SendIcon from '@mui/icons-material/Send';
+import { setMethod, setUrl, setObj, setUrlAndUpdateURLInner, setBodyText } from '@/features/RESTFul/RESTFulSlice';
+import { convertSlugToObj, getHttpMethods, isMethodWithoutBody } from '@/utils/utilsRESTful';
+
 import { useUser } from '@/hooks/authHook';
 import LoginRequired from '@/components/LoginRequired/LoginRequired';
 import { URLUpdate } from './URLUpdate';
-import { RESTFulRequests } from '@/api/RESTFulRequests';
+import SubmitBtn from './SubmitBtn';
 
 // TODO: loader for code area
 
@@ -32,7 +25,6 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
   const user = useUser();
   const method = useSelector((state: RootState) => state.RESTFul.method);
   const url = useSelector((state: RootState) => state.RESTFul.url);
-  const obj = useSelector((state: RootState) => state.RESTFul);
   const isInitialized = useSelector((state: RootState) => state.RESTFul.isInitialized);
 
   const idLabel = useId();
@@ -45,22 +37,6 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
       dispatch(setObj(newObj));
     }
   }, [params.slug, isInitialized, dispatch]);
-
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-
-    const date = new Date().toISOString();
-
-    const updatedObj = {
-      ...obj,
-      date,
-    };
-
-    addObjectToLocalStorage(updatedObj);
-
-    const response = await RESTFulRequests(obj);
-    dispatch(setResponse(response));
-  };
 
   const handleMethodChange = (event: SelectChangeEvent<HttpMethod>) => {
     const chosenMethod = event.target.value as HttpMethod;
@@ -85,7 +61,7 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
   return (
     <URLUpdate>
       <Box sx={{ my: 2, px: 1 }}>
-        <form onSubmit={handleSubmit}>
+        <form>
           <Stack direction="row" spacing={1}>
             <FormControl sx={{ minWidth: 120 }}>
               <InputLabel id={idLabel}>Method</InputLabel>
@@ -109,10 +85,7 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
                 onBlur={handleUrlBlur}
               />
             </FormControl>
-
-            <Button endIcon={<SendIcon />} variant="contained" type="submit">
-              Send
-            </Button>
+            <SubmitBtn />
           </Stack>
         </form>
 
