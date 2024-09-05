@@ -2,7 +2,7 @@ import { RESTFulState, HttpMethod, VariableRow, ResponseObj, BodyType } from '@/
 import { functionConvertObjToShortURL } from '@/utils/utilsRESTful';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-const initialState: RESTFulState = {
+export const initialState: RESTFulState = {
   method: 'GET',
   url: '',
   variableTable: [],

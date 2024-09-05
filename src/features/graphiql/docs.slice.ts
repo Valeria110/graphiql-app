@@ -7,7 +7,7 @@ interface initialStateInt {
   textError: string;
 }
 
-const initialState: initialStateInt = {
+export const initialState: initialStateInt = {
   schema: null,
   isOpen: false,
   textError: '',

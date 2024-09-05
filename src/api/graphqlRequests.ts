@@ -23,6 +23,8 @@ const fetchGraphQLData = async (
       },
       body: JSON.stringify({ query, variables: vars }),
     });
+    console.log(res);
+
     const status = res.status;
     const { data, errors } = await res.json();
 

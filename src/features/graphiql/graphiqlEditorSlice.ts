@@ -9,7 +9,7 @@ interface InitialState {
   sdlUrl: string;
 }
 
-const initialState: InitialState = {
+export const initialState: InitialState = {
   query: `query {
   character(id: 1) {
     id
