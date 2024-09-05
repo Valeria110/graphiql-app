@@ -62,6 +62,10 @@ export const RESTFulSlice = createSlice({
       const prev = state.isVariableTableOpen ?? false;
       state.isVariableTableOpen = !prev;
     },
+    toggleIsHeaderTableOpen: (state) => {
+      const prev = state.isHeaderTableOpen ?? false;
+      state.isHeaderTableOpen = !prev;
+    },
   },
 });
 
@@ -78,6 +82,7 @@ export const {
   restoreAllFieldsRest,
   updateURLInner,
   toggleIsVariableTableOpen,
+  toggleIsHeaderTableOpen,
   setHeader,
 } = RESTFulSlice.actions;
 

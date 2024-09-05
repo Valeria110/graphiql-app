@@ -14,7 +14,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { RootState, AppDispatch } from '@/store/store';
-import { setHeader } from '@/features/RESTFul/RESTFulSlice';
+import { setHeader, toggleIsHeaderTableOpen } from '@/features/RESTFul/RESTFulSlice';
 import CollapsibleComponent from './CollapsibleComponent';
 
 type HeadersArray = [string, string][];
@@ -51,7 +51,12 @@ export default function HeadersArea() {
 
   return (
     <>
-      <CollapsibleComponent tabName={`Headers (${localHeaders.length})`}>
+      <CollapsibleComponent
+        tabName={`Headers`}
+        stateSelector={(state) => state.RESTFul.isHeaderTableOpen ?? false}
+        toggleAction={toggleIsHeaderTableOpen}
+        tabLength={localHeaders.length}
+      >
         <TableContainer component={Paper}>
           <Table sx={{ width: '100%' }} size="small" aria-label="a dense table">
             <TableHead>

@@ -14,7 +14,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { RootState, AppDispatch } from '@/store/store';
-import { setVariableTable } from '@/features/RESTFul/RESTFulSlice';
+import { setVariableTable, toggleIsVariableTableOpen } from '@/features/RESTFul/RESTFulSlice';
 import CollapsibleComponent from './CollapsibleComponent';
 
 export default function VariablesArea() {
@@ -47,7 +47,12 @@ export default function VariablesArea() {
 
   return (
     <>
-      <CollapsibleComponent tabName={`Variables ${localTable.length > 0 ? `(${localTable.length})` : ''}`}>
+      <CollapsibleComponent
+        tabName={`Variables`}
+        stateSelector={(state) => state.RESTFul.isVariableTableOpen ?? false}
+        toggleAction={toggleIsVariableTableOpen}
+        tabLength={localTable.length}
+      >
         <TableContainer component={Paper}>
           <Table sx={{ width: '100%' }} size="small" aria-label="a dense table">
             <TableHead>
