@@ -72,6 +72,7 @@ export const {
   setBodyType,
   setUrlAndUpdateURLInner,
   restoreAllFieldsRest,
+  updateURLInner,
 } = RESTFulSlice.actions;
 
 export default RESTFulSlice.reducer;

@@ -8,6 +8,7 @@ import { useCallback, useEffect, useId, useState } from 'react';
 import { BodyType } from '@/types/types';
 import { prettifyJSON, prettifyText } from '@/utils/prettifyBody';
 import { isMethodWithoutBody } from '@/utils/utilsRESTful';
+import ExampleBtn from './ExampleBtn';
 
 interface BodyBarAreaProps {
   prettifyCode: () => void;
@@ -39,6 +40,7 @@ function BodyBarArea({ prettifyCode }: BodyBarAreaProps) {
           <Typography variant="body2" sx={{ m: 1 }}>
             Body
           </Typography>
+          <ExampleBtn />
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <IconButton size="small" edge="start" color="inherit" aria-label="menu" onClick={prettifyCode}>
               <AutoFixHighIcon />
