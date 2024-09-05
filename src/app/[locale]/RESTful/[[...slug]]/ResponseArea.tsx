@@ -1,4 +1,4 @@
-import { Box, AppBar, Toolbar, IconButton, Typography } from '@mui/material';
+import { Box, AppBar, Toolbar, IconButton, Typography, useTheme } from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { Editor } from '@monaco-editor/react';
 import { RootState } from '@/store/store';
@@ -34,6 +34,15 @@ function ResponseAreaBar() {
   const timeMs = response?.timeMs;
   const code = response?.code;
 
+  const theme = useTheme();
+  const getStatusColor = (code?: number) => {
+    if (code === undefined) return theme.palette.text.primary;
+    if (code >= 200 && code < 300) return theme.palette.success.main;
+    if (code >= 400 && code < 500) return theme.palette.warning.main;
+    if (code >= 500) return theme.palette.error.main;
+    return theme.palette.text.primary;
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -46,7 +55,9 @@ function ResponseAreaBar() {
               {timeMs ? `Time: ${timeMs} ms` : 'Time: '}
             </Typography>
           </Box>
-          <Typography variant="body2">{`Code: ${code ?? '\u00A0\u00A0\u00A0'}`}</Typography>
+          <Typography variant="body2" sx={{ color: getStatusColor(code), fontWeight: 'bold' }}>
+            {`Code: ${code ?? '\u00A0\u00A0\u00A0'}`}
+          </Typography>
         </Toolbar>
       </AppBar>
     </Box>
