@@ -9,12 +9,12 @@ import VariablesArea from './VariablesArea';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store/store';
 import { setMethod, setUrl, setResponse, setObj, setUrlAndUpdateURLInner } from '@/features/RESTFul/RESTFulSlice';
-import insertVariablesInBody from './insertVariablesInBody';
 import { addObjectToLocalStorage, convertSlugToObj, getHttpMethods } from '@/utils/utilsRESTful';
 import SendIcon from '@mui/icons-material/Send';
 import { useUser } from '@/hooks/authHook';
 import LoginRequired from '@/components/LoginRequired/LoginRequired';
 import { URLUpdate } from './URLUpdate';
+import { RESTFulRequests } from '@/api/RESTFulRequests';
 
 // TODO: add warning for body GET, DELETE, HEAD, OPTIONS
 // TODO: loader for code area
@@ -26,9 +26,6 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
   const user = useUser();
   const method = useSelector((state: RootState) => state.RESTFul.method);
   const url = useSelector((state: RootState) => state.RESTFul.url);
-  const headers = useSelector((state: RootState) => state.RESTFul.headers);
-  const bodyText = useSelector((state: RootState) => state.RESTFul.bodyText);
-  const variableTable = useSelector((state: RootState) => state.RESTFul.variableTable);
   const obj = useSelector((state: RootState) => state.RESTFul);
   const isInitialized = useSelector((state: RootState) => state.RESTFul.isInitialized);
 
@@ -55,55 +52,8 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
 
     addObjectToLocalStorage(updatedObj);
 
-    const replacedBody = insertVariablesInBody(variableTable, bodyText);
-
-    try {
-      const options: RequestInit = {
-        method,
-        headers: headers,
-        body: replacedBody,
-      };
-
-      const start = Date.now();
-      const res = await fetch(url, options);
-      const finish = Date.now();
-
-      let responseText = '';
-      const contentType = res.headers.get('content-type');
-      if (contentType && contentType.includes('application/json')) {
-        try {
-          const json = await res.json();
-          responseText = JSON.stringify(json, null, 2);
-        } catch {
-          responseText = '';
-        }
-      } else {
-        try {
-          responseText = await res.text();
-        } catch {
-          responseText = '';
-        }
-      }
-
-      dispatch(
-        setResponse({
-          code: res.status,
-          timeMs: finish - start,
-          responseText: responseText,
-        }),
-      );
-    } catch (error: unknown) {
-      const errorMessage = 'An unexpected error occurred';
-      const statusCode = 500;
-
-      dispatch(
-        setResponse({
-          code: statusCode,
-          timeMs: 0,
-          responseText: errorMessage,
-        }),
-      );
-    }
+    const response = await RESTFulRequests(obj);
+    dispatch(setResponse(response));
   };
 
   const handleMethodChange = (event: SelectChangeEvent<HttpMethod>) => {
