@@ -12,7 +12,7 @@ import { IconButton } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddIcon from '@mui/icons-material/Add';
 import { useSelector, useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { RootState, AppDispatch } from '@/store/store';
 import { setHeader, toggleIsHeaderTableOpen } from '@/features/RESTFul/RESTFulSlice';
 import CollapsibleComponent from './CollapsibleComponent';
@@ -21,9 +21,13 @@ type HeadersArray = [string, string][];
 
 export default function HeadersArea() {
   const dispatch = useDispatch<AppDispatch>();
-  const headersTable: HeadersArray = useSelector((state: RootState) => state.RESTFul.headers);
+  const headersFromRedux: HeadersArray = useSelector((state: RootState) => state.RESTFul.headers);
 
-  const [localHeaders, setLocalHeaders] = useState<HeadersArray>(headersTable);
+  const [localHeaders, setLocalHeaders] = useState<HeadersArray>(headersFromRedux);
+
+  useEffect(() => {
+    setLocalHeaders(headersFromRedux); // syns
+  }, [headersFromRedux]);
 
   const handleInputChange = (index: number, field: 'header' | 'value', newValue: string) => {
     const updatedHeaders: HeadersArray = localHeaders.map((row, i) =>
