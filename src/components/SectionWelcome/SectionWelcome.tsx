@@ -65,7 +65,7 @@ export default function SectionWelcome({ t }: SectionsProps) {
         <Image
           className={sectionWelcomeStyles['section-welcome__logo']}
           src={restLogo}
-          alt="logo"
+          alt="restLogo"
           width={230}
           height={170}
           priority
@@ -74,7 +74,7 @@ export default function SectionWelcome({ t }: SectionsProps) {
         <Image
           className={sectionWelcomeStyles['section-welcome__logo']}
           src={graphQLLogo}
-          alt="logo"
+          alt="graphQLLogo"
           width={200}
           height={220}
           priority
