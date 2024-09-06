@@ -4,6 +4,7 @@ import { Editor } from '@monaco-editor/react';
 import { RootState } from '@/store/store';
 import { useSelector } from 'react-redux';
 import { useTranslations } from 'next-intl';
+import Loader from '@/components/Loader/Loader';
 
 export default function ResponseArea() {
   const response = useSelector((state: RootState) => state.RESTFul.response);
@@ -24,6 +25,7 @@ export default function ResponseArea() {
             minimap: { enabled: false },
           }}
           theme="vs-dark"
+          loading={<Loader />}
         />
       </div>
     </Box>

@@ -9,6 +9,7 @@ import { BodyType } from '@/types/types';
 import { prettifyJSON, prettifyText } from '@/utils/prettifyBody';
 import { isMethodWithoutBody } from '@/utils/utilsRESTful';
 import ExampleBtn from './ExampleBtn';
+import Loader from '@/components/Loader/Loader';
 
 interface BodyBarAreaProps {
   prettifyCode: () => void;
@@ -52,7 +53,6 @@ function BodyBarArea({ prettifyCode }: BodyBarAreaProps) {
   );
 }
 
-// TODO: hide minimap for small devices
 export default function BodyArea() {
   const dispatch = useDispatch<AppDispatch>();
   const bodyTextFromRedux = useSelector((state: RootState) => state.RESTFul.bodyText);
@@ -102,6 +102,7 @@ export default function BodyArea() {
             minimap: { enabled: true },
           }}
           theme="vs-dark"
+          loading={<Loader />}
         />
       </Box>
     </Box>
