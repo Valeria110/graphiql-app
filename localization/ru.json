@@ -98,5 +98,44 @@
     "GraphQLText": "песочницу GraphQL",
     "HistoryText": "историю запросов",
     "RESTText": "песочницу RESTFull"
+  },
+  "RESTful": {
+    "Page": {
+      "URL": "URL",
+      "Method": "Метод"
+    },
+    "SubmitBtn": {
+      "SubmitBtn": "Отправить"
+    },
+    "VariablesArea": {
+      "TabName": "Переменные",
+      "RowVariable": "Переменная",
+      "RowValue": "Значение",
+      "RowActions": "Действия",
+      "AddRowBtn": "Добавить строку",
+      "DeleteLabelBtn": "удалить"
+    },
+    "HeadersArea": {
+      "TabName": "Заголовки",
+      "RowHeader": "Заголовок",
+      "RowValue": "Значение",
+      "RowActions": "Действия",
+      "AddHeaderBtn": "Добавить заголовок",
+      "DeleteLabelBtn": "удалить"
+    },
+    "ExampleBtn": {
+      "FillBtn": "Заполнить пример",
+      "ExampleBodyTitle": "Некоторый заголовок",
+      "ExampleBodyValue": "Пример текста, который мы храним в переменной body"
+    },
+    "ResponseArea": {
+      "Time": "Время",
+      "Ms": "Мс",
+      "Code": "Код"
+    }
+  },
+  "CollapsiblePanel": {
+    "Hide": "Скрыть",
+    "Show": "Показать"
   }
 }

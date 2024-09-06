@@ -3,6 +3,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { Editor } from '@monaco-editor/react';
 import { RootState } from '@/store/store';
 import { useSelector } from 'react-redux';
+import { useTranslations } from 'next-intl';
 
 export default function ResponseArea() {
   const response = useSelector((state: RootState) => state.RESTFul.response);
@@ -33,6 +34,7 @@ function ResponseAreaBar() {
   const response = useSelector((state: RootState) => state.RESTFul.response);
   const timeMs = response?.timeMs;
   const code = response?.code;
+  const t = useTranslations('RESTful.ResponseArea');
 
   const theme = useTheme();
   const getStatusColor = (code?: number) => {
@@ -52,11 +54,11 @@ function ResponseAreaBar() {
               <AccessTimeIcon />
             </IconButton>
             <Typography variant="body2" sx={{ ml: 1 }}>
-              {timeMs ? `Time: ${timeMs} ms` : 'Time: '}
+              {timeMs ? `${t('Time')}: ${timeMs} ${t('Ms')}` : `${t('Time')}:`}
             </Typography>
           </Box>
           <Typography variant="body2" sx={{ color: getStatusColor(code), fontWeight: 'bold' }}>
-            {`Code: ${code ?? '\u00A0\u00A0\u00A0'}`}
+            {`${t('Code')}: ${code ?? '\u00A0\u00A0\u00A0'}`}
           </Typography>
         </Toolbar>
       </AppBar>

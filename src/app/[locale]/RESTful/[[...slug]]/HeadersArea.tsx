@@ -16,12 +16,14 @@ import { useEffect, useState } from 'react';
 import { RootState, AppDispatch } from '@/store/store';
 import { setHeader, toggleIsHeaderTableOpen } from '@/features/RESTFul/RESTFulSlice';
 import CollapsiblePanel from '@/components/CollapsiblePanel/CollapsiblePanel';
+import { useTranslations } from 'next-intl';
 
 type HeadersArray = [string, string][];
 
 export default function HeadersArea() {
   const dispatch = useDispatch<AppDispatch>();
   const headersFromRedux: HeadersArray = useSelector((state: RootState) => state.RESTFul.headers);
+  const t = useTranslations('RESTful.HeadersArea');
 
   const [localHeaders, setLocalHeaders] = useState<HeadersArray>(headersFromRedux);
 
@@ -56,21 +58,21 @@ export default function HeadersArea() {
   return (
     <>
       <CollapsiblePanel
-        tabName={`Headers`}
+        tabName={t('TabName')}
         stateSelector={(state) => state.RESTFul.isHeaderTableOpen ?? false}
         toggleAction={toggleIsHeaderTableOpen}
         tabLength={localHeaders.length}
       >
         <TableContainer component={Paper}>
-          <Table sx={{ width: '100%' }} size="small" aria-label="a dense table">
+          <Table sx={{ width: '100%' }} size="small">
             <TableHead>
               <TableRow>
-                <TableCell sx={{ width: '45%' }}>Header</TableCell>
+                <TableCell sx={{ width: '45%' }}>{t('RowHeader')}</TableCell>
                 <TableCell align="left" sx={{ width: '45%' }}>
-                  Value
+                  {t('RowValue')}
                 </TableCell>
                 <TableCell align="left" sx={{ width: '10%' }}>
-                  Actions
+                  {t('RowActions')}
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -102,7 +104,7 @@ export default function HeadersArea() {
                       size="small"
                       edge="start"
                       color="inherit"
-                      aria-label="delete"
+                      aria-label={t('DeleteLabelBtn')}
                       onClick={() => handleRemoveRow(index)}
                     >
                       <DeleteOutlineIcon />
@@ -116,7 +118,7 @@ export default function HeadersArea() {
 
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}>
           <Button variant="contained" startIcon={<AddIcon />} onClick={handleAddRow}>
-            Add Header
+            {t('AddHeaderBtn')}
           </Button>
         </Box>
       </CollapsiblePanel>

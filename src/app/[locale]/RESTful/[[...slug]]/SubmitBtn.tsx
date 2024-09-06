@@ -5,10 +5,12 @@ import { AppDispatch, RootState } from '@/store/store';
 import { addObjectToLocalStorage } from '@/utils/utilsRESTful';
 import { RESTFulRequests } from '@/api/RESTFulRequests';
 import { setResponse } from '@/features/RESTFul/RESTFulSlice';
+import { useTranslations } from 'next-intl';
 
 export default function SubmitBtn() {
   const dispatch = useDispatch<AppDispatch>();
   const obj = useSelector((state: RootState) => state.RESTFul);
+  const t = useTranslations('RESTful.SubmitBtn');
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -29,7 +31,7 @@ export default function SubmitBtn() {
   return (
     <>
       <Button endIcon={<SendIcon />} variant="contained" type="submit" onClick={handleSubmit}>
-        Send
+        {t('SubmitBtn')}
       </Button>
     </>
   );

@@ -4,14 +4,16 @@ import { AppDispatch } from '@/store/store';
 import { setObj, updateURLInner } from '@/features/RESTFul/RESTFulSlice';
 import FormatColorTextIcon from '@mui/icons-material/FormatColorText';
 import { RESTFulState } from '@/types/types';
+import { useTranslations } from 'next-intl';
 
 export default function ExampleBtn() {
   const dispatch = useDispatch<AppDispatch>();
+  const t = useTranslations('RESTful.ExampleBtn');
 
   const handleClick = () => {
     const bodyObj = {
       likes: 30,
-      title: 'Some title',
+      title: t('ExampleBodyTitle'),
       body: '__body__',
     };
     const formattedBodyText = JSON.stringify(bodyObj, null, 2);
@@ -22,7 +24,7 @@ export default function ExampleBtn() {
       variableTable: [
         {
           variable: 'body',
-          value: 'An example of the text we store in the body variable',
+          value: t('ExampleBodyValue'),
         },
       ],
       bodyText: formattedBodyText,
@@ -39,7 +41,7 @@ export default function ExampleBtn() {
   return (
     <>
       <Button endIcon={<FormatColorTextIcon />} variant="contained" onClick={handleClick} color="secondary">
-        Fill example
+        {t('FillBtn')}
       </Button>
     </>
   );

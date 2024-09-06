@@ -98,5 +98,44 @@
     "GraphQLText": "GraphQL Playground",
     "HistoryText": "history requests",
     "RESTText": "RESTFull Playground"
+  },
+  "RESTful": {
+    "Page": {
+      "URL": "URL",
+      "Method": "Method"
+    },
+    "SubmitBtn": {
+      "SubmitBtn": "Send"
+    },
+    "VariablesArea": {
+      "TabName": "Variables",
+      "RowVariable": "Variable",
+      "RowValue": "Value",
+      "RowActions": "Actions",
+      "AddRowBtn": "Add Row",
+      "DeleteLabelBtn": "delete"
+    },
+    "HeadersArea": {
+      "TabName": "Headers",
+      "RowHeader": "Header",
+      "RowValue": "Value",
+      "RowActions": "Actions",
+      "AddHeaderBtn": "Add Header",
+      "DeleteLabelBtn": "delete"
+    },
+    "ExampleBtn": {
+      "FillBtn": "Fill example",
+      "ExampleBodyTitle": "Some title",
+      "ExampleBodyValue": "An example of the text we store in the body variable"
+    },
+    "ResponseArea": {
+      "Time": "Time",
+      "Ms": "Ms",
+      "Code": "Code"
+    }
+  },
+  "CollapsiblePanel": {
+    "Hide": "Hide",
+    "Show": "Show"
   }
 }

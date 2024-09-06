@@ -16,10 +16,12 @@ import { useState } from 'react';
 import { RootState, AppDispatch } from '@/store/store';
 import { setVariableTable, toggleIsVariableTableOpen } from '@/features/RESTFul/RESTFulSlice';
 import CollapsiblePanel from '@/components/CollapsiblePanel/CollapsiblePanel';
+import { useTranslations } from 'next-intl';
 
 export default function VariablesArea() {
   const dispatch = useDispatch<AppDispatch>();
   const varTable = useSelector((state: RootState) => state.RESTFul.variableTable);
+  const t = useTranslations('RESTful.VariablesArea');
 
   const [localTable, setLocalTable] = useState(varTable);
 
@@ -48,7 +50,7 @@ export default function VariablesArea() {
   return (
     <>
       <CollapsiblePanel
-        tabName={`Variables`}
+        tabName={t('TabName')}
         stateSelector={(state) => state.RESTFul.isVariableTableOpen ?? false}
         toggleAction={toggleIsVariableTableOpen}
         tabLength={localTable.length}
@@ -57,12 +59,12 @@ export default function VariablesArea() {
           <Table sx={{ width: '100%' }} size="small" aria-label="a dense table">
             <TableHead>
               <TableRow>
-                <TableCell sx={{ width: '35%' }}>Variable</TableCell>
+                <TableCell sx={{ width: '35%' }}>{t('RowVariable')}</TableCell>
                 <TableCell align="left" sx={{ width: '60%' }}>
-                  Value
+                  {t('RowValue')}
                 </TableCell>
                 <TableCell align="left" sx={{ width: '5%' }}>
-                  Actions
+                  {t('RowActions')}
                 </TableCell>
               </TableRow>
             </TableHead>
@@ -94,7 +96,7 @@ export default function VariablesArea() {
                       size="small"
                       edge="start"
                       color="inherit"
-                      aria-label="menu"
+                      aria-label={t('DeleteLabelBtn')}
                       onClick={() => handleRemoveRow(index)}
                     >
                       <DeleteOutlineIcon />
@@ -108,7 +110,7 @@ export default function VariablesArea() {
 
         <Box sx={{ display: 'flex', justifyContent: 'flex-end', mt: 1 }}>
           <Button variant="contained" startIcon={<AddIcon />} onClick={handleAddRow}>
-            Add Row
+            {t('AddRowBtn')}
           </Button>
         </Box>
       </CollapsiblePanel>

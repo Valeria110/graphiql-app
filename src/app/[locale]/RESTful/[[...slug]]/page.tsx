@@ -10,12 +10,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '@/store/store';
 import { setMethod, setUrl, setObj, setUrlAndUpdateURLInner, setBodyText } from '@/features/RESTFul/RESTFulSlice';
 import { convertSlugToObj, getHttpMethods, isMethodWithoutBody } from '@/utils/utilsRESTful';
-
 import { useUser } from '@/hooks/authHook';
 import LoginRequired from '@/components/LoginRequired/LoginRequired';
 import { URLUpdate } from './URLUpdate';
 import SubmitBtn from './SubmitBtn';
 import HeadersArea from './HeadersArea';
+import { useTranslations } from 'next-intl';
 
 const httpMethods: HttpMethod[] = getHttpMethods();
 
@@ -25,6 +25,7 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
   const method = useSelector((state: RootState) => state.RESTFul.method);
   const url = useSelector((state: RootState) => state.RESTFul.url);
   const isInitialized = useSelector((state: RootState) => state.RESTFul.isInitialized);
+  const t = useTranslations('RESTful.Page');
 
   const idLabel = useId();
   const idSelect = useId();
@@ -63,8 +64,8 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
         <form>
           <Stack direction="row" spacing={1}>
             <FormControl sx={{ minWidth: 120 }}>
-              <InputLabel id={idLabel}>Method</InputLabel>
-              <Select labelId={idLabel} id={idSelect} value={method} label="Method" onChange={handleMethodChange}>
+              <InputLabel id={idLabel}>{t('Method')}</InputLabel>
+              <Select labelId={idLabel} id={idSelect} value={method} label={t('Method')} onChange={handleMethodChange}>
                 {httpMethods.map((method) => (
                   <MenuItem key={method} value={method}>
                     {method}
@@ -76,7 +77,7 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
             <FormControl fullWidth>
               <TextField
                 id={idURL}
-                label="URL"
+                label={t('URL')}
                 variant="outlined"
                 fullWidth
                 value={url}
