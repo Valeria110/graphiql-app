@@ -6,13 +6,13 @@ const fetchGraphQLData = async (
   url: string,
   query: string,
   headers?: Record<string, string> | null,
-  variables?: string | null,
+  variables?: Record<string, string> | null,
 ) => {
   try {
     if (!url) {
       return 'Please, enter a url to make a request';
     }
-    const vars = variables ? JSON.parse(variables) : {};
+    const vars = variables ? variables : {};
 
     const res = await fetch(url, {
       method: 'POST',
@@ -23,6 +23,8 @@ const fetchGraphQLData = async (
       },
       body: JSON.stringify({ query, variables: vars }),
     });
+    console.log(res);
+
     const status = res.status;
     const { data, errors } = await res.json();
 

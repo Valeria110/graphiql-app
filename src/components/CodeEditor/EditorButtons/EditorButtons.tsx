@@ -68,13 +68,13 @@ export default function EditorButtons({ query, setQuery: setEditorQuery }: Edito
   };
 
   return (
-    <div className={styles.btnsWrapper}>
-      <button className={classNames(styles.btn, styles.runCodeBtn)} onClick={runCode}>
+    <div className={styles.btnsWrapper} data-testid="editor-btns-wrapper">
+      <button className={classNames(styles.btn, styles.runCodeBtn)} onClick={runCode} data-testid="run-code-btn">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
           <polygon points="5,3 19,12 5,21" fill="#fff" />
         </svg>
       </button>
-      <button className={styles.btn} onClick={prettifyCode}>
+      <button className={styles.btn} onClick={prettifyCode} data-testid="prettify-btn">
         <svg xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 16 16">
           <path
             fill="#fff"

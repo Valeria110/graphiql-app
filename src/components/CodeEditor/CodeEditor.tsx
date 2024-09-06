@@ -26,9 +26,7 @@ export default function CodeEditor({ language }: CodeEditorProps) {
   const [pathname, setPathname] = useState(pathUrl);
 
   useEffect(() => {
-    if (query) {
-      setEditorQuery(editorCodeQueryValue);
-    }
+    setEditorQuery(editorCodeQueryValue);
 
     window.history.replaceState(null, '', pathname);
   }, [editorCodeQueryValue, setEditorQuery, pathname]);
@@ -47,7 +45,7 @@ export default function CodeEditor({ language }: CodeEditorProps) {
   };
 
   return (
-    <div className={styles.codeEditor}>
+    <div className={styles.codeEditor} data-testid="code-editor">
       <div className={styles.editorContainer}>
         <div className={styles.monacoEditor} onBlur={handleOnBlur}>
           <Editor

@@ -1,9 +1,9 @@
-interface IRequestData {
+export interface IRequestData {
   url: string;
   sdlUrl: string;
   body: string;
   headers: Record<string, string> | null;
-  variables: string | null;
+  variables: Record<string, string> | null;
   date: Date;
 }
 
