@@ -55,7 +55,7 @@ export default function RESTFul({ params }: { params: { slug: string[] } }) {
     dispatch(setUrlAndUpdateURLInner(event.target.value));
   };
 
-  if (!user) {
+  if (user === null) {
     return <LoginRequired serviceName="REST" />;
   }
 
