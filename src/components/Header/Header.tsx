@@ -72,7 +72,12 @@ export default function Header() {
           <HomeBtn handleCLick={() => router.push('/')} />
           <div className={styles.rightBtnsWrapper}>
             {isUserSignedIn ? (
-              <Button variant="contained" color="secondary" onClick={handleSignOut}>
+              <Button
+                variant="contained"
+                color="secondary"
+                onClick={handleSignOut}
+                sx={{ whiteSpace: 'nowrap', paddingX: 4 }}
+              >
                 {t('btnSignOut')}
               </Button>
             ) : (

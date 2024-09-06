@@ -7,9 +7,7 @@ export const initialState: RESTFulState = {
   url: '',
   variableTable: [],
   bodyType: 'json',
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  headers: [],
   bodyText: '',
   urlInner: 'GET',
   response: undefined,
@@ -25,8 +23,9 @@ export const RESTFulSlice = createSlice({
       state.method = action.payload;
       RESTFulSlice.caseReducers.updateURLInner(state);
     },
-    setHeader: (state, action: PayloadAction<HeadersInit | undefined>) => {
+    setHeader: (state, action: PayloadAction<[string, string][]>) => {
       state.headers = action.payload;
+      RESTFulSlice.caseReducers.updateURLInner(state);
     },
     setUrl: (state, action: PayloadAction<string>) => {
       state.url = action.payload;
@@ -41,6 +40,7 @@ export const RESTFulSlice = createSlice({
     },
     setVariableTable: (state, action: PayloadAction<VariableRow[]>) => {
       state.variableTable = action.payload;
+      RESTFulSlice.caseReducers.updateURLInner(state);
     },
     setResponse: (state, action: PayloadAction<ResponseObj>) => {
       state.response = action.payload;
@@ -58,6 +58,14 @@ export const RESTFulSlice = createSlice({
     restoreAllFieldsRest: (state, action: PayloadAction<RESTFulState>) => {
       return { ...state, ...action.payload };
     },
+    toggleIsVariableTableOpen: (state) => {
+      const prev = state.isVariableTableOpen ?? false;
+      state.isVariableTableOpen = !prev;
+    },
+    toggleIsHeaderTableOpen: (state) => {
+      const prev = state.isHeaderTableOpen ?? false;
+      state.isHeaderTableOpen = !prev;
+    },
   },
 });
 
@@ -72,6 +80,10 @@ export const {
   setBodyType,
   setUrlAndUpdateURLInner,
   restoreAllFieldsRest,
+  updateURLInner,
+  toggleIsVariableTableOpen,
+  toggleIsHeaderTableOpen,
+  setHeader,
 } = RESTFulSlice.actions;
 
 export default RESTFulSlice.reducer;

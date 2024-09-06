@@ -1,8 +1,10 @@
-import { Box, AppBar, Toolbar, IconButton, Typography } from '@mui/material';
+import { Box, AppBar, Toolbar, IconButton, Typography, useTheme } from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { Editor } from '@monaco-editor/react';
 import { RootState } from '@/store/store';
 import { useSelector } from 'react-redux';
+import { useTranslations } from 'next-intl';
+import Loader from '@/components/Loader/Loader';
 
 export default function ResponseArea() {
   const response = useSelector((state: RootState) => state.RESTFul.response);
@@ -23,6 +25,7 @@ export default function ResponseArea() {
             minimap: { enabled: false },
           }}
           theme="vs-dark"
+          loading={<Loader />}
         />
       </div>
     </Box>
@@ -33,6 +36,16 @@ function ResponseAreaBar() {
   const response = useSelector((state: RootState) => state.RESTFul.response);
   const timeMs = response?.timeMs;
   const code = response?.code;
+  const t = useTranslations('RESTful.ResponseArea');
+
+  const theme = useTheme();
+  const getStatusColor = (code?: number) => {
+    if (code === undefined) return theme.palette.text.primary;
+    if (code >= 200 && code < 300) return theme.palette.success.main;
+    if (code >= 400 && code < 500) return theme.palette.warning.main;
+    if (code >= 500) return theme.palette.error.main;
+    return theme.palette.text.primary;
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -43,10 +56,12 @@ function ResponseAreaBar() {
               <AccessTimeIcon />
             </IconButton>
             <Typography variant="body2" sx={{ ml: 1 }}>
-              {timeMs ? `Time: ${timeMs} ms` : 'Time: '}
+              {timeMs ? `${t('Time')}: ${timeMs} ${t('Ms')}` : `${t('Time')}:`}
             </Typography>
           </Box>
-          <Typography variant="body2">{`Code: ${code ?? '\u00A0\u00A0\u00A0'}`}</Typography>
+          <Typography variant="body2" sx={{ color: getStatusColor(code), fontWeight: 'bold' }}>
+            {`${t('Code')}: ${code ?? '\u00A0\u00A0\u00A0'}`}
+          </Typography>
         </Toolbar>
       </AppBar>
     </Box>
