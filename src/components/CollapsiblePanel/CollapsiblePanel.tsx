@@ -4,7 +4,7 @@ import { Button, Collapse, Box } from '@mui/material';
 import { RootState, AppDispatch } from '@/store/store';
 import { Action } from '@reduxjs/toolkit';
 
-interface CollapsibleComponentProps {
+interface CollapsiblePanelProps {
   children: ReactNode;
   tabName: string;
   tabLength: number;
@@ -12,13 +12,13 @@ interface CollapsibleComponentProps {
   toggleAction: () => Action;
 }
 
-export default function CollapsibleComponent({
+export default function CollapsiblePanel({
   children,
   tabName,
   stateSelector,
   toggleAction,
   tabLength,
-}: CollapsibleComponentProps) {
+}: CollapsiblePanelProps) {
   const dispatch = useDispatch<AppDispatch>();
 
   const open = useSelector(stateSelector);

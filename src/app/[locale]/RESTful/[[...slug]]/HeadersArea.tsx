@@ -15,7 +15,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { RootState, AppDispatch } from '@/store/store';
 import { setHeader, toggleIsHeaderTableOpen } from '@/features/RESTFul/RESTFulSlice';
-import CollapsibleComponent from './CollapsibleComponent';
+import CollapsiblePanel from '@/components/CollapsiblePanel/CollapsiblePanel';
 
 type HeadersArray = [string, string][];
 
@@ -55,7 +55,7 @@ export default function HeadersArea() {
 
   return (
     <>
-      <CollapsibleComponent
+      <CollapsiblePanel
         tabName={`Headers`}
         stateSelector={(state) => state.RESTFul.isHeaderTableOpen ?? false}
         toggleAction={toggleIsHeaderTableOpen}
@@ -119,7 +119,7 @@ export default function HeadersArea() {
             Add Header
           </Button>
         </Box>
-      </CollapsibleComponent>
+      </CollapsiblePanel>
     </>
   );
 }

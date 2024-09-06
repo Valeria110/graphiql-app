@@ -15,7 +15,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
 import { RootState, AppDispatch } from '@/store/store';
 import { setVariableTable, toggleIsVariableTableOpen } from '@/features/RESTFul/RESTFulSlice';
-import CollapsibleComponent from './CollapsibleComponent';
+import CollapsiblePanel from '@/components/CollapsiblePanel/CollapsiblePanel';
 
 export default function VariablesArea() {
   const dispatch = useDispatch<AppDispatch>();
@@ -47,7 +47,7 @@ export default function VariablesArea() {
 
   return (
     <>
-      <CollapsibleComponent
+      <CollapsiblePanel
         tabName={`Variables`}
         stateSelector={(state) => state.RESTFul.isVariableTableOpen ?? false}
         toggleAction={toggleIsVariableTableOpen}
@@ -111,7 +111,7 @@ export default function VariablesArea() {
             Add Row
           </Button>
         </Box>
-      </CollapsibleComponent>
+      </CollapsiblePanel>
     </>
   );
 }
