@@ -151,6 +151,6 @@ function isJSON(str: string) {
 }
 
 export function isMethodWithoutBody(method: HttpMethod) {
-  const methodsWithoutBody: HttpMethod[] = ['GET']; // TODO: add more
+  const methodsWithoutBody: HttpMethod[] = ['GET', 'HEAD', 'OPTIONS'];
   return methodsWithoutBody.includes(method);
 }

@@ -17,8 +17,6 @@ import { URLUpdate } from './URLUpdate';
 import SubmitBtn from './SubmitBtn';
 import HeadersArea from './HeadersArea';
 
-// TODO: loader for code area
-
 const httpMethods: HttpMethod[] = getHttpMethods();
 
 export default function RESTFul({ params }: { params: { slug: string[] } }) {
