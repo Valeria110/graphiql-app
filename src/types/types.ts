@@ -32,11 +32,13 @@ export interface ResponseObj {
   responseText: string;
 }
 
+export type HeadersREST = [string, string][];
+
 export interface RESTFulState {
   method: HttpMethod;
   url: string;
   variableTable: VariableRow[];
-  headers: [string, string][];
+  headers: HeadersREST;
   bodyText: string;
   bodyType: BodyType;
   response?: ResponseObj;

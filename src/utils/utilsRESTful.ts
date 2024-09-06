@@ -1,4 +1,4 @@
-import { HttpMethod, RESTFulState, RESTFulStateMini } from '@/types/types';
+import { HeadersREST, HttpMethod, RESTFulState, RESTFulStateMini } from '@/types/types';
 
 export function convertObjToSlug(obj: RESTFulState): string[] {
   const answer: string[] = [];
@@ -27,11 +27,9 @@ export function functionConvertObjToShortURL(obj: RESTFulState) {
     .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
     .join('&');
 
-  const queryString = encodedHeaders ? `?headers=${encodedHeaders}` : '';
+  const queryString = encodedHeaders ? `?${encodedHeaders}` : '';
 
   const pathname = currentSlug.join('/') + queryString;
-
-  console.log('functionConvertObjToShortURL', pathname);
 
   return pathname;
 }
@@ -43,8 +41,11 @@ export function getHttpMethods() {
 
 export function convertSlugToObj(slug: string[]): RESTFulState {
   const httpMethods = getHttpMethods();
+  const SYMBOL_QUESTION = encodeURIComponent('?');
+
   let method: HttpMethod = 'GET'; // default
   let miniObj: RESTFulStateMini | undefined = undefined;
+  const headers: HeadersREST = [];
 
   if (slug.length > 0 && httpMethods.includes(slug[0] as HttpMethod)) {
     method = slug[0] as HttpMethod;
@@ -52,7 +53,21 @@ export function convertSlugToObj(slug: string[]): RESTFulState {
 
   try {
     if (slug.length > 1) {
-      miniObj = decodeBase64UrlToObject(slug[1]);
+      const [partObj, partHeaders] = slug[1].split(SYMBOL_QUESTION);
+      miniObj = decodeBase64UrlToObject(partObj);
+
+      if (partHeaders) {
+        const pairs = decodeURIComponent(partHeaders).split('&');
+
+        pairs.forEach((pair) => {
+          const [encodedKey, encodedValue] = pair.split('=');
+          if (encodedKey && encodedValue) {
+            const key = decodeURIComponent(encodedKey);
+            const value = decodeURIComponent(encodedValue);
+            headers.push([key, value]);
+          }
+        });
+      }
     }
   } catch (error) {
     console.error('Failed to restore miniObj');
@@ -64,7 +79,7 @@ export function convertSlugToObj(slug: string[]): RESTFulState {
     url: '',
     variableTable: [],
     bodyType: 'json',
-    headers: [],
+    headers,
     bodyText: '',
     urlInner: '',
     response: undefined,
