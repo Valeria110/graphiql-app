@@ -20,15 +20,19 @@ export function convertObjToSlug(obj: RESTFulState): string[] {
   return answer;
 }
 
-export function functionConvertObjToURL(locale: 'en' | 'ru', obj: RESTFulState) {
-  const currentSlug = convertObjToSlug(obj);
-  const pathname = `/${locale}/RESTful/${currentSlug.join('/')}`;
-  return pathname;
-}
-
 export function functionConvertObjToShortURL(obj: RESTFulState) {
   const currentSlug = convertObjToSlug(obj);
-  const pathname = currentSlug.join('/');
+
+  const encodedHeaders = obj.headers
+    .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+    .join('&');
+
+  const queryString = encodedHeaders ? `?headers=${encodedHeaders}` : '';
+
+  const pathname = currentSlug.join('/') + queryString;
+
+  console.log('functionConvertObjToShortURL', pathname);
+
   return pathname;
 }
 
