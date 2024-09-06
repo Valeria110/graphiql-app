@@ -1,4 +1,4 @@
-import { HttpMethod, RESTFulState, RESTFulStateMini } from '@/types/types';
+import { HeadersREST, HttpMethod, RESTFulState, RESTFulStateMini } from '@/types/types';
 
 export function convertObjToSlug(obj: RESTFulState): string[] {
   const answer: string[] = [];
@@ -20,15 +20,17 @@ export function convertObjToSlug(obj: RESTFulState): string[] {
   return answer;
 }
 
-export function functionConvertObjToURL(locale: 'en' | 'ru', obj: RESTFulState) {
-  const currentSlug = convertObjToSlug(obj);
-  const pathname = `/${locale}/RESTful/${currentSlug.join('/')}`;
-  return pathname;
-}
-
 export function functionConvertObjToShortURL(obj: RESTFulState) {
   const currentSlug = convertObjToSlug(obj);
-  const pathname = currentSlug.join('/');
+
+  const encodedHeaders = obj.headers
+    .map(([key, value]) => `${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+    .join('&');
+
+  const queryString = encodedHeaders ? `?${encodedHeaders}` : '';
+
+  const pathname = currentSlug.join('/') + queryString;
+
   return pathname;
 }
 
@@ -39,8 +41,11 @@ export function getHttpMethods() {
 
 export function convertSlugToObj(slug: string[]): RESTFulState {
   const httpMethods = getHttpMethods();
+  const SYMBOL_QUESTION = encodeURIComponent('?');
+
   let method: HttpMethod = 'GET'; // default
   let miniObj: RESTFulStateMini | undefined = undefined;
+  const headers: HeadersREST = [];
 
   if (slug.length > 0 && httpMethods.includes(slug[0] as HttpMethod)) {
     method = slug[0] as HttpMethod;
@@ -48,7 +53,21 @@ export function convertSlugToObj(slug: string[]): RESTFulState {
 
   try {
     if (slug.length > 1) {
-      miniObj = decodeBase64UrlToObject(slug[1]);
+      const [partObj, partHeaders] = slug[1].split(SYMBOL_QUESTION);
+      miniObj = decodeBase64UrlToObject(partObj);
+
+      if (partHeaders) {
+        const pairs = decodeURIComponent(partHeaders).split('&');
+
+        pairs.forEach((pair) => {
+          const [encodedKey, encodedValue] = pair.split('=');
+          if (encodedKey && encodedValue) {
+            const key = decodeURIComponent(encodedKey);
+            const value = decodeURIComponent(encodedValue);
+            headers.push([key, value]);
+          }
+        });
+      }
     }
   } catch (error) {
     console.error('Failed to restore miniObj');
@@ -60,9 +79,7 @@ export function convertSlugToObj(slug: string[]): RESTFulState {
     url: '',
     variableTable: [],
     bodyType: 'json',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+    headers,
     bodyText: '',
     urlInner: '',
     response: undefined,
@@ -86,8 +103,8 @@ export function convertSlugToObj(slug: string[]): RESTFulState {
 export function encodeObjectToBase64Url(obj: RESTFulStateMini): string {
   try {
     const jsonString = JSON.stringify(obj);
-    const base64 = btoa(jsonString);
-    // Replace symbols with problems in URL
+    const utf8Bytes = new TextEncoder().encode(jsonString);
+    const base64 = btoa(String.fromCharCode(...utf8Bytes));
     return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
   } catch (error) {
     console.error('Error encoding object to Base64 URL:', error);
@@ -97,12 +114,12 @@ export function encodeObjectToBase64Url(obj: RESTFulStateMini): string {
 
 export function decodeBase64UrlToObject(base64Url: string): RESTFulStateMini {
   try {
-    // Replace symbols with problems in URL back
     const base64 = base64Url
       .replace(/-/g, '+')
       .replace(/_/g, '/')
       .padEnd(base64Url.length + ((4 - (base64Url.length % 4)) % 4), '=');
-    const jsonString = atob(base64);
+    const utf8Bytes = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
+    const jsonString = new TextDecoder().decode(utf8Bytes);
     return JSON.parse(jsonString);
   } catch (error) {
     console.error('Error decoding Base64 URL to object:', error);
@@ -131,4 +148,9 @@ function isJSON(str: string) {
   } catch (e) {
     return false;
   }
+}
+
+export function isMethodWithoutBody(method: HttpMethod) {
+  const methodsWithoutBody: HttpMethod[] = ['GET', 'HEAD', 'OPTIONS'];
+  return methodsWithoutBody.includes(method);
 }

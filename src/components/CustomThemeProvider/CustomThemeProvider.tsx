@@ -13,11 +13,11 @@ const customTheme = createTheme({
       contrastText: '#fff',
     },
     secondary: {
-      main: blue[500], // TODO: what the our secondary color?
+      main: '#44b7b7',
     },
     background: {
       default: blue[900], // common background
-      paper: blue[800], // card background
+      paper: '#072f55', // card background
     },
   },
   breakpoints: {

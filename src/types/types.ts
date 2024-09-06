@@ -32,17 +32,21 @@ export interface ResponseObj {
   responseText: string;
 }
 
+export type HeadersREST = [string, string][];
+
 export interface RESTFulState {
   method: HttpMethod;
   url: string;
   variableTable: VariableRow[];
-  headers?: HeadersInit;
+  headers: HeadersREST;
   bodyText: string;
   bodyType: BodyType;
   response?: ResponseObj;
   urlInner: string;
   isInitialized: boolean;
   date: string;
+  isVariableTableOpen?: boolean;
+  isHeaderTableOpen?: boolean;
 }
 
 export type BodyType = 'text' | 'json';

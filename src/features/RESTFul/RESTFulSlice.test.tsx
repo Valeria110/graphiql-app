@@ -40,7 +40,11 @@ describe('RESTFulSliceReducer', () => {
 
   it('should set a variable table text correctly', () => {
     const state = RESTFulSliceReducer(initialState, setVariableTable([{ variable: 'id', value: '1' }]));
-    expect(state).toEqual({ ...initialState, variableTable: [{ variable: 'id', value: '1' }] });
+    expect(state).toEqual({
+      ...initialState,
+      variableTable: [{ variable: 'id', value: '1' }],
+      urlInner: 'GET/eyJ1cmwiOiIiLCJ2YXJpYWJsZVRhYmxlIjpbeyJ2YXJpYWJsZSI6ImlkIiwidmFsdWUiOiIxIn1dLCJib2R5VGV4dCI6IiJ9',
+    });
   });
 
   it('should set a response text correctly', () => {

@@ -1,7 +1,8 @@
 import { VariableRow } from '@/types/types';
 
 function replacePlaceholderInJson(jsonString: string, placeholder: string, replacement: string): string {
-  return jsonString.replace(new RegExp(placeholder, 'g'), `"${replacement}"`);
+  const saveReplacement = JSON.stringify(replacement).slice(1, -1);
+  return jsonString.replace(new RegExp(placeholder, 'g'), `"${saveReplacement}"`);
 }
 
 export default function insertVariablesInBody(variableTable: VariableRow[], bodyText: string): string {

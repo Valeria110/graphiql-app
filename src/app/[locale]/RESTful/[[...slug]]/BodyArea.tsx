@@ -7,6 +7,9 @@ import { setBodyText, setBodyType } from '@/features/RESTFul/RESTFulSlice';
 import { useCallback, useEffect, useId, useState } from 'react';
 import { BodyType } from '@/types/types';
 import { prettifyJSON, prettifyText } from '@/utils/prettifyBody';
+import { isMethodWithoutBody } from '@/utils/utilsRESTful';
+import ExampleBtn from './ExampleBtn';
+import Loader from '@/components/Loader/Loader';
 
 interface BodyBarAreaProps {
   prettifyCode: () => void;
@@ -28,6 +31,9 @@ function BodyBarArea({ prettifyCode }: BodyBarAreaProps) {
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
         <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <Typography variant="body1" sx={{ m: 1 }}>
+            Body
+          </Typography>
           <Select labelId={idLabel} id={idSelect} value={bodyType} label="Method" onChange={handleMethodChange}>
             {bodyTypes.map((type) => (
               <MenuItem key={type} value={type}>
@@ -35,9 +41,7 @@ function BodyBarArea({ prettifyCode }: BodyBarAreaProps) {
               </MenuItem>
             ))}
           </Select>
-          <Typography variant="body2" sx={{ m: 1 }}>
-            Body
-          </Typography>
+          <ExampleBtn />
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <IconButton size="small" edge="start" color="inherit" aria-label="menu" onClick={prettifyCode}>
               <AutoFixHighIcon />
@@ -49,11 +53,12 @@ function BodyBarArea({ prettifyCode }: BodyBarAreaProps) {
   );
 }
 
-// TODO: hide minimap for small devices
 export default function BodyArea() {
   const dispatch = useDispatch<AppDispatch>();
   const bodyTextFromRedux = useSelector((state: RootState) => state.RESTFul.bodyText);
   const bodyType = useSelector((state: RootState) => state.RESTFul.bodyType);
+  const method = useSelector((state: RootState) => state.RESTFul.method);
+  const readOnly = isMethodWithoutBody(method);
 
   const [editorValue, setEditorValue] = useState(bodyTextFromRedux);
 
@@ -92,9 +97,12 @@ export default function BodyArea() {
           }}
           options={{
             automaticLayout: true,
+            readOnly: readOnly,
+            readOnlyMessage: { value: `Disable for ${method}` },
             minimap: { enabled: true },
           }}
           theme="vs-dark"
+          loading={<Loader />}
         />
       </Box>
     </Box>

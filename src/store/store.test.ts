@@ -27,9 +27,7 @@ const restfulInitialState = {
   url: '',
   variableTable: [],
   bodyType: 'json',
-  headers: {
-    'Content-Type': 'application/json',
-  },
+  headers: [],
   bodyText: '',
   urlInner: 'GET',
   response: undefined,
