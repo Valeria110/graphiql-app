@@ -103,8 +103,8 @@ export function convertSlugToObj(slug: string[]): RESTFulState {
 export function encodeObjectToBase64Url(obj: RESTFulStateMini): string {
   try {
     const jsonString = JSON.stringify(obj);
-    const base64 = btoa(jsonString);
-    // Replace symbols with problems in URL
+    const utf8Bytes = new TextEncoder().encode(jsonString);
+    const base64 = btoa(String.fromCharCode(...utf8Bytes));
     return base64.replace(/\+/g, '-').replace(/\//g, '_').replace(/=/g, '');
   } catch (error) {
     console.error('Error encoding object to Base64 URL:', error);
@@ -114,12 +114,12 @@ export function encodeObjectToBase64Url(obj: RESTFulStateMini): string {
 
 export function decodeBase64UrlToObject(base64Url: string): RESTFulStateMini {
   try {
-    // Replace symbols with problems in URL back
     const base64 = base64Url
       .replace(/-/g, '+')
       .replace(/_/g, '/')
       .padEnd(base64Url.length + ((4 - (base64Url.length % 4)) % 4), '=');
-    const jsonString = atob(base64);
+    const utf8Bytes = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
+    const jsonString = new TextDecoder().decode(utf8Bytes);
     return JSON.parse(jsonString);
   } catch (error) {
     console.error('Error decoding Base64 URL to object:', error);

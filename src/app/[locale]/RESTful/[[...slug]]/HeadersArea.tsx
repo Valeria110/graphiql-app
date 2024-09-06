@@ -17,22 +17,21 @@ import { RootState, AppDispatch } from '@/store/store';
 import { setHeader, toggleIsHeaderTableOpen } from '@/features/RESTFul/RESTFulSlice';
 import CollapsiblePanel from '@/components/CollapsiblePanel/CollapsiblePanel';
 import { useTranslations } from 'next-intl';
-
-type HeadersArray = [string, string][];
+import { HeadersREST } from '@/types/types';
 
 export default function HeadersArea() {
   const dispatch = useDispatch<AppDispatch>();
-  const headersFromRedux: HeadersArray = useSelector((state: RootState) => state.RESTFul.headers);
+  const headersFromRedux: HeadersREST = useSelector((state: RootState) => state.RESTFul.headers);
   const t = useTranslations('RESTful.HeadersArea');
 
-  const [localHeaders, setLocalHeaders] = useState<HeadersArray>(headersFromRedux);
+  const [localHeaders, setLocalHeaders] = useState<HeadersREST>(headersFromRedux);
 
   useEffect(() => {
     setLocalHeaders(headersFromRedux); // syns
   }, [headersFromRedux]);
 
   const handleInputChange = (index: number, field: 'header' | 'value', newValue: string) => {
-    const updatedHeaders: HeadersArray = localHeaders.map((row, i) =>
+    const updatedHeaders: HeadersREST = localHeaders.map((row, i) =>
       i === index ? [field === 'header' ? newValue : row[0], field === 'value' ? newValue : row[1]] : row,
     );
     setLocalHeaders(updatedHeaders);

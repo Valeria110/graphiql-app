@@ -12,7 +12,7 @@ import { IconButton } from '@mui/material';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import AddIcon from '@mui/icons-material/Add';
 import { useSelector, useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { RootState, AppDispatch } from '@/store/store';
 import { setVariableTable, toggleIsVariableTableOpen } from '@/features/RESTFul/RESTFulSlice';
 import CollapsiblePanel from '@/components/CollapsiblePanel/CollapsiblePanel';
@@ -20,10 +20,14 @@ import { useTranslations } from 'next-intl';
 
 export default function VariablesArea() {
   const dispatch = useDispatch<AppDispatch>();
-  const varTable = useSelector((state: RootState) => state.RESTFul.variableTable);
+  const tableFromRedux = useSelector((state: RootState) => state.RESTFul.variableTable);
   const t = useTranslations('RESTful.VariablesArea');
 
-  const [localTable, setLocalTable] = useState(varTable);
+  const [localTable, setLocalTable] = useState(tableFromRedux);
+
+  useEffect(() => {
+    setLocalTable(tableFromRedux); // syns
+  }, [tableFromRedux]);
 
   const handleInputChange = (index: number, field: 'variable' | 'value', newValue: string) => {
     const updatedRows = localTable.map((row, i) => (i === index ? { ...row, [field]: newValue } : row));
@@ -31,7 +35,7 @@ export default function VariablesArea() {
   };
 
   const handleBlur = (index: number, field: 'variable' | 'value', newValue: string) => {
-    const updatedRows = varTable.map((row, i) => (i === index ? { ...row, [field]: newValue } : row));
+    const updatedRows = tableFromRedux.map((row, i) => (i === index ? { ...row, [field]: newValue } : row));
     dispatch(setVariableTable(updatedRows));
   };
 
