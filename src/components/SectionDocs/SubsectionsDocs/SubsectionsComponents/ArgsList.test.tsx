@@ -3,6 +3,7 @@ import { IntrospectionInputObjectType, IntrospectionInputValue, IntrospectionQue
 import { describe, expect, it, Mock, vi } from 'vitest';
 import { ArgItem, ArgsList } from './ArgsList';
 import { findKeyValue } from '@/utils/docsUtils';
+import { baseSchema } from '@/tests/mocks/baseSchema';
 
 const mockedTranslations = {
   Docs: {
@@ -41,11 +42,7 @@ describe('ArgsList', () => {
 
   const mockSchema: IntrospectionQuery = {
     __schema: {
-      queryType: { name: 'Query', kind: 'OBJECT' },
-      mutationType: null,
-      subscriptionType: null,
-      types: [],
-      directives: [],
+      ...baseSchema.__schema,
     },
   };
 
@@ -73,9 +70,7 @@ describe('ArgItem', () => {
 
   const mockSchema: IntrospectionQuery = {
     __schema: {
-      queryType: { name: 'Query', kind: 'OBJECT' },
-      mutationType: null,
-      subscriptionType: null,
+      ...baseSchema.__schema,
       types: [
         {
           name: 'MockType',
@@ -85,7 +80,6 @@ describe('ArgItem', () => {
           isOneOf: false,
         },
       ],
-      directives: [],
     },
   };
 
@@ -105,9 +99,7 @@ describe('ArgItem', () => {
 
     const mockSchemaNonInputObject: IntrospectionQuery = {
       __schema: {
-        queryType: { name: 'Query', kind: 'OBJECT' },
-        mutationType: null,
-        subscriptionType: null,
+        ...baseSchema.__schema,
         types: [
           {
             name: 'MockType',
@@ -115,7 +107,6 @@ describe('ArgItem', () => {
             description: 'Description of String',
           },
         ],
-        directives: [],
       },
     };
 

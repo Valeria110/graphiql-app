@@ -82,7 +82,7 @@ export default function EditorButtons({ query, setQuery: setEditorQuery }: Edito
           />
         </svg>
       </button>
-      <button onClick={getSchema} className={styles['button-docs']} />
+      <button onClick={getSchema} className={styles['button-docs']} data-testid="schema-btn" />
     </div>
   );
 }

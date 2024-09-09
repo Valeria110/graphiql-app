@@ -7,6 +7,7 @@ import {
   IntrospectionOutputTypeRef,
   IntrospectionQuery,
 } from 'graphql';
+import { baseSchema } from '@/tests/mocks/baseSchema';
 
 vi.mock('@/utils/docsUtils', () => ({
   findKeyValue: vi.fn((type, key) => (key === 'name' ? type.name : null)),
@@ -42,9 +43,7 @@ describe('DocsItem', () => {
 
   const mockSchema: IntrospectionQuery = {
     __schema: {
-      queryType: { name: 'Query', kind: 'OBJECT' },
-      mutationType: null,
-      subscriptionType: null,
+      ...baseSchema.__schema,
       types: [
         {
           kind: 'OBJECT',
@@ -53,7 +52,6 @@ describe('DocsItem', () => {
           interfaces: [],
         },
       ],
-      directives: [],
     },
   };
 

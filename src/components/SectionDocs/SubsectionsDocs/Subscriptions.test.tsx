@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { IntrospectionQuery } from 'graphql';
 import { FC, ReactNode } from 'react';
 import Subscriptions from './Subscriptions';
+import { baseSchema } from '@/tests/mocks/baseSchema';
 
 interface Query {
   name: string;
@@ -44,16 +45,6 @@ const mockT = (key: string) => {
     subscriptionsTitle: 'Subscriptions',
   };
   return translations[key] || key;
-};
-
-const baseSchema: IntrospectionQuery = {
-  __schema: {
-    queryType: { kind: 'OBJECT', name: 'Query' },
-    mutationType: null,
-    subscriptionType: { kind: 'OBJECT', name: 'Subscription' },
-    directives: [],
-    types: [],
-  },
 };
 
 describe('Subscriptions component', () => {

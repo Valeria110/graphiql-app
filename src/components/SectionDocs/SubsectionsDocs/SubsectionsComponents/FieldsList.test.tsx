@@ -8,6 +8,7 @@ import {
 import { describe, expect, it, Mock, vi } from 'vitest';
 import { FieldsList, InputFieldsList } from './FieldsList';
 import { filterSchemaTypes } from '@/utils/docsUtils';
+import { baseSchema } from '@/tests/mocks/baseSchema';
 
 vi.mock('@/utils/docsUtils', () => ({
   filterSchemaTypes: vi.fn(
@@ -24,9 +25,7 @@ vi.mock('next-intl', () => ({
 describe('FieldsList', () => {
   const mockSchema: IntrospectionQuery = {
     __schema: {
-      queryType: { name: 'Query', kind: 'OBJECT' },
-      mutationType: null,
-      subscriptionType: null,
+      ...baseSchema.__schema,
       types: [
         {
           name: 'MockType',
@@ -60,7 +59,6 @@ describe('FieldsList', () => {
           interfaces: [],
         },
       ],
-      directives: [],
     },
   };
 
@@ -107,9 +105,7 @@ describe('FieldsList', () => {
 describe('InputFieldsList', () => {
   const mockSchema: IntrospectionQuery = {
     __schema: {
-      queryType: { name: 'Query', kind: 'OBJECT' },
-      mutationType: null,
-      subscriptionType: null,
+      ...baseSchema.__schema,
       types: [
         {
           name: 'String',
@@ -132,7 +128,6 @@ describe('InputFieldsList', () => {
           interfaces: [],
         },
       ],
-      directives: [],
     },
   };
 
