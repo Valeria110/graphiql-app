@@ -2,21 +2,9 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
 import Mutations from './Mutations';
 import { IntrospectionQuery } from 'graphql';
-import { FC, ReactNode } from 'react';
+import { FC } from 'react';
 import { baseSchema } from '@/tests/mocks/baseSchema';
-
-interface Query {
-  name: string;
-}
-
-interface MockDocsItemProps {
-  query: Query;
-}
-
-interface MockNestedItemProps {
-  name: string;
-  children?: ReactNode;
-}
+import { MockDocsItemProps, MockNestedItemProps } from '@/tests/mocks/mockTypesForDocsTests';
 
 vi.mock('./DocsItem', async (importOriginal) => {
   const actual = (await importOriginal()) as { DocsItem: unknown };
