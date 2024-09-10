@@ -79,7 +79,7 @@ export function TeamList() {
           </div>
 
           <a className={TeamListStyles['accordions-container__link']} href={`${member.github}`} target="_blank">
-            <Image src={githubIcon} alt="github-logo" />
+            <Image src={githubIcon} alt="github-logo" width={40} height={40} />
             {member.github.slice(member.github.lastIndexOf('/') + 1).toLowerCase()}
           </a>
         </div>
@@ -88,7 +88,7 @@ export function TeamList() {
   );
 }
 
-function MemberAccordion({ title, items }: MemberAccordionProps) {
+export function MemberAccordion({ title, items }: MemberAccordionProps) {
   const [expanded, setExpanded] = useState(false);
 
   const handleChange = () => {

@@ -11,7 +11,7 @@ export default defineConfig({
     include: ['./src/**/*.test.{ts,tsx}'],
     coverage: {
       include: ['src/**/*.{ts,tsx}'],
-      exclude: ['src/tests/**/*', 'src/middleware.ts', ...coverageConfigDefaults.exclude],
+      exclude: ['src/tests/**/*', 'src/middleware.ts', 'src/app/**/layout.tsx', ...coverageConfigDefaults.exclude],
     },
   },
   resolve: {
