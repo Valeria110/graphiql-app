@@ -1,14 +1,14 @@
-import { ReactNode } from "react";
+import { ReactNode } from 'react';
 
 interface Query {
-    name: string;
+  name: string;
 }
 
 export interface MockDocsItemProps {
-    query: Query;
+  query: Query;
 }
 
 export interface MockNestedItemProps {
-    name: string;
-    children?: ReactNode;
+  name: string;
+  children?: ReactNode;
 }
