@@ -27,7 +27,7 @@ export default function HeadersArea() {
   const [localHeaders, setLocalHeaders] = useState<HeadersREST>(headersFromRedux);
 
   useEffect(() => {
-    setLocalHeaders(headersFromRedux); // syns
+    setLocalHeaders(headersFromRedux);
   }, [headersFromRedux]);
 
   const handleInputChange = (index: number, field: 'header' | 'value', newValue: string) => {

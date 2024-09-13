@@ -26,7 +26,7 @@ export default function VariablesArea() {
   const [localTable, setLocalTable] = useState(tableFromRedux);
 
   useEffect(() => {
-    setLocalTable(tableFromRedux); // syns
+    setLocalTable(tableFromRedux);
   }, [tableFromRedux]);
 
   const handleInputChange = (index: number, field: 'variable' | 'value', newValue: string) => {
