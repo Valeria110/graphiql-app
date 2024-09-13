@@ -6,7 +6,6 @@ import VariablesArea from './VariablesArea';
 import { RESTFulState } from '@/types/types';
 import RESTFulReducer from './../../../../features/RESTFul/RESTFulSlice';
 
-// Define the complete initial state
 const initialState: RESTFulState = {
   method: 'GET',
   url: '',
