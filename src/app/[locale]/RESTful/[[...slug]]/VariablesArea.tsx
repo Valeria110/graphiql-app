@@ -26,7 +26,7 @@ export default function VariablesArea() {
   const [localTable, setLocalTable] = useState(tableFromRedux);
 
   useEffect(() => {
-    setLocalTable(tableFromRedux); // syns
+    setLocalTable(tableFromRedux);
   }, [tableFromRedux]);
 
   const handleInputChange = (index: number, field: 'variable' | 'value', newValue: string) => {
@@ -82,6 +82,7 @@ export default function VariablesArea() {
                       onBlur={(e) => handleBlur(index, 'variable', e.target.value)}
                       variant="outlined"
                       size="small"
+                      placeholder="header"
                       fullWidth
                     />
                   </TableCell>
@@ -92,6 +93,7 @@ export default function VariablesArea() {
                       onBlur={(e) => handleBlur(index, 'value', e.target.value)}
                       variant="outlined"
                       size="small"
+                      placeholder="value"
                       fullWidth
                     />
                   </TableCell>

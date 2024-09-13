@@ -141,7 +141,7 @@ export function addObjectToLocalStorage(obj: RESTFulState): void {
   }
 }
 
-function isJSON(str: string) {
+export function isJSON(str: string) {
   try {
     JSON.parse(str);
     return true;

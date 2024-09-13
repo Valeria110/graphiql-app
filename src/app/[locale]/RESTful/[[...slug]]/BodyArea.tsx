@@ -63,7 +63,7 @@ export default function BodyArea() {
   const [editorValue, setEditorValue] = useState(bodyTextFromRedux);
 
   useEffect(() => {
-    setEditorValue(bodyTextFromRedux); // syns
+    setEditorValue(bodyTextFromRedux);
   }, [bodyTextFromRedux]);
 
   const prettifyCode = useCallback(() => {
