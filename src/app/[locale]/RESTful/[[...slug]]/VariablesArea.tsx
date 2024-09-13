@@ -82,6 +82,7 @@ export default function VariablesArea() {
                       onBlur={(e) => handleBlur(index, 'variable', e.target.value)}
                       variant="outlined"
                       size="small"
+                      placeholder="header"
                       fullWidth
                     />
                   </TableCell>
