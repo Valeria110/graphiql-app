@@ -49,7 +49,9 @@ export default function BurgerMenu() {
 
   const returnHomePage = () => {
     router.push(`/${localActive}`);
-    toggleBurgerMenu();
+    setIsMenuOpen(false);
+    setNavClass(styles.nav);
+    setBurgerBtnClass(styles.burgerBtn);
   };
 
   return (
