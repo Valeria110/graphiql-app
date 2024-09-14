@@ -68,7 +68,7 @@ describe('VariablesArea Component', () => {
         <VariablesArea />
       </Provider>,
     );
-    const input = screen.getByPlaceholderText('value');
+    const input = screen.getByTestId('value-input-0');
     fireEvent.change(input, { target: { value: 'newVariable' } });
     fireEvent.blur(input);
     expect(input).toHaveValue('newVariable');
