@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import * as yup from 'yup';
 
 export interface valuesSignUp {
@@ -5,14 +6,16 @@ export interface valuesSignUp {
   password: string;
 }
 
-export const schemaSignUp: yup.ObjectSchema<valuesSignUp> = yup.object().shape({
-  email: yup.string().email('Invalid email').required('Email is required'),
-
-  password: yup
-    .string()
-    .min(8, 'Password must be at least 8 characters')
-    .matches(/\p{L}/u, 'Password must contain at least one letter')
-    .matches(/\d/, 'Password must contain at least one number')
-    .matches(/[@$!%*?&]/, 'Password must contain at least one special character')
-    .required('Password is required'),
-});
+export const useSchemaSignUp = () => {
+  const t = useTranslations('Validation');
+  return yup.object().shape({
+    email: yup.string().email(t('invalidEmail')).required(t('emailRequired')),
+    password: yup
+      .string()
+      .required(t('passwordRequired'))
+      .min(8, t('passwordMinLength', { length: 8 }))
+      .matches(/\p{L}/u, t('passwordLetter'))
+      .matches(/\d/, t('passwordNumber'))
+      .matches(/[@$!%*?&]/, t('passwordSpecialChar', { example: '@$!%*?&' })),
+  });
+};
