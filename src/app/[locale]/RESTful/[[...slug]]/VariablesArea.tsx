@@ -82,7 +82,7 @@ export default function VariablesArea() {
                       onBlur={(e) => handleBlur(index, 'variable', e.target.value)}
                       variant="outlined"
                       size="small"
-                      placeholder="header"
+                      inputProps={{ 'data-testid': `variable-input-${index}` }}
                       fullWidth
                     />
                   </TableCell>
@@ -93,7 +93,7 @@ export default function VariablesArea() {
                       onBlur={(e) => handleBlur(index, 'value', e.target.value)}
                       variant="outlined"
                       size="small"
-                      placeholder="value"
+                      inputProps={{ 'data-testid': `value-input-${index}` }}
                       fullWidth
                     />
                   </TableCell>
