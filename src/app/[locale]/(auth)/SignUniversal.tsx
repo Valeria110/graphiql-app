@@ -6,7 +6,7 @@ import { useForm, useWatch } from 'react-hook-form';
 import { logInWithEmailAndPassword, registerWithEmailAndPasswordShort } from '@/authService';
 import { auth } from '@/firebase';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { schemaSignUp, valuesSignUp } from '@/validation/schemas';
+import { useSchemaSignUp, valuesSignUp } from '@/validation/schemas';
 import { useRouter } from 'next/navigation';
 import { useLocale, useTranslations } from 'next-intl';
 
@@ -15,6 +15,7 @@ interface SignUniversalProps {
 }
 
 export default function SignUniversal({ mode }: SignUniversalProps) {
+  const schemaSignUp = useSchemaSignUp();
   const { register, handleSubmit, formState, control } = useForm({
     resolver: yupResolver(schemaSignUp),
     mode: 'onChange',
@@ -48,10 +49,10 @@ export default function SignUniversal({ mode }: SignUniversalProps) {
     } catch (error: unknown) {
       if (error && typeof error === 'object' && 'code' in error) {
         if (error.code === 'auth/email-already-in-use') {
-          setMessageAuthErrorMail('This email already in use');
+          setMessageAuthErrorMail(t('errorMsgEmailInUse'));
         } else {
-          setMessageAuthErrorMail('Invalid credentials');
-          setMessageAuthPassword('Invalid credentials');
+          setMessageAuthErrorMail(t('errorMsgInvalidCredentials'));
+          setMessageAuthPassword(t('errorMsgInvalidCredentials'));
         }
       }
     }

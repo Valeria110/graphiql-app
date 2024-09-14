@@ -7,7 +7,9 @@
     "labelPassword": "Password",
     "btnSignUp": "Sign\u00A0up",
     "btnSignIn": "Sign\u00A0in",
-    "btnSignOut": "Sign\u00A0out"
+    "btnSignOut": "Sign\u00A0out",
+    "errorMsgEmailInUse": "This email already in use",
+    "errorMsgInvalidCredentials": "Invalid credentials"
   },
   "WelcomePage": {
     "sectionWelcomeTitle": "Hello",
@@ -137,5 +139,14 @@
   "CollapsiblePanel": {
     "Hide": "Hide",
     "Show": "Show"
+  },
+  "Validation": {
+    "invalidEmail": "Invalid email",
+    "emailRequired": "Email is required",
+    "passwordMinLength": "Password must be at least {length} characters",
+    "passwordLetter": "Password must contain at least one letter",
+    "passwordNumber": "Password must contain at least one number",
+    "passwordSpecialChar": "Password must contain at least one special character ({example})",
+    "passwordRequired": "Password is required"
   }
 }

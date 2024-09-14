@@ -7,7 +7,9 @@
     "labelPassword": "Пароль",
     "btnSignUp": "Регистрация",
     "btnSignIn": "Войти",
-    "btnSignOut": "Выйти"
+    "btnSignOut": "Выйти",
+    "errorMsgEmailInUse": "Этот адрес электронной почты уже используется",
+    "errorMsgInvalidCredentials": "Некорректные данные"
   },
   "WelcomePage": {
     "sectionWelcomeTitle": "Привет",
@@ -137,5 +139,14 @@
   "CollapsiblePanel": {
     "Hide": "Скрыть",
     "Show": "Показать"
+  },
+  "Validation": {
+    "invalidEmail": "Некорректный адрес электронной почты",
+    "emailRequired": "Электронная почта обязательна",
+    "passwordMinLength": "Пароль должен быть не менее {length} символов",
+    "passwordLetter": "Пароль должен содержать хотя бы одну букву",
+    "passwordNumber": "Пароль должен содержать хотя бы одну цифру",
+    "passwordSpecialChar": "Пароль должен содержать хотя бы один специальный символ ({example})",
+    "passwordRequired": "Пароль обязателен"
   }
 }

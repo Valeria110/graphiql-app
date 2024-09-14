@@ -1,7 +1,13 @@
-import { describe, expect, it } from 'vitest';
-import { schemaSignUp } from './schemas';
+import { describe, expect, it, vi } from 'vitest';
+import { useSchemaSignUp } from './schemas';
+
+vi.mock('next-intl', () => ({
+  useTranslations: () => (key: string) => key,
+}));
 
 describe('yupSchema', () => {
+  const schemaSignUp = useSchemaSignUp();
+
   it('should validate valid email and password', async () => {
     const values = {
       email: 'test@example.com',
@@ -17,7 +23,7 @@ describe('yupSchema', () => {
       password: 'Password123!',
     };
 
-    await expect(schemaSignUp.validate(values)).rejects.toThrowError('Invalid email');
+    await expect(schemaSignUp.validate(values)).rejects.toThrowError('invalidEmail');
   });
 
   it('should throw error for empty email', async () => {
@@ -26,7 +32,7 @@ describe('yupSchema', () => {
       password: 'Password123!',
     };
 
-    await expect(schemaSignUp.validate(values)).rejects.toThrowError('Email is required');
+    await expect(schemaSignUp.validate(values)).rejects.toThrowError('emailRequired');
   });
 
   it('should throw error for short password', async () => {
@@ -35,7 +41,7 @@ describe('yupSchema', () => {
       password: 'Jake12',
     };
 
-    await expect(schemaSignUp.validate(values)).rejects.toThrowError('Password must be at least 8 characters');
+    await expect(schemaSignUp.validate(values)).rejects.toThrowError('passwordMinLength');
   });
 
   it('should throw error for password without a letter', async () => {
@@ -44,7 +50,7 @@ describe('yupSchema', () => {
       password: '12345678910',
     };
 
-    await expect(schemaSignUp.validate(values)).rejects.toThrowError('Password must contain at least one letter');
+    await expect(schemaSignUp.validate(values)).rejects.toThrowError('passwordLetter');
   });
 
   it('should throw error for password without a number', async () => {
@@ -53,7 +59,7 @@ describe('yupSchema', () => {
       password: 'SomePassword',
     };
 
-    await expect(schemaSignUp.validate(values)).rejects.toThrowError('Password must contain at least one number');
+    await expect(schemaSignUp.validate(values)).rejects.toThrowError('passwordNumber');
   });
 
   it('should throw error for password without a special character', async () => {
@@ -62,9 +68,7 @@ describe('yupSchema', () => {
       password: 'Password234',
     };
 
-    await expect(schemaSignUp.validate(values)).rejects.toThrowError(
-      'Password must contain at least one special character',
-    );
+    await expect(schemaSignUp.validate(values)).rejects.toThrowError('passwordSpecialChar');
   });
 
   it('should throw error for empty password', async () => {
@@ -73,6 +77,6 @@ describe('yupSchema', () => {
       password: '',
     };
 
-    await expect(schemaSignUp.validate(values)).rejects.toThrowError('Password must be at least 8 characters');
+    await expect(schemaSignUp.validate(values)).rejects.toThrowError('passwordRequired');
   });
 });
