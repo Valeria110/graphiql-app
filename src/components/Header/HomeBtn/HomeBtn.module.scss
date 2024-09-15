@@ -1,0 +1,16 @@
+.homeBtn {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 0;
+  transition: background-color 0.4s;
+
+  &:hover {
+    cursor: pointer;
+    background-color: #ddd6d6;
+  }
+
+  path {
+    background-color: #000;
+  }
+}

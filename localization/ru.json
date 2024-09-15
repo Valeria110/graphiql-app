@@ -1,0 +1,152 @@
+{
+  "HomePage": {
+    "title": "Hi, ru"
+  },
+  "AuthPages": {
+    "labelEmail": "Email",
+    "labelPassword": "Пароль",
+    "btnSignUp": "Регистрация",
+    "btnSignIn": "Войти",
+    "btnSignOut": "Выйти",
+    "errorMsgEmailInUse": "Этот адрес электронной почты уже используется",
+    "errorMsgInvalidCredentials": "Некорректные данные"
+  },
+  "WelcomePage": {
+    "sectionWelcomeTitle": "Привет",
+    "sectionWelcomeSubtitle": "Добро пожаловать в легкое и мощное приложение для работы с REST и GraphQL API.",
+    "sectionWelcomeDescription": "Мы объединили возможности Postman и GraphiQL в одном простом и удобном приложении.",
+    "sectionWelcomebtnSignUp": "Регистрация",
+    "sectionWelcomebtnSignIn": "Войти",
+    "sectionWelcomebtnHistory": "История",
+    "sectionProjectTitle": "Наш проект",
+    "sectionProjectSubtitle": "Наш инструмент предлагает упрощённый интерфейс, который облегчает ваш рабочий процесс:",
+    "sectionProjectList": "Тестируйте конечные точки без усилий; Анализируйте ответы быстро; Управляйте API-запросами с легкостью; Переключайтесь между REST и GraphQL без проблем; Настраивайте свои запросы и просматривайте ответы в реальном времени",
+    "sectionProjecDescriptionText": "Это универсальное решение для разработки и тестирования API, созданное для того, чтобы сделать вашу работу быстрее, проще и продуктивнее. Погрузитесь в наш инструмент и узнайте, как он может преобразить ваше взаимодействие с API, сделав его более плавным и эффективным, чем когда-либо.",
+    "sectionTeamTitle": "Наша команда",
+    "sectionCourseTitle": "Наш учебный путь",
+    "sectionCourseSubtitle": "Курс React от RS School — это продвинутая образовательная программа, ориентированная на разработчиков, которые хотят освоить React и стать профессиональными front-end разработчиками.",
+    "sectionCourseDescriptionTitle": "Основные особенности курса:",
+    "sectionCourseFeature": "1. Глубокое изучение React; 2. Проектно-ориентированный подход; 3. Менторство и код-ревью; 4. Поддержка современных инструментов; 5. Сообщество и карьерные возможности",
+    "sectionCourseDescriptionText": "Курс React от RS School — это отличная возможность для разработчиков углубить свои знания и навыки, создавая современные веб-приложения с использованием одного из самых востребованных инструментов на рынке.",
+    "memberNameMikhail": "Михаил Семенюк",
+    "memberDescriptionMikhail": "Михаил — невероятно умный и трудолюбивый член команды, известный своим выдающимся самоорганизацией и дисциплиной. Михаил также увлекается автоматизацией, часто пишет небольшие скрипты для упрощения задач и облегчения жизни. Кроме того, он создает дружелюбную и позитивную атмосферу в команде. Его вклад в наш проект бесценен.",
+    "memberRoleMikhail": "Front-end developer",
+    "memberContributionsMikhail": "Создание страниц для приложения (Вход / Регистрация, RESTful client);Четкая обратная связь по PR;Написание unit и e2e тестов",
+    "memberEducationMikhail": "Брестский государственный технический университет (2016);Курс RS School «JavaScript/Front-end. Stage 0» 2023;Курс RS School «JavaScript/Front-end. Stage 1-2» 2024;Курс RS School «React. Stage 3» 2024",
+    "memberWorkMikhail": "2023-2018 - работа в лизинговой компании, разработка CRM и API для интеграций, автоматизация и упрощение работы сотрудников.;2018-2017 - Разработчик 1С, Python + Odoo;2016-2017 - Системный администратор, разработка и поддержка сайта организации, программист.",
+    "memberLanguagesMikhail": "Английский - B2;Белорусский - родной;Русский - родной;Польский - B1",
+    "memberNameValerie": "Валерия Ивашкевич",
+    "memberDescriptionValerie": "Валерия исключительно самодисциплинирована, ответственна и креативна, с выдающейся трудовой этикой и глубокой страстью к веб-разработке. На протяжении проекта она постоянно демонстрировала сильное стремление создать уникальное и привлекательное приложение. Её вклад был действительно бесценен и решающим для успеха проекта.",
+    "memberRoleValerie": "Руководитель команды и Front-end разработчик",
+    "memberContributionsValerie": "Организация команды;Настройка репозитория и управление рабочим процессом при помощи доски задач Kanban;Создание страниц для приложения (маршрут GraphiQL);Проверка PR и четкая обратная связь;Написание unit и e2e тестов",
+    "memberEducationValerie": "Курс RS School «JavaScript/Front-end. Stage 1-2» 2024;БГЭУ (Факультет международных бизнес-коммуникаций) 2026;Курс «The Web Developer Bootcamp 2023» от Colt Steele;Курс RS School «JavaScript/Front-end. Stage 0» 2023;Курс RS School «React. Stage 3» 2024",
+    "memberWorkValerie": "Летом 2022 года работала устным и письменным переводчиком в компании. Выполняла устный и письменный перевод с русского на английский и немецкий, и наоборот. Участвовала в тендерах, переговорах в качестве переводчика.;В настоящее время Валерия посвящает все свое свободное время прохождению курса RS school по front-end",
+    "memberLanguagesValerie": "Русский/Белорусский - родной;Английский - C1 продвинутый;Немецкий - B1;Китайский - A1 начальный",
+    "memberNameViktoriya": "Виктория Ращепкина",
+    "memberDescriptionViktoriya": "Виктория исключительно усердна и ответственна, принося высокий уровень качества и внимания к каждой задаче, которую она выполняет. На протяжении проекта она отдала все свои силы для развития нашего проекта. Вика замечательный и позитивный член нашей команды!",
+    "memberRoleViktoriya": "Front-end developer",
+    "memberContributionsViktoriya": "Создание страниц для приложения (Welcome и History страницы);Настройка аутентификации с помощью Firebase;Проверка PR и четкая обратная связь;Написание unit и e2e тестов",
+    "memberEducationViktoriya": "Медицинский колледж;Курс RS School «JavaScript/Front-end. Stage 1-2» 2024;Курс RS School «React. Stage 3» 2024",
+    "memberWorkViktoriya": "В настоящее время Вика посвящает все свое свободное время программированию и прохождению курса RS school по front-end",
+    "memberLanguagesViktoriya": "Русский - родной;Английский - B1",
+    "contributionsTitle": "Вклад",
+    "educationTitle": "Образование",
+    "workTitle": "Работа",
+    "languagesTitle": "Языки",
+    "sectionWelcomeBtnRestClient": "REST Клиент",
+    "sectionWelcomeBtnGraphiQLClient": "GraphiQL Клиент",
+    "sectionWelcomeBtnHistory": "История"
+  },
+  "Docs": {
+    "docsTitle": "Документация",
+    "queriesTitle": "Запросы",
+    "mutationsTitle": "Мутации",
+    "subscriptionsTitle": "Подписки",
+    "descriptionTitle": "Описание",
+    "typeTitle": "Тип",
+    "argsTitle": "Аргументы",
+    "fieldsTitle": "Поля"
+  },
+  "PlaygroundInputs": {
+    "urlUnput": "Введите URL-адрес...",
+    "sdlUrlUnput": "Введите SDL-адрес..."
+  },
+  "BurgerMenu": {
+    "signOutBtn": "Выйти",
+    "signInBtn": "Войти"
+  },
+  "GraphiqlToolsBar": {
+    "varsBtn": "Переменные",
+    "headersBtn": "Заголовки"
+  },
+  "HistoryPage": {
+    "HistoryPageTitle": "История запросов",
+    "EmptyHistory": "Вы не выполнили ни одного запроса. Здесь пусто. Попробуйте эти варианты:",
+    "HistoryBtnRest": "REST Клиент",
+    "HistoryBtnGraphiQL": "GraphiQL Клиент",
+    "HistoryPaginationTitle": "Страница:",
+    "HistoryTypeTitle": "Тип:",
+    "HistoryMethodTitle": "Метод:",
+    "HistoryUrlTitle": "URL-адрес:",
+    "HistoryDateTitle": "Дата:",
+    "ErrorLC": "Произошла ошибка при получении истории ваших запросов. Пожалуйста, повторите попытку позже.",
+    "HistoryBtnClear": "Очистить историю",
+    "HistoryBtnAsc": "По возрастанию",
+    "HistoryBtnDesc": "По убыванию"
+  },
+  "LoginRequired": {
+    "InfoText": "Пожалуйста, войдите, чтобы открыть",
+    "signInBtn": "Войти",
+    "GraphQLText": "песочницу GraphQL",
+    "HistoryText": "историю запросов",
+    "RESTText": "песочницу RESTFull"
+  },
+  "RESTful": {
+    "Page": {
+      "URL": "URL",
+      "Method": "Метод"
+    },
+    "SubmitBtn": {
+      "SubmitBtn": "Отправить"
+    },
+    "VariablesArea": {
+      "TabName": "Переменные",
+      "RowVariable": "Переменная",
+      "RowValue": "Значение",
+      "RowActions": "Действия",
+      "AddRowBtn": "Добавить строку",
+      "DeleteLabelBtn": "удалить"
+    },
+    "HeadersArea": {
+      "TabName": "Заголовки",
+      "RowHeader": "Заголовок",
+      "RowValue": "Значение",
+      "RowActions": "Действия",
+      "AddHeaderBtn": "Добавить заголовок",
+      "DeleteLabelBtn": "удалить"
+    },
+    "ExampleBtn": {
+      "FillBtn": "Заполнить пример",
+      "ExampleBodyTitle": "Некоторый заголовок",
+      "ExampleBodyValue": "Пример текста, который мы храним в переменной body"
+    },
+    "ResponseArea": {
+      "Time": "Время",
+      "Ms": "Мс",
+      "Code": "Код"
+    }
+  },
+  "CollapsiblePanel": {
+    "Hide": "Скрыть",
+    "Show": "Показать"
+  },
+  "Validation": {
+    "invalidEmail": "Некорректный адрес электронной почты",
+    "emailRequired": "Электронная почта обязательна",
+    "passwordMinLength": "Пароль должен быть не менее {length} символов",
+    "passwordLetter": "Пароль должен содержать хотя бы одну букву",
+    "passwordNumber": "Пароль должен содержать хотя бы одну цифру",
+    "passwordSpecialChar": "Пароль должен содержать хотя бы один специальный символ ({example})",
+    "passwordRequired": "Пароль обязателен"
+  }
+}

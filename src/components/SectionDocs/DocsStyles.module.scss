@@ -1,0 +1,156 @@
+@use '../../styles/globals.scss' as *;
+
+.docs-section {
+  background-color: $blue-primary;
+  width: 30%;
+  padding: 20px;
+  border-radius: 15px;
+  min-height: 550px;
+  height: 500px;
+  overflow: scroll;
+  position: fixed;
+  font-size: 15px;
+  transform: translateX(-2000px);
+  transition: transform 0.5s;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+
+  @media (max-width: 1395px) {
+    width: 100%;
+    transform: translateY(-2000px);
+    min-height: 350px;
+    height: 400px;
+  }
+
+  @media (max-width: 600px) {
+    padding: 5px;
+  }
+
+  &__title {
+    margin: 0;
+  }
+
+  &__header {
+    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 9px;
+
+    @media (max-width: 600px) {
+      padding: 5px 9px;
+      margin-bottom: 0px;
+    }
+  }
+
+  &__button-close {
+    border: 0;
+    background-color: transparent;
+    font-size: 20px;
+    display: flex;
+    color: white;
+    transform: rotate(45deg);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+
+.args {
+  &-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  &-list {
+    display: flex;
+    background-color: $bgc-dark-blue;
+    border-radius: 15px;
+    width: 90%;
+    margin: 10px;
+    padding: 10px 20px;
+    flex-direction: column;
+    gap: 10px;
+
+    @media (max-width: 600px) {
+      width: 100%;
+      overflow: scroll;
+    }
+
+    p {
+      margin: 0;
+    }
+
+    &__title {
+      text-align: center;
+      font-size: 20px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+
+      @media (max-width: 600px) {
+        font-size: 17px;
+      }
+    }
+  }
+}
+
+.fields-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+
+  &__item {
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+  }
+
+  &__header {
+    flex-direction: row;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 17px;
+    word-wrap: break-word;
+
+    @media (max-width: 600px) {
+      font-size: 16px;
+    }
+  }
+
+  &__item-title {
+    font-size: 17px;
+    word-wrap: break-word;
+
+    @media (max-width: 600px) {
+      font-size: 16px;
+    }
+  }
+}
+
+.open-docs {
+  transform: translateX(0);
+  position: relative;
+
+  @media (max-width: 1395px) {
+    transform: translateY(0);
+  }
+}
+
+.error-message {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  height: 100%;
+  align-items: center;
+  position: absolute;
+  gap: 10px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
